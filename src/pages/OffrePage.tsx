@@ -8,8 +8,8 @@ import DynamicNavigation from "@/components/DynamicNavigation";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import ContactCTA, { contactCtaLabel } from "@/components/ContactCTA";
-import palmInvestHero from "@/assets/offre-palminvest-hero.jpg";
-import terraPalmHero from "@/assets/offre-terrapalm-hero.jpg";
+import palmInvestHero from "@/assets/nursery-pepiniere-daloa.jpg";
+import terraPalmHero from "@/assets/vavoua-land-2026.jpg";
 
 export type OffreKey = "palminvest" | "terrapalm";
 
@@ -21,7 +21,7 @@ const OFFERS = {
     intro:
       "AgriCapital sécurise le foncier, crée votre plantation clé en main et vous la remet productive. Vous devenez propriétaire d'un patrimoine agricole tangible, cartographié et sécurisé par contrat, sans aucune contrainte technique.",
     image: palmInvestHero,
-    alt: "Technicien AgriCapital tenant des plants de palmier à huile certifiés en pépinière",
+    alt: "Pépinière AgriCapital de Daloa : plants de palmier à huile Tenera certifiés en sachets",
     highlights: [
       { icon: MapPinned, title: "Foncier sécurisé par AgriCapital", desc: "Identification, vérification et sécurisation de la parcelle. Levé GPS et plan cartographique remis." },
       { icon: Sprout, title: "Plantation clé en main", desc: "143 plants Tenera certifiés/ha, nettoyage, piquetage, plantation, intrants et fertilisation." },
@@ -48,7 +48,7 @@ const OFFERS = {
     intro:
       "Votre foncier dort ? AgriCapital le valorise intégralement : études, cartographie, création de la plantation et suivi agronomique. Vous restez propriétaire de votre terre et devenez propriétaire d'une plantation à forte valeur.",
     image: terraPalmHero,
-    alt: "Famille propriétaire foncière et agronome AgriCapital effectuant un levé GPS sur une parcelle plantée",
+    alt: "Parcelle foncière AgriCapital à Vavoua avant mise en valeur agricole",
     highlights: [
       { icon: Leaf, title: "Votre terre reste la vôtre", desc: "Aucune cession de propriété. AgriCapital intervient comme opérateur de valorisation." },
       { icon: MapPinned, title: "Cartographie et documentation", desc: "Levé topographique GPS, plan parcellaire et dossier technique complet." },
