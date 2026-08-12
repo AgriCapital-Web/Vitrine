@@ -9,12 +9,14 @@ const ADDRESS_LABEL = "AgriCapital — Bureau de Gonaté, Côte d'Ivoire";
 
 const LocationMap = () => {
   const [mapType, setMapType] = useState<"m" | "k">("m"); // m=plan, k=satellite
+  const [zoom, setZoom] = useState(12); // vue ville complète (Gonaté / Daloa)
   const { lat, lng } = AGRICAPITAL_COORDS;
 
   // Iframe embed sans clé API — fonctionne partout, y compris production Vercel
-  const bbox = `${lng - 0.02},${lat - 0.013},${lng + 0.02},${lat + 0.013}`;
+  const span = 0.08;
+  const bbox = `${lng - span},${lat - span * 0.65},${lng + span},${lat + span * 0.65}`;
   const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lng}`;
-  const googleSrc = `https://maps.google.com/maps?q=${lat},${lng}&z=16&t=${mapType}&output=embed`;
+  const googleSrc = `https://maps.google.com/maps?q=${lat},${lng}(${encodeURIComponent("AgriCapital — Gonaté")})&z=${zoom}&t=${mapType}&output=embed`;
 
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
   const viewUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
@@ -38,6 +40,10 @@ const LocationMap = () => {
           </div>
         </div>
         <div className="flex gap-2 flex-shrink-0">
+          <div className="hidden md:flex rounded-md border border-border overflow-hidden">
+            <button type="button" onClick={() => setZoom((z) => Math.max(9, z - 1))} className="px-2 py-1 text-xs bg-background" aria-label="Dézoomer">−</button>
+            <button type="button" onClick={() => setZoom((z) => Math.min(18, z + 1))} className="px-2 py-1 text-xs bg-background border-l border-border" aria-label="Zoomer">+</button>
+          </div>
           <div className="hidden sm:flex rounded-md border border-border overflow-hidden">
             <button
               type="button"
@@ -70,7 +76,7 @@ const LocationMap = () => {
       </div>
       <div className="relative w-full" style={{ aspectRatio: "16 / 9", minHeight: 320 }}>
         <iframe
-          key={mapType}
+          key={`${mapType}-${zoom}`}
           title="Carte AgriCapital Daloa"
           src={googleSrc}
           className="absolute inset-0 w-full h-full border-0"

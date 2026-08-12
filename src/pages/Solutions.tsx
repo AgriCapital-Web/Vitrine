@@ -91,6 +91,11 @@ const Solutions = () => {
                   <br />
                   <span className="font-semibold">Gestion intégrale optionnelle jusqu'à 28 ans.</span>
                 </p>
+                <Button asChild className="mt-6 bg-[#ed7500] hover:bg-[#ed7500]/90 text-white">
+                  <Link to="/terrapalm">
+                    Découvrir TerraPalm <ArrowRight className="w-4 h-4 ml-1" />
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
 
@@ -117,6 +122,11 @@ const Solutions = () => {
                   <br />
                   <span className="font-semibold">Gestion intégrale optionnelle jusqu'à 28 ans.</span>
                 </p>
+                <Button asChild className="mt-6">
+                  <Link to="/palminvest">
+                    Découvrir PalmInvest <ArrowRight className="w-4 h-4 ml-1" />
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
           </div>
