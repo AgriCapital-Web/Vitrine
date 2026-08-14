@@ -934,3 +934,153 @@ const zh: DeepPartial<typeof fr> = {
 };
 
 
+/**
+ * Baoulé (bci) — alphabet officiel ivoirien (Orthographe pratique des langues ivoiriennes) :
+ * a b c d e ɛ f g gb h i j k kl kp l m n ny ŋ o ɔ p r s t u v w y z
+ * Les clés absentes retombent automatiquement sur le français (fusion profonde).
+ */
+const bci: DeepPartial<typeof fr> = {
+  map: {
+    title: "Lika nga e di junman lɔ'n",
+    subtitle: "E tranwa Daloa, Haut-Sassandra mɛn'n nun, Kotidivwa",
+    marker: "AgriCapital i awlo dan'n",
+    description: "Haut-Sassandra mɛn'n ti kpa mmɔja waka'n i tralɛ nun.",
+  },
+  nav: {
+    home: "Awlo",
+    about: "E su ndɛ",
+    approach: "E ajalɛ'n",
+    impact: "E kwlalɛ'n",
+    partnership: "Ninnge nga e man'n",
+    contact: "Kan ndɛ kle e",
+  },
+  hero: {
+    badge: "Fa sika gua asiɛ'n su. Nian ainman.",
+    title: "Yi ɔ bɔbɔ ɔ mmɔja waka fie'n AgriCapital i sa nun",
+    description: "Ɲan ɔ bɔbɔ ɔ fie kpa kun mɔ be nian su kpa'n. Sɛ asiɛ o ɔ sa nun-o, sɛ ɔ leman-o, AgriCapital yo junman'n i kwlaa.",
+    btnApproach: "Nian ninnge nga e man'n",
+    btnPartner: "Klɛ ɔ dunman",
+  },
+  ambitions: {
+    title: "Sran wafa nɲɔn, angunndan kunngba",
+    why: "Ngue ti yɛ ɔ kwla fa AgriCapital ɔ?",
+  },
+  news: {
+    title: "Jasin uflɛ",
+    subtitle: "AgriCapital i jasin nga be fin'n",
+    readMore: "Kanngan i kwlaa",
+    noNews: "Jasin fi nunman lɛ",
+    featured: "Jasin cinnjin",
+    category: "Akpasua",
+    publishedOn: "Be yili i",
+    by: "Sran ng'ɔ klɛli'n",
+    share: "Fa man ɔ janvuɛ mun",
+    backToNews: "Sa sin jasin'n su",
+  },
+  partnershipRequest: {
+    title: "Bisa e",
+    subtitle: "Klɛ ɔ ndɛ'n naan e kan e kle wɔ",
+    firstName: "Dunman klikli",
+    lastName: "Awlo dunman",
+    email: "Email",
+    phone: "Telefɔnu",
+    whatsapp: "WhatsApp",
+    company: "Junman dan",
+    country: "Mɛn",
+    city: "Klɔ",
+    address: "Lika",
+    message: "Ndɛ",
+    submit: "Fa kɔ",
+    success: "E sɔli ɔ ndɛ'n nun kpa!",
+    error: "Sa kun juli.",
+  },
+};
+
+/**
+ * Dioula / Julakan (dyu) — alphabet officiel (Mandenkan latin) :
+ * a b c d e ɛ f g h i j k l m n ɲ ŋ o ɔ p r s t u w y z
+ */
+const dyu: DeepPartial<typeof fr> = {
+  map: {
+    title: "An ka baara yɔrɔ",
+    subtitle: "An sigilen bɛ Daloa, Haut-Sassandra mara la, Kɔdiwari",
+    marker: "AgriCapital ka so ba",
+    description: "Haut-Sassandra mara ka ɲi tulu yiri sɛnɛ kama, dugukolo ka nɔgɔ ani sanfɛ ko ka ɲi.",
+  },
+  nav: {
+    home: "So",
+    about: "An ka kow",
+    approach: "An ka baaracogo",
+    impact: "An sebaaya",
+    partnership: "An ka fɛɛrɛw",
+    contact: "Kuma an fɛ",
+  },
+  hero: {
+    badge: "Ka wari don dugukolo la. Ka sini sɛnɛ.",
+    title: "I ka tulu yiri foro dilan AgriCapital fɛ",
+    description: "Sɔrɔ i yɛrɛ ka sɛnɛ nafolo la, a lakanalen don ani baarakɛla ɲumanw b'a kɔlɔsi. Ni dugukolo b'i bolo walima a t'i bolo, AgriCapital bɛ baara bɛɛ kɛ.",
+    btnApproach: "An ka fɛɛrɛw lajɛ",
+    btnPartner: "I tɔgɔ sɛbɛn",
+  },
+  ambitions: {
+    title: "Mɔgɔ suguya fila, laɲini kelen",
+    why: "Mun na i ka kan ka AgriCapital sugandi?",
+  },
+  news: {
+    title: "Kibaruw",
+    subtitle: "AgriCapital ka kibaru kuraw",
+    readMore: "A kalan ka taa ɲɛ",
+    noNews: "Kibaru si tɛ yan",
+    featured: "Kibaru kunba",
+    category: "Suguya",
+    publishedOn: "A bɔra don",
+    by: "Sɛbɛnnikɛla",
+    share: "A tila",
+    backToNews: "Segin kibaruw ma",
+  },
+  partnershipRequest: {
+    title: "Ɲininkali ci",
+    subtitle: "Sɛbɛn fa walasa an ka kunnafoni di i ma",
+    firstName: "Tɔgɔ",
+    lastName: "Jamu",
+    email: "Email",
+    phone: "Telefɔni",
+    whatsapp: "WhatsApp",
+    company: "Sosiyete",
+    country: "Jamana",
+    city: "Dugu",
+    address: "Sigiyɔrɔ",
+    message: "Cikan",
+    submit: "A ci",
+    success: "I ka ɲininkali cira ka ɲɛ!",
+    error: "Fili dɔ kɛra.",
+  },
+};
+
+/** Fusion profonde récursive : la base française comble toute clé manquante. */
+export function deepMerge<T>(base: T, override: any): T {
+  if (override === undefined || override === null) return base;
+  if (typeof base !== "object" || base === null || Array.isArray(base)) return (override ?? base) as T;
+  const out: any = Array.isArray(base) ? [...(base as any)] : { ...(base as any) };
+  for (const key of Object.keys(base as any)) {
+    const b = (base as any)[key];
+    const o = override[key];
+    out[key] = o === undefined ? b : deepMerge(b, o);
+  }
+  for (const key of Object.keys(override)) {
+    if (!(key in out)) out[key] = override[key];
+  }
+  return out as T;
+}
+
+const rawTranslations = { fr, en, ar, es, de, zh, bci, dyu };
+
+/** Chaque langue est fusionnée avec le français : aucun texte ni chiffre ne peut manquer. */
+export const translations = Object.fromEntries(
+  (Object.keys(rawTranslations) as Language[]).map((lang) => [
+    lang,
+    lang === "fr" ? fr : deepMerge(fr, (rawTranslations as any)[lang]),
+  ])
+) as Record<Language, typeof fr>;
+
+export const supportedLanguages = Object.keys(rawTranslations) as Language[];
