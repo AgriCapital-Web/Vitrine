@@ -1,4 +1,7 @@
-export type Language = "fr" | "en" | "ar" | "es" | "de" | "zh";
+export type Language = "fr" | "en" | "ar" | "es" | "de" | "zh" | "bci" | "dyu";
+
+/** Fusion profonde : toute clé absente d'une langue retombe sur le français. */
+export type DeepPartial<T> = { [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K] };
 
 export const languageNames: Record<Language, string> = {
   fr: "Français",
@@ -6,7 +9,14 @@ export const languageNames: Record<Language, string> = {
   ar: "العربية",
   es: "Español",
   de: "Deutsch",
-  zh: "中文"
+  zh: "中文",
+  bci: "Baoulé",
+  dyu: "Dioula (Julakan)"
+};
+
+/** Codes ISO 639-3 officiels : bci = Baoulé, dyu = Dioula/Jula. */
+export const languageLocales: Record<Language, string> = {
+  fr: "fr-FR", en: "en-US", ar: "ar", es: "es-ES", de: "de-DE", zh: "zh-CN", bci: "bci", dyu: "dyu",
 };
 
 const fr = {
@@ -398,7 +408,7 @@ const fr = {
   },
 };
 
-const en: typeof fr = {
+const en: DeepPartial<typeof fr> = {
   map: {
     title: "Our Area of Operation",
     subtitle: "Based in Daloa in the Haut-Sassandra region, Côte d'Ivoire",
@@ -762,7 +772,7 @@ const en: typeof fr = {
   },
 };
 
-const ar: typeof fr = {
+const ar: DeepPartial<typeof fr> = {
   map: { title: "منطقة عملنا", subtitle: "مقرنا في دالوا، منطقة هوت ساساندرا، كوت ديفوار", marker: "مقر أغريكابيتال", description: "توفر منطقة هوت ساساندرا ظروفًا مثالية لزراعة نخيل الزيت." },
   nav: { home: "الرئيسية", about: "من نحن", approach: "نهجنا", impact: "القدرة", partnership: "العروض", contact: "اتصل بنا" },
   hero: {
@@ -848,7 +858,7 @@ const ar: typeof fr = {
   admin: { dashboard: "لوحة التحكم", users: "المستخدمون", content: "المحتوى", settings: "الإعدادات", analytics: "التحليلات", messages: "الرسائل", testimonials: "الشهادات", partnerships: "الشراكات", newsletter: "النشرة", media: "الوسائط", pages: "الصفحات", menu: "القائمة", seo: "SEO", backup: "النسخ الاحتياطي", database: "قاعدة البيانات", audit: "سجل التدقيق", permissions: "الصلاحيات", communications: "الاتصالات", logout: "خروج" },
 };
 
-const es: typeof fr = {
+const es: DeepPartial<typeof fr> = {
   map: { title: "Nuestra Zona de Operación", subtitle: "Con sede en Daloa, región de Haut-Sassandra, Costa de Marfil", marker: "Sede de AgriCapital", description: "La región de Haut-Sassandra ofrece condiciones ideales para el cultivo de palma aceitera." },
   nav: { home: "Inicio", about: "Nosotros", approach: "Nuestro Enfoque", impact: "Capacidad", partnership: "Ofertas", contact: "Contacto" },
   hero: { badge: "Invertir en la tierra. Cultivar el futuro.", title: "Cree su plantación de palma aceitera con AgriCapital", description: "Acceda a su propio patrimonio agrícola duradero, seguro y gestionado profesionalmente. Ya sea suscriptor o propietario de tierra, AgriCapital estructura su proyecto de principio a fin.", btnApproach: "Descubrir nuestras ofertas", btnPartner: "Unirse a la lista de espera" },
@@ -873,7 +883,7 @@ const es: typeof fr = {
   admin: { dashboard: "Panel", users: "Usuarios", content: "Contenido", settings: "Configuración", analytics: "Analítica", messages: "Mensajes", testimonials: "Testimonios", partnerships: "Asociaciones", newsletter: "Boletín", media: "Medios", pages: "Páginas", menu: "Menú", seo: "SEO", backup: "Respaldo", database: "Base de datos", audit: "Auditoría", permissions: "Permisos", communications: "Comunicaciones", logout: "Cerrar sesión" },
 };
 
-const de: typeof fr = {
+const de: DeepPartial<typeof fr> = {
   map: { title: "Unser Einsatzgebiet", subtitle: "Mit Sitz in Daloa, Region Haut-Sassandra, Elfenbeinküste", marker: "AgriCapital Hauptsitz", description: "Die Region Haut-Sassandra bietet ideale Bedingungen für den Ölpalmenanbau." },
   nav: { home: "Startseite", about: "Über uns", approach: "Unser Ansatz", impact: "Kapazität", partnership: "Angebote", contact: "Kontakt" },
   hero: { badge: "In Land investieren. Die Zukunft kultivieren.", title: "Erstellen Sie Ihre Ölpalmenplantage mit AgriCapital", description: "Erhalten Sie Zugang zu Ihrem eigenen nachhaltigen, sicheren und professionell verwalteten landwirtschaftlichen Erbe. Ob Zeichner oder Grundbesitzer — AgriCapital strukturiert Ihr Projekt von A bis Z.", btnApproach: "Unsere Angebote entdecken", btnPartner: "Warteliste beitreten" },
@@ -898,7 +908,7 @@ const de: typeof fr = {
   admin: { dashboard: "Dashboard", users: "Benutzer", content: "Inhalt", settings: "Einstellungen", analytics: "Analytik", messages: "Nachrichten", testimonials: "Berichte", partnerships: "Partnerschaften", newsletter: "Newsletter", media: "Medien", pages: "Seiten", menu: "Menü", seo: "SEO", backup: "Backup", database: "Datenbank", audit: "Audit-Log", permissions: "Berechtigungen", communications: "Kommunikation", logout: "Abmelden" },
 };
 
-const zh: typeof fr = {
+const zh: DeepPartial<typeof fr> = {
   map: { title: "我们的业务区域", subtitle: "总部位于科特迪瓦上萨桑德拉地区达洛阿", marker: "AgriCapital总部", description: "上萨桑德拉地区拥有理想的油棕种植条件。" },
   nav: { home: "首页", about: "关于我们", approach: "我们的方法", impact: "运营能力", partnership: "方案", contact: "联系我们" },
   hero: { badge: "投资土地，耕耘未来。", title: "与AgriCapital一起创建您的油棕种植园", description: "获得您自己的可持续、安全且专业管理的农业遗产。无论您是认购者还是土地所有者，AgriCapital为您的项目提供全方位服务。", btnApproach: "了解我们的方案", btnPartner: "加入等候名单" },
@@ -923,4 +933,154 @@ const zh: typeof fr = {
   admin: { dashboard: "仪表板", users: "用户", content: "内容", settings: "设置", analytics: "分析", messages: "消息", testimonials: "评价", partnerships: "合作", newsletter: "通讯", media: "媒体", pages: "页面", menu: "菜单", seo: "SEO", backup: "备份", database: "数据库", audit: "审计", permissions: "权限", communications: "通讯", logout: "退出" },
 };
 
-export const translations = { fr, en, ar, es, de, zh };
+
+/**
+ * Baoulé (bci) — alphabet officiel ivoirien (Orthographe pratique des langues ivoiriennes) :
+ * a b c d e ɛ f g gb h i j k kl kp l m n ny ŋ o ɔ p r s t u v w y z
+ * Les clés absentes retombent automatiquement sur le français (fusion profonde).
+ */
+const bci: DeepPartial<typeof fr> = {
+  map: {
+    title: "Lika nga e di junman lɔ'n",
+    subtitle: "E tranwa Daloa, Haut-Sassandra mɛn'n nun, Kotidivwa",
+    marker: "AgriCapital i awlo dan'n",
+    description: "Haut-Sassandra mɛn'n ti kpa mmɔja waka'n i tralɛ nun.",
+  },
+  nav: {
+    home: "Awlo",
+    about: "E su ndɛ",
+    approach: "E ajalɛ'n",
+    impact: "E kwlalɛ'n",
+    partnership: "Ninnge nga e man'n",
+    contact: "Kan ndɛ kle e",
+  },
+  hero: {
+    badge: "Fa sika gua asiɛ'n su. Nian ainman.",
+    title: "Yi ɔ bɔbɔ ɔ mmɔja waka fie'n AgriCapital i sa nun",
+    description: "Ɲan ɔ bɔbɔ ɔ fie kpa kun mɔ be nian su kpa'n. Sɛ asiɛ o ɔ sa nun-o, sɛ ɔ leman-o, AgriCapital yo junman'n i kwlaa.",
+    btnApproach: "Nian ninnge nga e man'n",
+    btnPartner: "Klɛ ɔ dunman",
+  },
+  ambitions: {
+    title: "Sran wafa nɲɔn, angunndan kunngba",
+    why: "Ngue ti yɛ ɔ kwla fa AgriCapital ɔ?",
+  },
+  news: {
+    title: "Jasin uflɛ",
+    subtitle: "AgriCapital i jasin nga be fin'n",
+    readMore: "Kanngan i kwlaa",
+    noNews: "Jasin fi nunman lɛ",
+    featured: "Jasin cinnjin",
+    category: "Akpasua",
+    publishedOn: "Be yili i",
+    by: "Sran ng'ɔ klɛli'n",
+    share: "Fa man ɔ janvuɛ mun",
+    backToNews: "Sa sin jasin'n su",
+  },
+  partnershipRequest: {
+    title: "Bisa e",
+    subtitle: "Klɛ ɔ ndɛ'n naan e kan e kle wɔ",
+    firstName: "Dunman klikli",
+    lastName: "Awlo dunman",
+    email: "Email",
+    phone: "Telefɔnu",
+    whatsapp: "WhatsApp",
+    company: "Junman dan",
+    country: "Mɛn",
+    city: "Klɔ",
+    address: "Lika",
+    message: "Ndɛ",
+    submit: "Fa kɔ",
+    success: "E sɔli ɔ ndɛ'n nun kpa!",
+    error: "Sa kun juli.",
+  },
+};
+
+/**
+ * Dioula / Julakan (dyu) — alphabet officiel (Mandenkan latin) :
+ * a b c d e ɛ f g h i j k l m n ɲ ŋ o ɔ p r s t u w y z
+ */
+const dyu: DeepPartial<typeof fr> = {
+  map: {
+    title: "An ka baara yɔrɔ",
+    subtitle: "An sigilen bɛ Daloa, Haut-Sassandra mara la, Kɔdiwari",
+    marker: "AgriCapital ka so ba",
+    description: "Haut-Sassandra mara ka ɲi tulu yiri sɛnɛ kama, dugukolo ka nɔgɔ ani sanfɛ ko ka ɲi.",
+  },
+  nav: {
+    home: "So",
+    about: "An ka kow",
+    approach: "An ka baaracogo",
+    impact: "An sebaaya",
+    partnership: "An ka fɛɛrɛw",
+    contact: "Kuma an fɛ",
+  },
+  hero: {
+    badge: "Ka wari don dugukolo la. Ka sini sɛnɛ.",
+    title: "I ka tulu yiri foro dilan AgriCapital fɛ",
+    description: "Sɔrɔ i yɛrɛ ka sɛnɛ nafolo la, a lakanalen don ani baarakɛla ɲumanw b'a kɔlɔsi. Ni dugukolo b'i bolo walima a t'i bolo, AgriCapital bɛ baara bɛɛ kɛ.",
+    btnApproach: "An ka fɛɛrɛw lajɛ",
+    btnPartner: "I tɔgɔ sɛbɛn",
+  },
+  ambitions: {
+    title: "Mɔgɔ suguya fila, laɲini kelen",
+    why: "Mun na i ka kan ka AgriCapital sugandi?",
+  },
+  news: {
+    title: "Kibaruw",
+    subtitle: "AgriCapital ka kibaru kuraw",
+    readMore: "A kalan ka taa ɲɛ",
+    noNews: "Kibaru si tɛ yan",
+    featured: "Kibaru kunba",
+    category: "Suguya",
+    publishedOn: "A bɔra don",
+    by: "Sɛbɛnnikɛla",
+    share: "A tila",
+    backToNews: "Segin kibaruw ma",
+  },
+  partnershipRequest: {
+    title: "Ɲininkali ci",
+    subtitle: "Sɛbɛn fa walasa an ka kunnafoni di i ma",
+    firstName: "Tɔgɔ",
+    lastName: "Jamu",
+    email: "Email",
+    phone: "Telefɔni",
+    whatsapp: "WhatsApp",
+    company: "Sosiyete",
+    country: "Jamana",
+    city: "Dugu",
+    address: "Sigiyɔrɔ",
+    message: "Cikan",
+    submit: "A ci",
+    success: "I ka ɲininkali cira ka ɲɛ!",
+    error: "Fili dɔ kɛra.",
+  },
+};
+
+/** Fusion profonde récursive : la base française comble toute clé manquante. */
+export function deepMerge<T>(base: T, override: any): T {
+  if (override === undefined || override === null) return base;
+  if (typeof base !== "object" || base === null || Array.isArray(base)) return (override ?? base) as T;
+  const out: any = Array.isArray(base) ? [...(base as any)] : { ...(base as any) };
+  for (const key of Object.keys(base as any)) {
+    const b = (base as any)[key];
+    const o = override[key];
+    out[key] = o === undefined ? b : deepMerge(b, o);
+  }
+  for (const key of Object.keys(override)) {
+    if (!(key in out)) out[key] = override[key];
+  }
+  return out as T;
+}
+
+const rawTranslations = { fr, en, ar, es, de, zh, bci, dyu };
+
+/** Chaque langue est fusionnée avec le français : aucun texte ni chiffre ne peut manquer. */
+export const translations = Object.fromEntries(
+  (Object.keys(rawTranslations) as Language[]).map((lang) => [
+    lang,
+    lang === "fr" ? fr : deepMerge(fr, (rawTranslations as any)[lang]),
+  ])
+) as Record<Language, typeof fr>;
+
+export const supportedLanguages = Object.keys(rawTranslations) as Language[];

@@ -75,6 +75,8 @@ serve(async (req) => {
       es: "Spanish",
       de: "German",
       zh: "Chinese (Simplified)",
+      bci: "Baoulé (Ivorian Baule language, official Ivorian practical orthography: a b c d e ɛ f g gb h i j k kp l m n ny ŋ o ɔ p r s t u v w y z)",
+      dyu: "Dioula / Julakan (Manding language, official Latin orthography: a b c d e ɛ f g h i j k l m n ɲ ŋ o ɔ p r s t u w y z)",
     };
 
     const langName = langNames[targetLanguage] || targetLanguage;

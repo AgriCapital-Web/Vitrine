@@ -6,7 +6,7 @@ import { Language, languageNames } from "@/lib/translations";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 const logo = "/logo-agricapital.png";
 
-const languages: Language[] = ["fr", "en", "ar", "es", "de", "zh"];
+const languages: Language[] = ["fr", "en", "ar", "es", "de", "zh", "bci", "dyu"];
 
 interface SubMenuItem {
   label: string;

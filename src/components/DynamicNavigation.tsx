@@ -11,7 +11,7 @@ const CLIENT_PORTAL_URL = "https://client.agricapital.ci";
 const WHATSAPP_URL = "https://wa.me/2250564551717";
 const PHONE_URL = "tel:+2250564551717";
 
-const languages: Language[] = ["fr", "en", "ar", "es", "de", "zh"];
+const languages: Language[] = ["fr", "en", "ar", "es", "de", "zh", "bci", "dyu"];
 
 interface SubMenuItem {
   label: Record<Language, string>;
