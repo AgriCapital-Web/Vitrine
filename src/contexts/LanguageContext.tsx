@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { translations, Language } from "@/lib/translations";
+import { translations, supportedLanguages as allLanguages, Language } from "@/lib/translations";
 
 export type { Language };
 
@@ -11,7 +11,7 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const supportedLanguages: Language[] = ['fr', 'en', 'ar', 'es', 'de', 'zh'];
+const supportedLanguages: Language[] = allLanguages;
 
 const detectLanguageFromURL = (): Language | null => {
   const pathname = window.location.pathname;
