@@ -34,8 +34,8 @@ const SEOJsonLD = () => {
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 6.8770,
-      "longitude": -6.4502
+      "latitude": 6.905935222212314,
+      "longitude": -6.249822932129582
     },
     "areaServed": {
       "@type": "Country",
@@ -76,8 +76,8 @@ const SEOJsonLD = () => {
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 6.8770,
-      "longitude": -6.4502
+      "latitude": 6.905935222212314,
+      "longitude": -6.249822932129582
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
