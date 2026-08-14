@@ -3,9 +3,9 @@ import { Card } from "@/components/ui/card";
 import { MapPin, Navigation, ExternalLink, Map as MapIcon, Satellite } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// Coordonnées AgriCapital — Bureau de proximité de Gonaté (Plus Code WP4X+RRM)
-const AGRICAPITAL_COORDS = { lat: 7.158189, lng: -6.525408 };
-const ADDRESS_LABEL = "AgriCapital — Bureau de Gonaté, Côte d'Ivoire";
+// Coordonnées AgriCapital
+const AGRICAPITAL_COORDS = { lat: 6.905935222212314, lng: -6.249822932129582 };
+const ADDRESS_LABEL = "AgriCapital — Côte d'Ivoire";
 
 const LocationMap = () => {
   const [mapType, setMapType] = useState<"m" | "k">("m"); // m=plan, k=satellite
