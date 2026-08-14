@@ -14,8 +14,8 @@ L.Icon.Default.mergeOptions({
 const IvoryCoastMap = () => {
   const { t } = useLanguage();
 
-  // Coordinates for Daloa
-  const daloaPosition: [number, number] = [6.8770, -6.4503];
+  // Coordinates for AgriCapital location
+  const daloaPosition: [number, number] = [6.905935222212314, -6.249822932129582];
 
   // Approximate boundaries of Haut-Sassandra region
   const hautSassandraPolygon: [number, number][] = [
