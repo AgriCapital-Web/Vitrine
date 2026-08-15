@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, ArrowRight, Newspaper, TrendingUp, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAutoTranslate } from "@/hooks/useAutoTranslate";
 
 const translations = {
   fr: { title: "Actualités", subtitle: "Les dernières nouvelles d'AgriCapital", moreNews: "Plus d'actualités", evolution: "Voir l'évolution", readMore: "Lire la suite", noNews: "Restez connectés pour les prochaines actualités", views: "vues" },
@@ -37,9 +38,19 @@ const NewsSection = () => {
 
   const newsItems = newsFromDb || [];
 
-  const getLocalizedField = (item: any, field: string) => {
+  const rawField = (item: any, field: string) => {
     const langField = `${field}_${language}`;
     return item[langField] || item[`${field}_fr`] || item[field] || "";
+  };
+
+  // Auto-traduction des contenus dynamiques non traduits en base
+  const sourceTexts = newsItems.flatMap((item: any) => [rawField(item, "title"), rawField(item, "excerpt")]);
+  const { translated } = useAutoTranslate(sourceTexts);
+
+  const getLocalizedField = (item: any, field: string) => {
+    const idx = newsItems.findIndex((n: any) => n.id === item.id);
+    const offset = field === "title" ? 0 : 1;
+    return translated[idx * 2 + offset] || rawField(item, field);
   };
 
   const formatDate = (dateStr: string) => {
