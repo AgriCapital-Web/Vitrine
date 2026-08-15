@@ -78,7 +78,10 @@ serve(async (req) => {
     let mediaPreview: any[] = [];
     let campaignId: string | null = null;
 
-    if (campaigns && campaigns.length > 0) {
+    const stripHtml = (h: string) => h.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    const campaignHasBody = (c: any) => typeof c?.html_content === "string" && stripHtml(c.html_content).length > 120;
+
+    if (campaigns && campaigns.length > 0 && campaignHasBody(campaigns[0])) {
       const c = campaigns[0] as any;
       campaignId = c.id;
       subject = c.subject;
@@ -90,16 +93,33 @@ serve(async (req) => {
       // Generate a fresh newsletter using AI
       const gen = await fetch(`${Deno.env.get("SUPABASE_URL")}/functions/v1/generate-newsletter`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", ...serviceAuth.headers },
+        headers: {
+          "Content-Type": "application/json",
+          ...serviceAuth.headers,
+          ...(cronSecret ? { "x-cron-secret": cronSecret } : {}),
+        },
         body: JSON.stringify({
           prompt: `Newsletter automatique AgriCapital (${trigger}) : nos actualités agricoles, projets fonciers et opportunités d'investissement.`,
           targetAudience: "all",
         }),
       });
-      const genData = await gen.json();
+      const genRaw = await gen.text();
+      let genData: any = {};
+      try { genData = JSON.parse(genRaw); } catch { /* noop */ }
+      if (!gen.ok) console.error(`generate-newsletter failed [${gen.status}]: ${genRaw.slice(0, 500)}`);
       subject = genData.subject || "AgriCapital · L'actualité";
-      html = genData.html || "<p>Merci de suivre AgriCapital.</p>";
+      html = typeof genData.html === "string" ? genData.html : "";
       preheader = genData.preheader || "Les nouvelles d'AgriCapital";
+      mediaPreview = Array.isArray(genData.mediaPreview) ? genData.mediaPreview : [];
+    }
+
+    // Garde-fou : ne jamais envoyer un email vide
+    if (stripHtml(html).length < 120) {
+      console.error("newsletter-auto-send annulé : contenu généré vide ou trop court");
+      return new Response(
+        JSON.stringify({ success: false, aborted: true, reason: "empty_content", trigger }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
     }
 
     // Invoke send-newsletter-batch as service role (bypass admin check by injecting a system-admin header)
