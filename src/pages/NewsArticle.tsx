@@ -4,6 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import DOMPurify from "dompurify";
+import { useAutoTranslate } from "@/hooks/useAutoTranslate";
 import DynamicNavigation from "@/components/DynamicNavigation";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
@@ -73,9 +74,26 @@ const NewsArticle = () => {
 
   useEffect(() => { window.scrollTo(0, 0); }, [slug]);
 
-  const getLocalizedField = (item: any, field: string) => {
+  const rawField = (item: any, field: string) => {
     if (!item) return "";
     return item[`${field}_${language}`] || item[`${field}_fr`] || item[field] || "";
+  };
+
+  // Auto-traduction de l'article si la version traduite n'existe pas en base
+  const { translated } = useAutoTranslate([
+    rawField(article, "title"),
+    rawField(article, "excerpt"),
+    rawField(article, "content"),
+  ]);
+  const autoFields: Record<string, string> = {
+    title: translated[0],
+    excerpt: translated[1],
+    content: translated[2],
+  };
+
+  const getLocalizedField = (item: any, field: string) => {
+    if (item && item === article && autoFields[field]) return autoFields[field];
+    return rawField(item, field);
   };
 
   const formatDate = (dateStr: string) => {
