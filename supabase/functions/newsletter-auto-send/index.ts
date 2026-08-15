@@ -78,7 +78,10 @@ serve(async (req) => {
     let mediaPreview: any[] = [];
     let campaignId: string | null = null;
 
-    if (campaigns && campaigns.length > 0) {
+    const stripHtml = (h: string) => h.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    const campaignHasBody = (c: any) => typeof c?.html_content === "string" && stripHtml(c.html_content).length > 120;
+
+    if (campaigns && campaigns.length > 0 && campaignHasBody(campaigns[0])) {
       const c = campaigns[0] as any;
       campaignId = c.id;
       subject = c.subject;
@@ -90,16 +93,33 @@ serve(async (req) => {
       // Generate a fresh newsletter using AI
       const gen = await fetch(`${Deno.env.get("SUPABASE_URL")}/functions/v1/generate-newsletter`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", ...serviceAuth.headers },
+        headers: {
+          "Content-Type": "application/json",
+          ...serviceAuth.headers,
+          ...(cronSecret ? { "x-cron-secret": cronSecret } : {}),
+        },
         body: JSON.stringify({
           prompt: `Newsletter automatique AgriCapital (${trigger}) : nos actualités agricoles, projets fonciers et opportunités d'investissement.`,
           targetAudience: "all",
         }),
       });
-      const genData = await gen.json();
+      const genRaw = await gen.text();
+      let genData: any = {};
+      try { genData = JSON.parse(genRaw); } catch { /* noop */ }
+      if (!gen.ok) console.error(`generate-newsletter failed [${gen.status}]: ${genRaw.slice(0, 500)}`);
       subject = genData.subject || "AgriCapital · L'actualité";
-      html = genData.html || "<p>Merci de suivre AgriCapital.</p>";
+      html = typeof genData.html === "string" ? genData.html : "";
       preheader = genData.preheader || "Les nouvelles d'AgriCapital";
+      mediaPreview = Array.isArray(genData.mediaPreview) ? genData.mediaPreview : [];
+    }
+
+    // Garde-fou : ne jamais envoyer un email vide
+    if (stripHtml(html).length < 120) {
+      console.error("newsletter-auto-send annulé : contenu généré vide ou trop court");
+      return new Response(
+        JSON.stringify({ success: false, aborted: true, reason: "empty_content", trigger }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
     }
 
     // Invoke send-newsletter-batch as service role (bypass admin check by injecting a system-admin header)
@@ -115,7 +135,18 @@ serve(async (req) => {
     if (!BREVO) throw new Error("Brevo not configured");
 
     const logoUrl = "https://www.agricapital.ci/favicon.png";
-    const wrap = (inner: string, unsubUrl: string) => `<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;background:#f4f4f4;font-family:'Segoe UI',Arial,sans-serif;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4"><tr><td align="center" style="padding:20px 0"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)"><tr><td style="background:#f5efe1;padding:30px;text-align:center;border-bottom:3px solid #166534"><img src="${logoUrl}" alt="AgriCapital" width="150" style="display:block;margin:0 auto 8px"><p style="color:#ed7500;font-size:13px;margin:6px 0 0;font-weight:700">Investir la terre. Cultiver l'avenir.</p></td></tr><tr><td style="padding:30px;font-size:15px;line-height:1.6;color:#333">${inner}</td></tr><tr><td style="background:#f9fafb;padding:20px 30px;text-align:center;border-top:1px solid #e5e7eb"><p style="color:#9ca3af;font-size:11px;margin:0"><a href="https://www.agricapital.ci" style="color:#166534;text-decoration:none">www.agricapital.ci</a></p><p style="color:#9ca3af;font-size:11px;margin:10px 0 0"><a href="${unsubUrl}" style="color:#9ca3af;text-decoration:underline">Se désabonner</a></p></td></tr></table></td></tr></table></body></html>`;
+    const wrapTemplate = (inner: string, unsubUrl: string) => `<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;background:#f4f4f4;font-family:'Segoe UI',Arial,sans-serif;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4"><tr><td align="center" style="padding:20px 0"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)"><tr><td style="background:#f5efe1;padding:30px;text-align:center;border-bottom:3px solid #166534"><img src="${logoUrl}" alt="AgriCapital" width="150" style="display:block;margin:0 auto 8px"><p style="color:#ed7500;font-size:13px;margin:6px 0 0;font-weight:700">Investir la terre. Cultiver l'avenir.</p></td></tr><tr><td style="padding:30px;font-size:15px;line-height:1.6;color:#333">${inner}</td></tr><tr><td style="background:#f9fafb;padding:20px 30px;text-align:center;border-top:1px solid #e5e7eb"><p style="color:#9ca3af;font-size:11px;margin:0"><a href="https://www.agricapital.ci" style="color:#166534;text-decoration:none">www.agricapital.ci</a></p><p style="color:#9ca3af;font-size:11px;margin:10px 0 0"><a href="${unsubUrl}" style="color:#9ca3af;text-decoration:underline">Se désabonner</a></p></td></tr></table></td></tr></table></body></html>`;
+
+    // Le générateur IA renvoie déjà un document HTML complet : on ne le ré-encapsule pas,
+    // on y injecte seulement le lien de désabonnement.
+    const isFullDocument = /<html[\s>]/i.test(html);
+    const wrap = (inner: string, unsubUrl: string) => {
+      if (!isFullDocument) return wrapTemplate(inner, unsubUrl);
+      const footer = `<div style="text-align:center;padding:16px;font-family:Arial,sans-serif;"><a href="${unsubUrl}" style="color:#9ca3af;font-size:11px;text-decoration:underline;">Se désabonner</a></div>`;
+      return inner.includes("{{unsubscribe_url}}")
+        ? inner.replace(/\{\{unsubscribe_url\}\}/g, unsubUrl)
+        : inner.replace(/<\/body>/i, `${footer}</body>`);
+    };
 
     let sent = 0, failed = 0;
     const failedList: any[] = [];

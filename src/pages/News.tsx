@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Eye, ArrowRight, Newspaper, Play } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAutoTranslate } from "@/hooks/useAutoTranslate";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const translations = {
@@ -41,8 +42,23 @@ const News = () => {
     }
   });
 
-  const getLocalizedField = (item: any, field: string) => {
+  const items = newsFromDb || [];
+
+  const rawField = (item: any, field: string) => {
     return item[`${field}_${language}`] || item[`${field}_fr`] || item[field] || "";
+  };
+
+  // Auto-traduction des articles non traduits en base
+  const sourceTexts = items.flatMap((item: any) => [rawField(item, "title"), rawField(item, "excerpt")]);
+  const { translated } = useAutoTranslate(sourceTexts);
+
+  const getLocalizedField = (item: any, field: string) => {
+    if (field === "title" || field === "excerpt") {
+      const idx = items.findIndex((n: any) => n.id === item.id);
+      const offset = field === "title" ? 0 : 1;
+      if (idx >= 0 && translated[idx * 2 + offset]) return translated[idx * 2 + offset];
+    }
+    return rawField(item, field);
   };
 
   const formatDate = (dateStr: string) => {

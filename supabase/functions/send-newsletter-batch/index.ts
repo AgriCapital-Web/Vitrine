@@ -279,6 +279,16 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const sanitizedHtml = sanitizeHtml(html);
+
+    // Garde-fou : refuser tout envoi dont le contenu réel est vide
+    const textLength = sanitizedHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().length;
+    if (textLength < 40) {
+      return new Response(JSON.stringify({ error: "Contenu vide : la campagne n'a pas été envoyée." }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const recipients = await getRecipients(supabase, request);
 
     if (recipients.length === 0) {

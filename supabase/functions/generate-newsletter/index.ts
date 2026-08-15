@@ -24,6 +24,14 @@ async function verifyAdmin(req: Request): Promise<{ userId: string } | Response>
     return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
   }
 
+  // Appels internes (cron / edge-to-edge) : service role ou secret cron
+  const bearer = authHeader.replace("Bearer ", "").trim();
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  const cronSecret = Deno.env.get("CRON_SECRET");
+  if ((serviceKey && bearer === serviceKey) || (cronSecret && req.headers.get("x-cron-secret") === cronSecret)) {
+    return { userId: "system" };
+  }
+
   const supabase = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, {
     global: { headers: { Authorization: authHeader } },
   });
