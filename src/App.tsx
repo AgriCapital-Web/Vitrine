@@ -8,6 +8,7 @@ import { usePageTracking } from "@/hooks/usePageTracking";
 import { lazy, Suspense, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import ScrollToTop from "@/components/ScrollToTop";
+import AutoTranslateDOM from "@/components/AutoTranslateDOM";
 import { isDataroomHost } from "@/lib/canonical-host";
 
 
@@ -200,6 +201,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
+          <AutoTranslateDOM />
           <AppContent />
         </BrowserRouter>
       </TooltipProvider>

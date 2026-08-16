@@ -17,6 +17,56 @@ const LANG_NAMES: Record<string, string> = {
 };
 
 const WINDOW_MS = 60_000;
+
+/** Lexique métier imposé pour garantir la cohérence des langues ivoiriennes. */
+const GLOSSARY: Record<string, string> = {
+  bci: [
+    "terre = asiɛ",
+    "plantation = fie",
+    "palmier à huile = mmɛ waka (huile de palme = mmɛ ngo)",
+    "propriétaire = fie fuɛ",
+    "revenus = sika ng'ɔ ba",
+    "contrat = ndɛ nga be klɛli",
+    "paiement = sika tualɛ",
+    "investir = fa sika sie",
+    "agriculture = fie dilɛ",
+    "récolte = fie nun ninnge kpɛlɛ",
+    "partenariat = afiɛn kolɛ",
+    "client = atɔnvɔfuɛ",
+    "équipe = aniaan mun",
+    "avenir = ainman",
+    "projet = junman kunngba",
+  ].join("; "),
+  dyu: [
+    "terre = dugukolo",
+    "plantation = foro",
+    "palmier à huile = tulusun (huile de palme = tulu)",
+    "propriétaire = tigi",
+    "revenus = nafolo / wari min bɛ sɔrɔ",
+    "contrat = bɛnkan sɛbɛn",
+    "paiement = sara",
+    "investir = wari don baara la",
+    "agriculture = sɛnɛ",
+    "récolte = suman tigɛli",
+    "partenariat = jɛɲɔgɔnya",
+    "client = san-baga",
+    "équipe = jɛkulu",
+    "avenir = sini",
+    "projet = baara laɲini",
+  ].join("; "),
+};
+
+/** Caractères autorisés par orthographe officielle (contrôle post-traduction). */
+const ALLOWED: Record<string, RegExp> = {
+  bci: /^[\p{L}\p{N}\p{M}\s'’‘"“”.,;:!?()\[\]{}%°+\-–—/\\@#&*_=<>|~`$€]+$/u,
+  dyu: /^[\p{L}\p{N}\p{M}\s'’‘"“”.,;:!?()\[\]{}%°+\-–—/\\@#&*_=<>|~`$€]+$/u,
+};
+const FORBIDDEN: Record<string, RegExp> = {
+  // Caractères jamais utilisés dans les orthographes officielles ivoiriennes
+  bci: /[qxàâäéèêëîïôöùûüçQX]/,
+  dyu: /[qvxàâäéèêëîïôöùûüçQVX]/,
+};
+
 const MAX_PER_WINDOW = 30;
 const buckets = new Map<string, { count: number; resetAt: number }>();
 
@@ -72,11 +122,13 @@ serve(async (req) => {
           {
             role: "system",
             content:
-              "You are AgriCapital's professional localization engine. Translate each item faithfully, keeping the exact same meaning, tone, HTML tags, placeholders ({{x}}, %s) and ALL numbers, dates, units and currencies unchanged. Never translate brand names (AgriCapital, PalmInvest, TerraPalm, KAPITA, WhatsApp). Reply ONLY with a JSON object of the form {\"translations\": [\"...\"]} in the same order and with the same length as the input.",
+              "You are AgriCapital's professional localization engine. Translate each item faithfully, keeping the exact same meaning, tone, HTML tags, placeholders ({{x}}, %s) and ALL numbers, dates, units, percentages and currencies unchanged (36 mois, 143 plants/ha, 25 ans, 75 %). Never translate brand names (AgriCapital, PalmInvest, TerraPalm, KAPITA, WhatsApp, Google, LinkedIn), email addresses or URLs/domains. For Baoulé (bci) and Dioula (dyu), use ONLY the official Ivorian Latin orthography and the imposed business glossary; never use French letters absent from those alphabets (q, x, v for dyu, accented vowels à é è ê î ô û ä ë ï ö ü ç). Reply ONLY with a JSON object of the form {\"translations\": [\"...\"]} in the same order and with the same length as the input.",
           },
           {
             role: "user",
-            content: `Source language: ${LANG_NAMES[sourceLanguage] || sourceLanguage}\nTarget language: ${LANG_NAMES[targetLanguage]}\n\nITEMS:\n${JSON.stringify(items)}`,
+            content: `Source language: ${LANG_NAMES[sourceLanguage] || sourceLanguage}\nTarget language: ${LANG_NAMES[targetLanguage]}${
+              GLOSSARY[targetLanguage] ? `\nMANDATORY GLOSSARY (use exactly these terms): ${GLOSSARY[targetLanguage]}` : ""
+            }\n\nITEMS:\n${JSON.stringify(items)}`,
           },
         ],
       }),
@@ -96,7 +148,21 @@ serve(async (req) => {
     const parsed = match ? JSON.parse(match[0]) : null;
     const translations = Array.isArray(parsed?.translations) ? parsed.translations : items;
 
-    return new Response(JSON.stringify({ translations }), {
+    // Passe de vérification orthographique : repli sur le français si caractères interdits
+    const checked = translations.map((tr: unknown, i: number) => {
+      const value = typeof tr === "string" ? tr : "";
+      if (!value.trim()) return items[i];
+      const bad = FORBIDDEN[targetLanguage];
+      const allowed = ALLOWED[targetLanguage];
+      if (bad && bad.test(value)) {
+        console.warn(`orthographe ${targetLanguage} invalide, repli français: ${value.slice(0, 80)}`);
+        return items[i];
+      }
+      if (allowed && !allowed.test(value)) return items[i];
+      return value;
+    });
+
+    return new Response(JSON.stringify({ translations: checked }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {

@@ -41,7 +41,7 @@ const Evolution = () => {
       available: "ha disponible pour déploiement immédiat",
       waitlist: "souscripteurs accompagnés",
       ctaTitle: "Créez votre patrimoine agricole",
-      ctaSubtitle: "Faites-vous contacter et soyez parmi les premiers souscripteurs d'AgriCapital.",
+      ctaSubtitle: "Me faire contacter et être parmi les premiers souscripteurs d'AgriCapital.",
       contactUs: "Nous contacter",
       daloaTitle: "Pépinière de Daloa — 120 hectares",
       daloaDesc: "Site pleinement opérationnel : système d'irrigation autonome, plants certifiés Tenera, équipe technique mobilisée.",
