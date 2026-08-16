@@ -3,21 +3,21 @@ import React from "react";
 /** Portail public de prise de contact AgriCapital. */
 export const CONTACT_PORTAL_URL = "https://app.agricapital.ci/leads/public";
 
-/** Libellé multilingue du bouton « Faites-vous contacter ». */
+/** Libellé multilingue du bouton « Me faire contacter ». */
 export const contactCtaLabel = (language?: string) => {
   switch (language) {
     case "en":
-      return "Get contacted";
+      return "Contact me";
     case "ar":
-      return "اطلب أن نتصل بك";
+      return "اتصلوا بي";
     case "es":
-      return "Solicite ser contactado";
+      return "Contáctenme";
     case "de":
-      return "Kontaktiert werden";
+      return "Kontaktiert mich";
     case "zh":
       return "请联系我";
     default:
-      return "Faites-vous contacter";
+      return "Me faire contacter";
   }
 };
 
