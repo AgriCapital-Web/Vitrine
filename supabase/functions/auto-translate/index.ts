@@ -17,6 +17,56 @@ const LANG_NAMES: Record<string, string> = {
 };
 
 const WINDOW_MS = 60_000;
+
+/** Lexique métier imposé pour garantir la cohérence des langues ivoiriennes. */
+const GLOSSARY: Record<string, string> = {
+  bci: [
+    "terre = asiɛ",
+    "plantation = fie",
+    "palmier à huile = mmɛ waka (huile de palme = mmɛ ngo)",
+    "propriétaire = fie fuɛ",
+    "revenus = sika ng'ɔ ba",
+    "contrat = ndɛ nga be klɛli",
+    "paiement = sika tualɛ",
+    "investir = fa sika sie",
+    "agriculture = fie dilɛ",
+    "récolte = fie nun ninnge kpɛlɛ",
+    "partenariat = afiɛn kolɛ",
+    "client = atɔnvɔfuɛ",
+    "équipe = aniaan mun",
+    "avenir = ainman",
+    "projet = junman kunngba",
+  ].join("; "),
+  dyu: [
+    "terre = dugukolo",
+    "plantation = foro",
+    "palmier à huile = tulusun (huile de palme = tulu)",
+    "propriétaire = tigi",
+    "revenus = nafolo / wari min bɛ sɔrɔ",
+    "contrat = bɛnkan sɛbɛn",
+    "paiement = sara",
+    "investir = wari don baara la",
+    "agriculture = sɛnɛ",
+    "récolte = suman tigɛli",
+    "partenariat = jɛɲɔgɔnya",
+    "client = san-baga",
+    "équipe = jɛkulu",
+    "avenir = sini",
+    "projet = baara laɲini",
+  ].join("; "),
+};
+
+/** Caractères autorisés par orthographe officielle (contrôle post-traduction). */
+const ALLOWED: Record<string, RegExp> = {
+  bci: /^[\p{L}\p{N}\p{M}\s'’‘"“”.,;:!?()\[\]{}%°+\-–—/\\@#&*_=<>|~`$€]+$/u,
+  dyu: /^[\p{L}\p{N}\p{M}\s'’‘"“”.,;:!?()\[\]{}%°+\-–—/\\@#&*_=<>|~`$€]+$/u,
+};
+const FORBIDDEN: Record<string, RegExp> = {
+  // Caractères jamais utilisés dans les orthographes officielles ivoiriennes
+  bci: /[qxàâäéèêëîïôöùûüçQX]/,
+  dyu: /[qvxàâäéèêëîïôöùûüçQVX]/,
+};
+
 const MAX_PER_WINDOW = 30;
 const buckets = new Map<string, { count: number; resetAt: number }>();
 
