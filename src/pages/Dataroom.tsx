@@ -93,8 +93,10 @@ export default function Dataroom() {
         body: { email: loginEmail, code: loginCode },
       });
       if (error) throw error;
-      if (data?.signatory) {
+      if (data?.error) throw new Error(data.error);
+      if (data?.signatory && data?.session_token) {
         localStorage.setItem("dataroom_signatory", JSON.stringify(data.signatory));
+        localStorage.setItem("dataroom_session_token", data.session_token);
         toast({ title: "Bienvenue", description: `Bonjour ${data.signatory.full_name}` });
         navigate("/dataroom/vault");
       }

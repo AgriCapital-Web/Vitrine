@@ -35,13 +35,14 @@ export default function DataroomVault() {
 
   useEffect(() => {
     const raw = localStorage.getItem("dataroom_signatory");
-    if (!raw) { navigate("/dataroom", { replace: true }); return; }
+    const token = localStorage.getItem("dataroom_session_token");
+    if (!raw || !token) { navigate("/dataroom", { replace: true }); return; }
     const s: Signatory = JSON.parse(raw);
     setSignatory(s);
     (async () => {
       setLoading(true);
       const { data, error } = await supabase.functions.invoke("dataroom-list", {
-        body: { signatory_id: s.id, email: s.email },
+        body: { session_token: token },
       });
       if (error || (data as any)?.error) {
         setError((data as any)?.error ?? "Impossible de charger les publications.");
@@ -59,6 +60,7 @@ export default function DataroomVault() {
 
   const logout = () => {
     localStorage.removeItem("dataroom_signatory");
+    localStorage.removeItem("dataroom_session_token");
     navigate("/dataroom");
   };
 
@@ -66,7 +68,7 @@ export default function DataroomVault() {
     setActive(p);
     if (signatory) {
       supabase.functions.invoke("dataroom-list", {
-        body: { signatory_id: signatory.id, action: "view", publication_id: p.id },
+        body: { session_token: localStorage.getItem("dataroom_session_token"), action: "view", publication_id: p.id },
       });
     }
   };
