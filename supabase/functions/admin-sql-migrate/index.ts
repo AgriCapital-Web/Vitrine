@@ -39,8 +39,8 @@ Deno.serve(async (req) => {
   const client = new Client(Deno.env.get("SUPABASE_DB_URL")!);
   try {
     await client.connect();
-    await client.queryArray(sql);
-    return new Response(JSON.stringify({ ok: true }), {
+    const res = await client.queryObject(sql);
+    return new Response(JSON.stringify({ ok: true, rows: res.rows }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
