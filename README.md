@@ -1,73 +1,26 @@
-# Welcome to your Lovable project
+# Pressing la joie 
 
-## Project info
+creer une aplication de gestion pour mon presing ... enregistrement des entré et sorti ... retrait ... enregistrer es paiement ... faire des comande en ligne... un petit site vitrine ... puis à la fois mini crm ... j'ai des gerant, pouis moi meme je veut etre super admin et suivre à distance si possible ... c'est les gerant qui gere et je dois pouvoir gerer leur acces ... tu compren ... fais ... pas de base de donnée cloude ... je vais faire base de donnée mysql sur safry cloud, si tu pense que tu poura conneter sans dificulter ... ou si tu veut, en fait ilfaut tous faire ... tu creer la base de donnée integrer ... j'ai 50 GB d'espace sur mon hebergement donc il faut faire de sorte que tous soit dans le depot et je build et hebege et tous se fait labas directement ...
 
-**URL**: https://lovable.dev/projects/6cb1249b-ba7d-491a-ae75-4dc1115f1e1e
+This project was built with [Lovable](https://lovable.dev).
 
-## How can I edit this code?
+**Live app**: https://lajoiepressing.lovable.app
 
-There are several ways of editing your application.
+## Build with Lovable
 
-**Use Lovable**
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/c0f95c17-6148-45f7-a772-e8f307fbd553).
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/6cb1249b-ba7d-491a-ae75-4dc1115f1e1e) and start prompting.
+- **Ship faster**: describe what you want to build and Lovable handles the code.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
-Changes made via Lovable will be committed automatically to this repo.
+## Development
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
+git clone <this-repository-url>
+cd <repository-name>
 npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/6cb1249b-ba7d-491a-ae75-4dc1115f1e1e) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
