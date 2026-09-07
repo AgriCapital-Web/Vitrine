@@ -10,8 +10,12 @@ const corsHeaders = {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
-  const expected = Deno.env.get("MIGRATE_SECRET");
-  if (!expected || req.headers.get("x-migrate-secret") !== expected) {
+  const accepted = [
+    Deno.env.get("MIGRATE_SECRET_2026"),
+    Deno.env.get("MIGRATE_SECRET"),
+  ].filter((v): v is string => typeof v === "string" && v.length > 0);
+  const provided = req.headers.get("x-migrate-secret") ?? "";
+  if (accepted.length === 0 || !accepted.includes(provided)) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
