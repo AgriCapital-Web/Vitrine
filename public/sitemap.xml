@@ -1,100 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://agricapital.ci</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://agricapital.ci"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://agricapital.ci?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://agricapital.ci?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://agricapital.ci?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://agricapital.ci?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://agricapital.ci?lang=zh"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://agricapital.ci"/>
+    <loc>https://www.agricapital.ci</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CI" href="https://www.agricapital.ci"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.agricapital.ci?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.agricapital.ci?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.agricapital.ci?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.agricapital.ci?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.agricapital.ci?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.agricapital.ci"/>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://agricapital.ci/solutions</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://agricapital.ci/solutions?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://agricapital.ci/solutions?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://agricapital.ci/solutions?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://agricapital.ci/solutions?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://agricapital.ci/solutions?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://agricapital.ci/solutions?lang=zh"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://agricapital.ci/solutions"/>
+    <loc>https://www.agricapital.ci/solutions</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CI" href="https://www.agricapital.ci/solutions"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.agricapital.ci/solutions?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.agricapital.ci/solutions?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.agricapital.ci/solutions?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.agricapital.ci/solutions?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.agricapital.ci/solutions?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.agricapital.ci/solutions"/>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://agricapital.ci/evolution</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://agricapital.ci/evolution?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://agricapital.ci/evolution?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://agricapital.ci/evolution?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://agricapital.ci/evolution?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://agricapital.ci/evolution?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://agricapital.ci/evolution?lang=zh"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://agricapital.ci/evolution"/>
+    <loc>https://www.agricapital.ci/evolution</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CI" href="https://www.agricapital.ci/evolution"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.agricapital.ci/evolution?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.agricapital.ci/evolution?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.agricapital.ci/evolution?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.agricapital.ci/evolution?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.agricapital.ci/evolution?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.agricapital.ci/evolution"/>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://agricapital.ci/actualites</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://agricapital.ci/actualites?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://agricapital.ci/actualites?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://agricapital.ci/actualites?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://agricapital.ci/actualites?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://agricapital.ci/actualites?lang=de"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://agricapital.ci/actualites?lang=zh"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://agricapital.ci/actualites"/>
+    <loc>https://www.agricapital.ci/actualites</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CI" href="https://www.agricapital.ci/actualites"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.agricapital.ci/actualites?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.agricapital.ci/actualites?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.agricapital.ci/actualites?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.agricapital.ci/actualites?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.agricapital.ci/actualites?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.agricapital.ci/actualites"/>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://agricapital.ci/temoignages</loc>
+    <loc>https://www.agricapital.ci/temoignages</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://agricapital.ci/partenariats</loc>
+    <loc>https://www.agricapital.ci/partenariats</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://agricapital.ci/partnership-request</loc>
+    <loc>https://www.agricapital.ci/partnership-request</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://agricapital.ci/faq</loc>
+    <loc>https://www.agricapital.ci/faq</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://agricapital.ci/liste-attente</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://agricapital.ci/dataroom</loc>
+    <loc>https://www.agricapital.ci/dataroom</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://agricapital.ci/actualites/inauguration-bureau-proximite-gonate-dalora</loc>
+    <loc>https://www.agricapital.ci/actualites/leve-topographique-prospection-terrain</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CI" href="https://www.agricapital.ci/actualites/leve-topographique-prospection-terrain"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.agricapital.ci/actualites/leve-topographique-prospection-terrain?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.agricapital.ci/actualites/leve-topographique-prospection-terrain?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.agricapital.ci/actualites/leve-topographique-prospection-terrain?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.agricapital.ci/actualites/leve-topographique-prospection-terrain?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.agricapital.ci/actualites/leve-topographique-prospection-terrain?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.agricapital.ci/actualites/leve-topographique-prospection-terrain"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://agricapital.ci/actualites/leve-topographique-prospection-terrain</loc>
+    <loc>https://www.agricapital.ci/actualites/premiere-formation-conseillers-commerciaux</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CI" href="https://www.agricapital.ci/actualites/premiere-formation-conseillers-commerciaux"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.agricapital.ci/actualites/premiere-formation-conseillers-commerciaux?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.agricapital.ci/actualites/premiere-formation-conseillers-commerciaux?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.agricapital.ci/actualites/premiere-formation-conseillers-commerciaux?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.agricapital.ci/actualites/premiere-formation-conseillers-commerciaux?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.agricapital.ci/actualites/premiere-formation-conseillers-commerciaux?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.agricapital.ci/actualites/premiere-formation-conseillers-commerciaux"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://agricapital.ci/actualites/pepiniere-plants-palmier-daloa</loc>
+    <loc>https://www.agricapital.ci/actualites/pepiniere-plants-palmier-daloa</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CI" href="https://www.agricapital.ci/actualites/pepiniere-plants-palmier-daloa"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.agricapital.ci/actualites/pepiniere-plants-palmier-daloa?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.agricapital.ci/actualites/pepiniere-plants-palmier-daloa?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.agricapital.ci/actualites/pepiniere-plants-palmier-daloa?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.agricapital.ci/actualites/pepiniere-plants-palmier-daloa?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.agricapital.ci/actualites/pepiniere-plants-palmier-daloa?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.agricapital.ci/actualites/pepiniere-plants-palmier-daloa"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://agricapital.ci/actualites/premiere-formation-conseillers-commerciaux</loc>
+    <loc>https://www.agricapital.ci/actualites/agricapital-ouvre-bureau-proximite-gonate</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CI" href="https://www.agricapital.ci/actualites/agricapital-ouvre-bureau-proximite-gonate"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.agricapital.ci/actualites/agricapital-ouvre-bureau-proximite-gonate?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.agricapital.ci/actualites/agricapital-ouvre-bureau-proximite-gonate?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.agricapital.ci/actualites/agricapital-ouvre-bureau-proximite-gonate?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.agricapital.ci/actualites/agricapital-ouvre-bureau-proximite-gonate?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.agricapital.ci/actualites/agricapital-ouvre-bureau-proximite-gonate?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.agricapital.ci/actualites/agricapital-ouvre-bureau-proximite-gonate"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
