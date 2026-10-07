@@ -233,6 +233,44 @@ export type Database = {
         }
         Relationships: []
       }
+      client_messages: {
+        Row: {
+          created_at: string
+          from_admin: boolean
+          id: string
+          message: string
+          order_id: string | null
+          subject: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          from_admin?: boolean
+          id?: string
+          message: string
+          order_id?: string | null
+          subject: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          from_admin?: boolean
+          id?: string
+          message?: string
+          order_id?: string | null
+          subject?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_messages_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contact_messages: {
         Row: {
           admin_reply: string | null
@@ -1078,28 +1116,41 @@ export type Database = {
           author: string
           category: string
           content_ar: string | null
+          content_bci: string | null
           content_de: string | null
+          content_dyu: string | null
           content_en: string | null
           content_es: string | null
           content_fr: string
           content_zh: string | null
           created_at: string
+          editorial_angle: string | null
+          editorial_format: string | null
           excerpt_ar: string | null
+          excerpt_bci: string | null
           excerpt_de: string | null
+          excerpt_dyu: string | null
           excerpt_en: string | null
           excerpt_es: string | null
           excerpt_fr: string | null
           excerpt_zh: string | null
           featured_image: string | null
+          focus_keyword: string | null
+          hashtags: Json
           id: string
           images: Json
           is_featured: boolean
           is_published: boolean
+          meta_description: string | null
+          meta_title: string | null
           published_at: string | null
           shares_count: number
           slug: string
+          source_urls: Json
           title_ar: string | null
+          title_bci: string | null
           title_de: string | null
+          title_dyu: string | null
           title_en: string | null
           title_es: string | null
           title_fr: string
@@ -1112,28 +1163,41 @@ export type Database = {
           author?: string
           category?: string
           content_ar?: string | null
+          content_bci?: string | null
           content_de?: string | null
+          content_dyu?: string | null
           content_en?: string | null
           content_es?: string | null
           content_fr: string
           content_zh?: string | null
           created_at?: string
+          editorial_angle?: string | null
+          editorial_format?: string | null
           excerpt_ar?: string | null
+          excerpt_bci?: string | null
           excerpt_de?: string | null
+          excerpt_dyu?: string | null
           excerpt_en?: string | null
           excerpt_es?: string | null
           excerpt_fr?: string | null
           excerpt_zh?: string | null
           featured_image?: string | null
+          focus_keyword?: string | null
+          hashtags?: Json
           id?: string
           images?: Json
           is_featured?: boolean
           is_published?: boolean
+          meta_description?: string | null
+          meta_title?: string | null
           published_at?: string | null
           shares_count?: number
           slug: string
+          source_urls?: Json
           title_ar?: string | null
+          title_bci?: string | null
           title_de?: string | null
+          title_dyu?: string | null
           title_en?: string | null
           title_es?: string | null
           title_fr: string
@@ -1146,28 +1210,41 @@ export type Database = {
           author?: string
           category?: string
           content_ar?: string | null
+          content_bci?: string | null
           content_de?: string | null
+          content_dyu?: string | null
           content_en?: string | null
           content_es?: string | null
           content_fr?: string
           content_zh?: string | null
           created_at?: string
+          editorial_angle?: string | null
+          editorial_format?: string | null
           excerpt_ar?: string | null
+          excerpt_bci?: string | null
           excerpt_de?: string | null
+          excerpt_dyu?: string | null
           excerpt_en?: string | null
           excerpt_es?: string | null
           excerpt_fr?: string | null
           excerpt_zh?: string | null
           featured_image?: string | null
+          focus_keyword?: string | null
+          hashtags?: Json
           id?: string
           images?: Json
           is_featured?: boolean
           is_published?: boolean
+          meta_description?: string | null
+          meta_title?: string | null
           published_at?: string | null
           shares_count?: number
           slug?: string
+          source_urls?: Json
           title_ar?: string | null
+          title_bci?: string | null
           title_de?: string | null
+          title_dyu?: string | null
           title_en?: string | null
           title_es?: string | null
           title_fr?: string
@@ -1177,6 +1254,74 @@ export type Database = {
           views_count?: number
         }
         Relationships: []
+      }
+      news_relations: {
+        Row: {
+          created_at: string
+          news_id: string
+          related_news_id: string
+          relation_reason: string | null
+          relevance: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          news_id: string
+          related_news_id: string
+          relation_reason?: string | null
+          relevance?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          news_id?: string
+          related_news_id?: string
+          relation_reason?: string | null
+          relevance?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "news_relations_news_id_fkey"
+            columns: ["news_id"]
+            isOneToOne: false
+            referencedRelation: "news"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "news_relations_related_news_id_fkey"
+            columns: ["related_news_id"]
+            isOneToOne: false
+            referencedRelation: "news"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      news_slug_redirects: {
+        Row: {
+          created_at: string
+          news_id: string
+          old_slug: string
+        }
+        Insert: {
+          created_at?: string
+          news_id: string
+          old_slug: string
+        }
+        Update: {
+          created_at?: string
+          news_id?: string
+          old_slug?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "news_slug_redirects_news_id_fkey"
+            columns: ["news_id"]
+            isOneToOne: false
+            referencedRelation: "news"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       news_submissions: {
         Row: {
@@ -1376,30 +1521,36 @@ export type Database = {
         Row: {
           city: string | null
           country: string | null
+          country_code: string | null
           created_at: string
           id: string
           page_path: string
           referrer: string | null
+          region: string | null
           user_agent: string | null
           visitor_id: string
         }
         Insert: {
           city?: string | null
           country?: string | null
+          country_code?: string | null
           created_at?: string
           id?: string
           page_path: string
           referrer?: string | null
+          region?: string | null
           user_agent?: string | null
           visitor_id: string
         }
         Update: {
           city?: string | null
           country?: string | null
+          country_code?: string | null
           created_at?: string
           id?: string
           page_path?: string
           referrer?: string | null
+          region?: string | null
           user_agent?: string | null
           visitor_id?: string
         }
@@ -1528,6 +1679,78 @@ export type Database = {
         }
         Relationships: []
       }
+      portfolio_projects: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          fallback_image_url: string | null
+          id: string
+          image_url: string | null
+          is_featured: boolean
+          is_published: boolean
+          last_live_preview_at: string | null
+          last_live_preview_url: string | null
+          live_preview_checked_at: string | null
+          live_preview_enabled: boolean
+          live_preview_error: string | null
+          live_preview_status: string
+          official_domain: string | null
+          slug: string
+          sort_order: number
+          technologies: string[]
+          title: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          fallback_image_url?: string | null
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean
+          is_published?: boolean
+          last_live_preview_at?: string | null
+          last_live_preview_url?: string | null
+          live_preview_checked_at?: string | null
+          live_preview_enabled?: boolean
+          live_preview_error?: string | null
+          live_preview_status?: string
+          official_domain?: string | null
+          slug: string
+          sort_order?: number
+          technologies?: string[]
+          title: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          fallback_image_url?: string | null
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean
+          is_published?: boolean
+          last_live_preview_at?: string | null
+          last_live_preview_url?: string | null
+          live_preview_checked_at?: string | null
+          live_preview_enabled?: boolean
+          live_preview_error?: string | null
+          live_preview_status?: string
+          official_domain?: string | null
+          slug?: string
+          sort_order?: number
+          technologies?: string[]
+          title?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -1593,6 +1816,225 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      service_categories: {
+        Row: {
+          created_at: string
+          icon: string | null
+          id: string
+          is_published: boolean
+          slug: string
+          sort_order: number
+          subtitle: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_published?: boolean
+          slug: string
+          sort_order?: number
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_published?: boolean
+          slug?: string
+          sort_order?: number
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      service_order_events: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          note: string | null
+          order_id: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          note?: string | null
+          order_id: string
+          status: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          note?: string | null
+          order_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_order_events_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      service_orders: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          customer_company: string | null
+          customer_email: string
+          customer_name: string
+          customer_phone: string | null
+          customer_user_id: string | null
+          id: string
+          internal_notes: string | null
+          message: string | null
+          options: Json
+          order_number: string
+          payment_provider: string | null
+          payment_reference: string | null
+          payment_status: string
+          service_id: string | null
+          service_slug: string | null
+          service_title: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          customer_company?: string | null
+          customer_email: string
+          customer_name: string
+          customer_phone?: string | null
+          customer_user_id?: string | null
+          id?: string
+          internal_notes?: string | null
+          message?: string | null
+          options?: Json
+          order_number?: string
+          payment_provider?: string | null
+          payment_reference?: string | null
+          payment_status?: string
+          service_id?: string | null
+          service_slug?: string | null
+          service_title: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          customer_company?: string | null
+          customer_email?: string
+          customer_name?: string
+          customer_phone?: string | null
+          customer_user_id?: string | null
+          id?: string
+          internal_notes?: string | null
+          message?: string | null
+          options?: Json
+          order_number?: string
+          payment_provider?: string | null
+          payment_reference?: string | null
+          payment_status?: string
+          service_id?: string | null
+          service_slug?: string | null
+          service_title?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_orders_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      services: {
+        Row: {
+          bullets: Json
+          category_id: string | null
+          created_at: string
+          delivery_note: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          is_featured: boolean
+          is_orderable: boolean
+          is_published: boolean
+          metadata: Json
+          price: number | null
+          price_note: string | null
+          slug: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          bullets?: Json
+          category_id?: string | null
+          created_at?: string
+          delivery_note?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean
+          is_orderable?: boolean
+          is_published?: boolean
+          metadata?: Json
+          price?: number | null
+          price_note?: string | null
+          slug: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          bullets?: Json
+          category_id?: string | null
+          created_at?: string
+          delivery_note?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean
+          is_orderable?: boolean
+          is_published?: boolean
+          metadata?: Json
+          price?: number | null
+          price_note?: string | null
+          slug?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "services_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "service_categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       site_content: {
         Row: {
@@ -1984,6 +2426,28 @@ export type Database = {
       }
     }
     Functions: {
+      find_related_news: {
+        Args: {
+          p_category?: string
+          p_content?: string
+          p_excerpt?: string
+          p_limit?: number
+          p_news_id?: string
+          p_title?: string
+        }
+        Returns: {
+          category: string
+          excerpt_fr: string
+          featured_image: string
+          id: string
+          images: Json
+          published_at: string
+          relation_reason: string
+          relevance: number
+          slug: string
+          title_fr: string
+        }[]
+      }
       has_role:
         | {
             Args: {
@@ -2005,6 +2469,10 @@ export type Database = {
       increment_news_view: { Args: { p_news_id: string }; Returns: number }
       is_admin: { Args: never; Returns: boolean }
       purge_expired_dataroom_sessions: { Args: never; Returns: number }
+      refresh_news_relations: {
+        Args: { p_news_id: string }
+        Returns: undefined
+      }
       report_broken_image: {
         Args: { _image_url: string; _page_url: string; _user_agent: string }
         Returns: undefined
