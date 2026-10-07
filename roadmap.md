@@ -1,6 +1,7 @@
 # Roadmap AgriCapital
 
 ## En cours
+- [ ] Refonte institutionnelle de toutes les pages et formulaires, sans débordements ni espaces injustifiés, mobile/ordinateur ; actualités et articles éditoriaux cinématographiques (choix visuel préalable).
 - [ ] Recréer tout le schéma Supabase (tables, relations, RLS, GRANT, triggers) sur le projet externe `sxsolthkxfavimitoowy`
 - [ ] Créer automatiquement le super admin `admin@agricapital.ci` / `@AgriCapitalAdmin`
 - [ ] Page admin "Base de données" : import du backup (~100 Mo) déclenchant la migration
