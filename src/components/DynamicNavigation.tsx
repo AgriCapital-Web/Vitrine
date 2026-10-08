@@ -60,7 +60,30 @@ const DynamicNavigation = () => {
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return (
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const label = (labels: Record<Language, string>) => labels[language] || labels.fr;
+  const go = (action: string, isRoute?: boolean) => {
+    setMobileOpen(false);
+    setOpenDesktop(null);
+    setOpenMobile(null);
+    if (isRoute) {
+      navigate(action);
+      return;
+    }
+    const target = document.getElementById(action);
+    if (target) {
+      window.scrollTo({
+        top: target.getBoundingClientRect().top + window.scrollY - 84,
+        behavior: "smooth",
+      });
+    } else {
+      navigate(`/#${action}`);
+    }
+  };
+
+  return (
     <header className={`fixed inset-x-0 top-0 z-50 border-b border-border bg-card/95 backdrop-blur-md ${scrolled ? "shadow-soft" : ""}`}>
       <div className="site-container flex h-[72px] items-center justify-between gap-2 lg:gap-4">
         <Button variant="ghost" onClick={() => go("hero")} className="h-auto shrink-0 p-0 hover:bg-transparent" aria-label="AgriCapital — Accueil">

@@ -200,7 +200,28 @@ const Hero = () => {
         });
         setSlides(merged);
       });
-    return (
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const next = useCallback(() => setCurrent((p) => (p + 1) % slides.length), [slides.length]);
+  const prev = useCallback(() => setCurrent((p) => (p - 1 + slides.length) % slides.length), [slides.length]);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const id = setInterval(next, 6500);
+    return () => clearInterval(id);
+  }, [next, isPaused]);
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const slide = slides[current];
+  const t = (rec: Record<Language, string>) => rec[language] || rec.fr;
+
+  return (
     <section id="hero" className="pt-[72px] bg-background" onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)}>
       <div className="hero-stage relative overflow-hidden bg-cinema text-cinema-foreground">
         {slides.map((s, i) => <div key={i} aria-hidden={current !== i} className={`absolute inset-0 transition-opacity duration-1000 ${current === i ? "opacity-100" : "opacity-0"}`}>
