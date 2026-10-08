@@ -1,78 +1,77 @@
-# Refonte AgriCapital — style Belife Groupe
+# Feuille de route AgriCapital — identité et expérience institutionnelles
 
-## Sitemap (déjà disponible)
+## Référence de marque
 
-URL à coller dans Google Search Console : **`https://agricapital.ci/sitemap.xml`**
-(Champ "Ajouter un nouveau sitemap" → saisir simplement `sitemap.xml`.)
+Le projet est exclusivement dédié à **AgriCapital**.
 
-Le fichier est déjà servi, multilingue (FR/EN/AR/ES/DE/ZH), avec `hreflang` complet.
+Signature :
+**AgriCapital — Investir la terre. Cultiver l’avenir.**
 
----
+Toute référence à une ancienne activité, une ancienne marque ou un ancien projet sans rapport avec AgriCapital doit être supprimée lorsqu’elle apparaît dans le produit, les métadonnées, la documentation ou les contenus publics.
 
-## 1. Refonte visuelle (inspirée Belife)
+## Direction visuelle
 
-**Codes visuels Belife** (ce que je vais répliquer) :
-- Palette claire, beige/crème + accent orange brûlé + texte sombre
-- Navigation horizontale épurée avec mega-menu déroulant par catégorie
-- Typographie sobre, sans serif moderne
-- Cards produits/offres uniformes, photographies professionnelles uniquement
-- Hero plein écran avec image corporate + CTA unique
-- Sections généreuses (whitespace), sans extravagance
-- Footer dense en colonnes (liens, contact, légal)
+La direction visuelle doit rester propre à AgriCapital :
 
-**Composants à refondre** :
-- `Hero` → version corporate sobre, une image, un titre, un CTA
-- `DynamicNavigation` → style mega-menu épuré (À propos / Nos offres / Investir / Actualités / Contact)
-- `Footer` → 4 colonnes structurées
-- `About`, `Approach`, `Ambitions` → cards uniformes, fond clair
-- `Founder`, `Team` → portraits sobres, format LinkedIn corporate
-- `Partnership`, `Contact` → formulaires épurés
+- palette et éléments graphiques cohérents avec la charte AgriCapital ;
+- navigation institutionnelle claire ;
+- typographie sobre et contemporaine ;
+- photographies authentiques du terrain et des équipes ;
+- présentation premium des solutions agricoles ;
+- hiérarchie éditoriale claire ;
+- expérience mobile et ordinateur soignée ;
+- espaces généreux sans surcharge visuelle.
 
-## 2. Nettoyage public (suppression du superflu)
+## Architecture publique
 
-À **supprimer** des pages publiques (jugés peu pro / non crédibles) :
-- `CommunityProspecting` (section prospection communautaire)
-- `IvoryCoastMap` (carte interactive — trop gadget en homepage)
-- `TestimonialsDisplay` **OU** `Testimonials` (doublon — garder un seul module)
-- `Milestones` sur homepage (déplacer vers page Evolution dédiée)
-- Toutes images IA/placeholder dans News, Hero, About → garder uniquement photos authentiques validées
-- Welcome popup (intrusif)
+Le site doit présenter de manière cohérente :
 
-À **garder/affiner** :
-Hero • Ambitions • About • Approach • Founder • Team • Partnership • NewsSection • Contact • Footer
+- AgriCapital ;
+- À propos ;
+- Notre capacité ;
+- Notre approche ;
+- Évolution ;
+- Équipe ;
+- Solutions ;
+- PalmInvest ;
+- TerraPalm ;
+- PalmTerroir ;
+- Actualités ;
+- Témoignages ;
+- FAQ ;
+- Partenariats ;
+- Contact.
 
-## 3. Nettoyage admin (pages inutiles)
+## Outils numériques
 
-Pages admin actuellement présentes mais redondantes/non utilisées → à supprimer :
-- `AdminMenuNav` (gestion menu — pas exploitée)
-- `AdminSEO` (SEO géré statiquement)
-- `AdminPermissions` (doublon avec AdminUsers)
-- `AdminPartnerships` (doublon avec AdminPartnershipRequests)
-- `AdminTranslations` (auto via IA)
-- `AdminMedia` (rarement utilisée)
-- `AdminInbox` (doublon contact messages)
-- `AdminAuditLog`, `AdminBackup` (gardés mais déplacés sous "Configuration")
+Le projet comprend également :
 
-**Sidebar finale (3 pôles)** :
-- Contenu : Dashboard, Analytics, Actualités, Témoignages
-- Communication : Messages, Newsletter, Historique envois, Demandes partenariat, Conversations IA, Contacts visiteurs, Notifications
-- Configuration : Utilisateurs & Rôles, Base de données, Paramètres
+- espace client ;
+- AgriCapital Cloud / Data Room ;
+- administration ;
+- gestion des actualités ;
+- gestion des contacts ;
+- campagnes de communication ;
+- analytics ;
+- gestion des utilisateurs et paramètres.
 
-## 4. SEO renforcé
+## SEO et domaine canonique
 
-- `index.html` : title/description/OG optimisés + JSON-LD Organization
-- Vérifier balises canonical + hreflang (déjà OK dans sitemap)
-- Ajouter JSON-LD `Article` sur pages News via `react-helmet-async`
-- `robots.txt` déjà correct
-- Confirmer le sitemap dans Google Search Console (URL ci-dessus)
+Domaine public de référence :
 
----
+**https://www.agricapital.ci**
 
-## ⚠️ Confirmations nécessaires avant exécution
+Le domaine canonique, les balises SEO, les données structurées, les aperçus sociaux et les liens publics doivent rester alignés sur AgriCapital.
 
-1. **Palette Belife** (beige/crème + orange brûlé) OU on garde le vert AgriCapital actuel adouci ?
-2. **Suppression sections homepage** (CommunityProspecting, IvoryCoastMap, Milestones, un des deux Testimonials) — OK ?
-3. **Suppression pages admin** listées ci-dessus — OK ?
-4. **Images à supprimer** : tu veux que je liste les images existantes que je trouve "non crédibles" pour validation, ou je supprime/remplace de manière autonome ?
+## Qualité
 
-Réponds avec tes choix (ou "tout OK, fonce") et j'exécute en parallèle.
+Avant chaque mise en production :
+
+1. vérifier la compilation ;
+2. vérifier les routes publiques ;
+3. vérifier l’expérience mobile et desktop ;
+4. vérifier les formulaires et liens ;
+5. vérifier les métadonnées SEO ;
+6. vérifier qu’aucune ancienne identité ou contenu hors sujet n’est exposé publiquement ;
+7. vérifier le déploiement Vercel.
+

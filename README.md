@@ -1,26 +1,85 @@
-# Pressing la joie 
+# AgriCapital — Site institutionnel
 
-creer une aplication de gestion pour mon presing ... enregistrement des entré et sorti ... retrait ... enregistrer es paiement ... faire des comande en ligne... un petit site vitrine ... puis à la fois mini crm ... j'ai des gerant, pouis moi meme je veut etre super admin et suivre à distance si possible ... c'est les gerant qui gere et je dois pouvoir gerer leur acces ... tu compren ... fais ... pas de base de donnée cloude ... je vais faire base de donnée mysql sur safry cloud, si tu pense que tu poura conneter sans dificulter ... ou si tu veut, en fait ilfaut tous faire ... tu creer la base de donnée integrer ... j'ai 50 GB d'espace sur mon hebergement donc il faut faire de sorte que tous soit dans le depot et je build et hebege et tous se fait labas directement ...
+**AgriCapital — Investir la terre. Cultiver l’avenir.**
 
-This project was built with [Lovable](https://lovable.dev).
+Ce dépôt contient le site institutionnel et les outils numériques publics d’AgriCapital SARL, entreprise ivoirienne spécialisée dans la structuration, le développement et l’accompagnement de projets agricoles, notamment les plantations de palmier à huile.
 
-**Live app**: https://lajoiepressing.lovable.app
+## Positionnement
 
-## Build with Lovable
+Le site présente AgriCapital autour de quatre axes :
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/c0f95c17-6148-45f7-a772-e8f307fbd553).
+- **Foncier agricole** — identification, sécurisation et valorisation du foncier.
+- **Création de plantations** — mise en place et développement de plantations professionnelles.
+- **Accompagnement dans la durée** — suivi technique et opérationnel des projets.
+- **Solutions patrimoniales agricoles** — offres avec ou sans terrain, notamment PalmInvest, TerraPalm et PalmTerroir.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+## Périmètre du projet
 
-## Development
+L’application comprend notamment :
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+- site vitrine institutionnel ;
+- présentation des solutions et offres AgriCapital ;
+- actualités et contenus éditoriaux ;
+- pages À propos, Approche, Équipe, Évolution et Partenariats ;
+- formulaires de contact et de demande de partenariat ;
+- espace client ;
+- Data Room / AgriCapital Cloud ;
+- administration du contenu, des contacts, des campagnes et des utilisateurs ;
+- suivi analytique et outils internes ;
+- prise en charge multilingue : français, anglais, arabe, espagnol, allemand et chinois.
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+## Stack technique
+
+- React 18 + TypeScript
+- Vite
+- React Router
+- Tailwind CSS
+- shadcn/ui / Radix UI
+- Supabase
+- React Query
+- React Helmet Async
+- Leaflet / React Leaflet
+- Recharts
+- Vercel pour le déploiement
+
+## Développement local
+
+Pré-requis : Node.js 24 et npm 12.
+
+```bash
+npm install
 npm run dev
 ```
+
+Build de production :
+
+```bash
+npm run build
+```
+
+Vérification du code :
+
+```bash
+npm run lint
+```
+
+## Production
+
+Le site public de référence est :
+
+**https://www.agricapital.ci**
+
+Le domaine canonique est **www.agricapital.ci**. Les environnements de prévisualisation ne constituent pas la référence publique.
+
+## Principes de marque
+
+Le dépôt doit rester centré sur **AgriCapital**.
+
+Toute référence historique, texte, métadonnée, nom de projet ou contenu provenant d’un ancien projet sans rapport avec AgriCapital doit être supprimé ou remplacé lorsqu’il est exposé dans le projet.
+
+La marque de référence est :
+
+> **AgriCapital**  
+> **Investir la terre. Cultiver l’avenir.**
+
+© AgriCapital SARL — Côte d’Ivoire.
