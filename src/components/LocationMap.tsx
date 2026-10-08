@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { MapPin, Navigation, ExternalLink, Map as MapIcon, Satellite } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,7 +8,7 @@ import { Button } from "@/components/ui/button";
 const AGRICAPITAL_COORDS = { lat: 6.905935222212314, lng: -6.249822932129582 };
 const ADDRESS_LABEL = "AgriCapital — Côte d'Ivoire";
 
-const LocationMap = () => {
+const LocationMap = ({ className = "" }: { className?: string }) => {
   const [mapType, setMapType] = useState<"m" | "k">("m"); // m=plan, k=satellite
   const [zoom, setZoom] = useState(12); // vue ville complète (Gonaté / Daloa)
   const { lat, lng } = AGRICAPITAL_COORDS;
@@ -22,7 +23,7 @@ const LocationMap = () => {
   const viewUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
 
   return (
-    <Card className="overflow-hidden border-border">
+    <Card className={cn("overflow-hidden border-border flex h-full flex-col", className)}>
       <div className="flex items-center justify-between gap-3 px-4 py-3 bg-card border-b border-border">
         <div className="flex items-center gap-2 min-w-0">
           <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
@@ -74,7 +75,7 @@ const LocationMap = () => {
           </Button>
         </div>
       </div>
-      <div className="relative w-full" style={{ aspectRatio: "16 / 9", minHeight: 320 }}>
+      <div className="relative w-full flex-1 min-h-[320px] lg:min-h-[360px]">
         <iframe
           key={`${mapType}-${zoom}`}
           title="Carte AgriCapital Daloa"
