@@ -61,7 +61,7 @@ const Contact = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[.9fr_1.2fr_1fr] gap-5 lg:gap-6 max-w-7xl mx-auto items-stretch">
           {/* Contact Info */}
           <div className="flex min-w-0 flex-col gap-4 h-full">
-            <Card className="bg-card border-border min-h-[96px] h-full">
+            <Card className="bg-card border-border flex-1 min-h-[96px]">
               <CardContent className="p-5 sm:p-6 h-full flex items-center">
                 <div className="flex items-start gap-4">
                   <MapPin className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
@@ -75,8 +75,8 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-card border-border h-full">
-              <CardContent className="p-6">
+            <Card className="bg-card border-border flex-1 min-h-[96px]">
+              <CardContent className="p-5 sm:p-6 h-full flex items-center">
                 <div className="flex items-start gap-4">
                   <Mail className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
@@ -89,8 +89,8 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-card border-border">
-              <CardContent className="p-6">
+            <Card className="bg-card border-border flex-1 min-h-[96px]">
+              <CardContent className="p-5 sm:p-6 h-full flex items-center">
                 <div className="flex items-start gap-4">
                   <Phone className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
@@ -103,8 +103,8 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-agri-green/10 border-agri-green min-h-[96px] h-full">
-              <CardContent className="p-6">
+            <Card className="bg-agri-green/10 border-agri-green flex-1 min-h-[96px]">
+              <CardContent className="p-5 sm:p-6 h-full flex items-center">
                 <div className="flex items-start gap-4">
                   <MessageCircle className="w-6 h-6 text-agri-green flex-shrink-0 mt-1" />
                   <div>
@@ -122,8 +122,8 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-agri-orange/10 border-agri-orange min-h-[96px] h-full">
-              <CardContent className="p-6">
+            <Card className="bg-agri-orange/10 border-agri-orange flex-1 min-h-[96px]">
+              <CardContent className="p-5 sm:p-6 h-full flex items-center">
                 <h3 className="font-bold text-foreground mb-2">RCCM</h3>
                 <p className="text-sm text-muted-foreground mb-1">
                   CI-DAL-01-2025-B12-13435
