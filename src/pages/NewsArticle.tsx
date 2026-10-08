@@ -181,6 +181,11 @@ const NewsArticle = () => {
   }
 
   const content = title("content");
+  const extractedHashtags = useMemo(() => {
+    const source = String(content || "");
+    const matches = source.match(/#[\p{L}\p{N}_-]+/gu) || [];
+    return [...new Set(matches)];
+  }, [content]);
   const parsed = content.includes("<p") || content.includes("<h2") || content.includes("<figure")
     ? content
     : content.replace(/\n\n/g, "</p><p>").replace(/\n/g, "<br/>");
@@ -349,6 +354,16 @@ const NewsArticle = () => {
           </div>
         </aside>
       </section>
+
+      {extractedHashtags.length > 0 && (
+        <section className="site-container pb-10">
+          <div className="article-hashtags">
+            {extractedHashtags.map((tag) => (
+              <Link key={tag} to="/new" className="article-hashtag">{tag}</Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {videos.length > 0 && (
         <section className="site-container pb-14">
