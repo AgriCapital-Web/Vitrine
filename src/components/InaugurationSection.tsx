@@ -37,7 +37,7 @@ const slides: Slide[] = [
   {
     src: "/inauguration/inauguration-accueil-client.webp",
     title: "Accueil et accompagnement de proximité",
-    caption: "Un guichet dédié pour informer, accompagner et contractualiser au plus près des territoires.",
+    caption: "Un guichet dédié à l'information, l'accompagnement et la contractualisation, au plus près des propriétaires fonciers et des clients partenaires.",
   },
   {
     src: "/inauguration/bureau-gonate-interieur.webp",
@@ -47,7 +47,7 @@ const slides: Slide[] = [
   {
     src: "/inauguration/pepiniere-plants-palmier.webp",
     title: "Plus de 20 000 plants en pépinière",
-    caption: "La pépinière alimente les plantations clés en main déployées auprès de nos souscripteurs.",
+    caption: "La pépinière alimente les plantations clés en main développées pour nos clients partenaires.",
   },
 ];
 
