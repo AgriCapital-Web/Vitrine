@@ -153,13 +153,13 @@ const AdminContactMessages = () => {
       m.name,
       m.email,
       m.subject || '',
-      m.message.replace(/"/g, '""'),
+      m.message,
       m.status
     ]);
 
     const csvContent = [
       headers.join(';'),
-      ...csvData.map(row => row.map(cell => `"${safeCsvValue(cell)}"`).join(';'))
+      ...csvData.map(row => row.map(cell => csvCell(cell)).join(';'))
     ].join('\n');
 
     const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
