@@ -255,8 +255,8 @@ const NewsArticle = () => {
         </Link>
       </div>
 
-      <header className="site-container article-intro-reveal pt-9 sm:pt-12 lg:pt-16">
-        <div className="max-w-5xl">
+      <header className="site-container article-intro-reveal pt-8 sm:pt-10 lg:pt-14">
+        <div className="w-full max-w-[1320px]">
           <div className="flex flex-wrap items-center gap-3 text-xs font-black uppercase tracking-[.15em] text-accent">
             <span>{article.category || "Actualité"}</span>
             <span className="text-border">•</span>
@@ -264,7 +264,7 @@ const NewsArticle = () => {
             <span className="text-border">•</span>
             <span>{readingTime} {fr ? "min de lecture" : "min read"}</span>
           </div>
-          <h1 className="mt-5 max-w-6xl text-[clamp(2.5rem,7vw,6.5rem)] font-black leading-[.92] tracking-[-.055em] text-foreground">
+          <h1 className="mt-5 w-full max-w-[1280px] text-[clamp(2.15rem,5vw,4.9rem)] font-black leading-[1.02] tracking-[-.045em] text-foreground [text-wrap:balance]">
             {title("title")}
           </h1>
           <div className="mt-7 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
@@ -276,9 +276,9 @@ const NewsArticle = () => {
       </header>
 
       {images.length > 0 && (
-        <section className="site-container mt-9 sm:mt-12">
+        <section className="site-container mt-8 sm:mt-10 lg:mt-12">
           <div
-            className="news-hero-media group relative aspect-[16/7.5] max-h-[720px] overflow-hidden rounded-[1.5rem] bg-muted shadow-[0_24px_70px_hsl(var(--foreground)/.12)]"
+            className="news-hero-media group relative min-h-[260px] aspect-[16/8.5] max-h-[680px] overflow-hidden rounded-[1.25rem] bg-muted shadow-[0_24px_70px_hsl(var(--foreground)/.12)] sm:min-h-[360px] lg:min-h-[460px]"
             onClick={() => setGalleryOpen(true)}
           >
             <img
@@ -317,7 +317,7 @@ const NewsArticle = () => {
         <p className="max-w-4xl text-lg leading-8 text-muted-foreground sm:text-xl lg:text-2xl">{excerpt}</p>
       </section>
 
-      <section className="site-container grid gap-8 pb-10 lg:grid-cols-[minmax(0,1fr)_240px] lg:justify-between lg:pb-16 article-story-shell">
+      <section className="site-container grid gap-8 pb-10 lg:grid-cols-[minmax(0,920px)_240px] lg:items-start lg:justify-between lg:pb-16 article-story-shell">
         <article className="news-prose min-w-0" dangerouslySetInnerHTML={{ __html: safeHtml }} />
         <aside className="hidden lg:block">
           <div className="sticky top-28 rounded-2xl border border-border/70 bg-card p-5">
