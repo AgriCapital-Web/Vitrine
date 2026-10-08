@@ -852,7 +852,7 @@ input,textarea,select { max-width:100%; }
   }
 
   .article-story-shell > article.news-prose > * {
-    grid-column: span 6;
+    grid-column: 1 / -1;
     min-width: 0;
     margin-block: 0;
   }
@@ -872,20 +872,32 @@ input,textarea,select { max-width:100%; }
   }
 
   .article-story-shell > article.news-prose > p {
-    align-self: center;
+    align-self: start;
+    width: 100%;
     font-size: clamp(1rem, 1.2vw, 1.12rem);
     line-height: 1.85;
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    text-wrap: pretty;
+  }
+
+  /* Deux colonnes uniquement lorsqu'un média peut réellement accompagner le texte. */
+  .article-story-shell > article.news-prose > p:has(+ figure),
+  .article-story-shell > article.news-prose > figure + p {
+    grid-column: span 6;
   }
 
   .article-story-shell > article.news-prose > figure {
-    grid-column: span 7;
-    align-self: stretch;
+    grid-column: 1 / -1;
+    align-self: start;
     margin: 0;
     padding: 0;
   }
 
-  .article-story-shell > article.news-prose > figure:nth-of-type(even) {
-    grid-column: span 5;
+  .article-story-shell > article.news-prose > figure:has(+ p),
+  .article-story-shell > article.news-prose > p + figure {
+    grid-column: span 6;
   }
 
   .article-story-shell > article.news-prose > figure img {
@@ -983,12 +995,19 @@ input,textarea,select { max-width:100%; }
   .article-story-shell > article.news-prose > h2,
   .article-story-shell > article.news-prose > h3,
   .article-story-shell > article.news-prose > figure,
+  .article-story-shell > article.news-prose > p:has(+ figure),
+  .article-story-shell > article.news-prose > figure + p,
   .article-story-shell > article.news-prose > blockquote,
   .article-story-shell > article.news-prose > ul,
   .article-story-shell > article.news-prose > ol,
   .article-story-shell > article.news-prose > table,
   .article-story-shell > article.news-prose > hr {
     grid-column: 1 / -1;
+  }
+
+  .article-story-shell > article.news-prose > p {
+    text-align: left;
+    hyphens: none;
   }
 
   .article-story-shell > article.news-prose > figure img {
