@@ -113,7 +113,7 @@ serve(async (req) => {
 
     const langInstruction = { fr: "Réponds en français clair et naturel.", en: "Reply in English.", ar: "أجب بالعربية.", es: "Responde en español.", de: "Antworte auf Deutsch.", zh: "用中文回答。" }[language] || "Réponds en français.";
     const apiMessages: any[] = [{ role: "system", content: `${SITE_CONTEXT}\n${langInstruction}\nID visiteur: ${sanitizedVisitorId}` }];
-    for (let i = 0; i < limitedMessages.length - 1; i++) apiMessages.push({ role: limitedMessages[i].role, content: limitedMessages[i].content });
+    for (let i = 0; i < limitedMessages.length - 1; i++) apiMessages.push({ role: limitedMessages[i].role === "assistant" ? "assistant" : "user", content: typeof limitedMessages[i].content === "string" ? limitedMessages[i].content : "" });
 
     const lastMessage = limitedMessages[limitedMessages.length - 1];
     lastUserText = typeof lastMessage.content === "string" ? lastMessage.content : "[multimodal]";
@@ -123,7 +123,7 @@ serve(async (req) => {
       const mimeType = attachment.content.includes("data:") ? attachment.content.split(";")[0].split(":")[1] : "image/jpeg";
       apiMessages.push({ role: "user", content: [{ type: "image_url", image_url: { url: `data:${mimeType};base64,${base64Data}` } }, { type: "text", text: `${lastUserText || "Analyse cette image."}` }] });
     } else {
-      apiMessages.push({ role: lastMessage.role, content: lastMessage.content });
+      apiMessages.push({ role: "user", content: typeof lastMessage.content === "string" ? lastMessage.content : "" });
     }
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
