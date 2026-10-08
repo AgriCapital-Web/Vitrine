@@ -1,3 +1,4 @@
+import { csvCell, safeCsvValue } from "@/lib/csv-safe";
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -116,7 +117,7 @@ const AdminPartnershipRequests = () => {
         r.city || "",
         r.preferred_offer || "",
         r.status,
-      ].join(","))
+      ].map(csvCell).join(","))
     ].join("\n");
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });

@@ -1,3 +1,4 @@
+import { csvCell, safeCsvValue } from "@/lib/csv-safe";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -100,7 +101,7 @@ const AdminExportCSV = () => {
               if (col.includes('_at') && value) {
                 return new Date(value).toLocaleDateString('fr-FR');
               }
-              return String(value).replace(/"/g, '""').replace(/;/g, ',');
+              return safeCsvValue(value).replace(/"/g, '""').replace(/;/g, ',');
             }).map(cell => `"${cell}"`).join(';')
           )
         ].join('\n');

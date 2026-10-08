@@ -1,3 +1,4 @@
+import { csvCell, safeCsvValue } from "@/lib/csv-safe";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/admin/AdminLayout";
@@ -152,13 +153,13 @@ const AdminContactMessages = () => {
       m.name,
       m.email,
       m.subject || '',
-      m.message.replace(/"/g, '""'),
+      m.message,
       m.status
     ]);
 
     const csvContent = [
       headers.join(';'),
-      ...csvData.map(row => row.map(cell => `"${cell}"`).join(';'))
+      ...csvData.map(row => row.map(cell => csvCell(cell)).join(';'))
     ].join('\n');
 
     const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });

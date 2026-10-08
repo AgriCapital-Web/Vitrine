@@ -202,7 +202,7 @@ const sendEmailWithRetry = async (
       // Retry on 429 or 5xx
       if (attempt < MAX_RETRIES) {
         const delay = RETRY_DELAY_MS * attempt;
-        console.log(`Retry ${attempt}/${MAX_RETRIES} for ${recipient.email} after ${delay}ms (status: ${response.status})`);
+        console.log(`Retry ${attempt}/${MAX_RETRIES} after ${delay}ms (status: ${response.status})`);
         await new Promise(resolve => setTimeout(resolve, delay));
         continue;
       }
@@ -211,7 +211,7 @@ const sendEmailWithRetry = async (
     } catch (err) {
       if (attempt < MAX_RETRIES) {
         const delay = RETRY_DELAY_MS * attempt;
-        console.log(`Retry ${attempt}/${MAX_RETRIES} for ${recipient.email} after network error: ${err}`);
+        console.log(`Retry ${attempt}/${MAX_RETRIES} after network error: ${err}`);
         await new Promise(resolve => setTimeout(resolve, delay));
         continue;
       }
@@ -364,7 +364,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Newsletter sent: ${successCount} success, ${failCount} failed`);
     if (failedRecipients.length > 0) {
-      console.log(`Failed recipients: ${JSON.stringify(failedRecipients)}`);
+      console.log(`Failed recipients: ${failedRecipients.length}`);
     }
 
     const status = failCount === 0 ? "sent" : successCount > 0 ? "partial" : "failed";

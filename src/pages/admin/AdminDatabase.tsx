@@ -1,3 +1,4 @@
+import { csvCell, safeCsvValue } from "@/lib/csv-safe";
 import { useState, useRef } from "react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -272,8 +273,8 @@ const AdminDatabase = () => {
         headers.map(h => {
           const val = row[h];
           if (val === null || val === undefined) return "";
-          if (typeof val === "object") return `"${JSON.stringify(val).replace(/"/g, '""')}"`;
-          return `"${String(val).replace(/"/g, '""')}"`;
+          if (typeof val === "object") return csvCell(JSON.stringify(val));
+          return csvCell(val);
         }).join(",")
       )
     ];

@@ -1,3 +1,4 @@
+import { csvCell, safeCsvValue } from "@/lib/csv-safe";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -80,7 +81,7 @@ const AdminVisitorContacts = () => {
       format(new Date(c.created_at), 'dd/MM/yyyy HH:mm'),
     ]);
 
-    const csvContent = [headers.join(','), ...rows.map(r => r.map(cell => `"${cell}"`).join(','))].join('\n');
+    const csvContent = [headers.join(','), ...rows.map(r => r.map(cell => csvCell(cell)).join(','))].join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
