@@ -305,7 +305,7 @@ const NewsArticle = () => {
             <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
               {images.map((img: string, i: number) => (
                 <button key={`${img}-${i}`} onClick={() => setGalleryIndex(i)} className={`h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 ${i === galleryIndex ? "border-accent" : "border-transparent opacity-65"}`}>
-                  <img src={img} alt={`${title("title")} — ${i + 1}`} className="h-full w-full object-cover" />
+                  <img src={img} alt={`${title("title")} — ${i + 1}`} className="h-full w-full object-cover" onError={(e) => { e.currentTarget.src = "/placeholder.jpeg"; }} />
                 </button>
               ))}
             </div>
@@ -358,7 +358,7 @@ const NewsArticle = () => {
               return (
                 <Link key={item.id} to={`/new/${item.slug}`} className="group min-w-0">
                   <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
-                    <img src={itemImages[0] || "/placeholder.jpeg"} alt={title("title", item)} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+                    <img src={itemImages[0] || "/placeholder.jpeg"} alt={title("title", item)} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" onError={(e) => { e.currentTarget.src = "/placeholder.jpeg"; }} />
                   </div>
                   <p className="mt-4 text-[11px] font-black uppercase tracking-[.14em] text-accent">{item.category || "Actualité"}</p>
                   <h3 className="mt-2 text-xl font-extrabold leading-tight group-hover:text-primary">{title("title", item)}</h3>
@@ -391,7 +391,7 @@ const NewsArticle = () => {
             <Button variant="ghost" size="icon" className="absolute left-2 z-10 text-white" onClick={previous}><ChevronLeft className="h-8 w-8" /></Button>
             <Button variant="ghost" size="icon" className="absolute right-2 z-10 text-white" onClick={next}><ChevronRight className="h-8 w-8" /></Button>
           </>}
-          <img src={images[galleryIndex]} alt={`${title("title")} — ${galleryIndex + 1}`} className="max-h-[88vh] max-w-full object-contain" />
+          <img src={images[galleryIndex]} alt={`${title("title")} — ${galleryIndex + 1}`} className="max-h-[88vh] max-w-full object-contain" onError={(e) => { e.currentTarget.src = "/placeholder.jpeg"; }} />
         </div>
       </DialogContent>
     </Dialog>
