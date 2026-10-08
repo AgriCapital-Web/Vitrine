@@ -119,7 +119,7 @@ const News = () => {
             <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filtered.map((article: any) => (
                 <Link key={article.id} to={`/new/${article.slug}`} className="group block min-w-0 rounded-2xl border border-border/60 bg-card p-3 shadow-soft transition-all hover:-translate-y-1 hover:border-primary/20 hover:shadow-medium">
-                  <div className="aspect-[16/10] overflow-hidden rounded-xl bg-muted"><img src={images(article)[0] || "/placeholder.jpeg"} alt={title(article)} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" /></div>
+                  <div className="aspect-[16/10] overflow-hidden rounded-xl bg-muted"><img src={images(article)[0] || "/placeholder.jpeg"} alt={title(article)} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" onError={(e) => { e.currentTarget.src = "/placeholder.jpeg"; }} /></div>
                   <div className="px-2 pb-2 pt-4">
                     <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-[.12em] text-accent"><span>{article.category || "Actualité"}</span><span className="text-border">•</span><span>{date(article.published_at || article.created_at)}</span><span className="text-border">•</span><span>{readingTime(article)} {labels.min}</span></div>
                     <h2 className="news-card-title mt-3 text-[15px] font-extrabold leading-[1.2] tracking-[-.018em] text-foreground transition-colors group-hover:text-primary sm:text-[17px]">{title(article)}</h2>
