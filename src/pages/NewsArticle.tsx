@@ -249,72 +249,94 @@ const NewsArticle = () => {
     <div className="news-reading-progress" style={{ width: `${readingProgress}%` }} aria-hidden="true" />
 
     <main className="news-article-page min-h-screen overflow-x-hidden pt-[72px]">
-      <div className="site-container pt-6">
-        <Link to="/new" className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary">
-          <ArrowLeft className="h-4 w-4" />{t.news?.backToNews || (fr ? "Retour aux actualités" : "Back to newsroom")}
-        </Link>
-      </div>
-
-      <header className="site-container article-intro-reveal pt-8 sm:pt-10 lg:pt-14">
-        <div className="w-full max-w-[1320px]">
-          <div className="flex flex-wrap items-center gap-3 text-xs font-black uppercase tracking-[.15em] text-accent">
-            <span>{article.category || "Actualité"}</span>
-            <span className="text-border">•</span>
-            <span>{date(article.published_at || article.created_at)}</span>
-            <span className="text-border">•</span>
-            <span>{readingTime} {fr ? "min de lecture" : "min read"}</span>
-          </div>
-          <h1 className="mt-5 w-full max-w-[1280px] text-[clamp(2.15rem,5vw,4.9rem)] font-black leading-[1.02] tracking-[-.045em] text-foreground [text-wrap:balance]">
-            {title("title")}
-          </h1>
-          <div className="mt-7 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-            <span className="inline-flex items-center gap-2"><User className="h-4 w-4" />{article.author || "AgriCapital"}</span>
-            <span className="inline-flex items-center gap-2"><Eye className="h-4 w-4" />{view} {fr ? "vues" : "views"}</span>
-            {shares > 0 && <span className="inline-flex items-center gap-2"><Share2 className="h-4 w-4" />{shares} {fr ? "partages" : "shares"}</span>}
-          </div>
-        </div>
-      </header>
-
-      {images.length > 0 && (
-        <section className="site-container mt-8 sm:mt-10 lg:mt-12">
+      <section className="site-container pt-5 sm:pt-7 lg:pt-9">
+        {images.length > 0 ? (
           <div
-            className="news-hero-media group relative min-h-[260px] aspect-[16/8.5] max-h-[680px] overflow-hidden rounded-[1.25rem] bg-muted shadow-[0_24px_70px_hsl(var(--foreground)/.12)] sm:min-h-[360px] lg:min-h-[460px]"
+            className="article-cinematic-hero group"
             onClick={() => setGalleryOpen(true)}
           >
             <img
               key={images[galleryIndex]}
               src={images[galleryIndex]}
               alt={title("title")}
-              className="h-full w-full object-contain bg-muted transition-transform duration-1000 group-hover:scale-[1.01]"
+              className="article-cinematic-hero-image"
               onError={(e) => { e.currentTarget.src = "/placeholder.jpeg"; }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
-            <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4 text-white">
-              <span className="rounded-full bg-black/35 px-3 py-1.5 text-xs font-semibold backdrop-blur">
-                {images.length > 1 ? `${galleryIndex + 1} / ${images.length}` : "AgriCapital"}
+            <div className="article-cinematic-hero-shade" />
+            <div className="article-cinematic-hero-top">
+              <Link
+                to="/new"
+                className="article-glass-control inline-flex items-center gap-2"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <ArrowLeft className="h-4 w-4" />
+                {t.news?.backToNews || (fr ? "Retour aux actualités" : "Back to newsroom")}
+              </Link>
+              <span className="article-glass-control hidden sm:inline-flex">
+                {article.category || "Actualité"}
               </span>
-              {images.length > 1 && (
-                <div className="flex gap-2">
-                  <button aria-label="Précédent" className="rounded-full bg-black/45 p-2 backdrop-blur" onClick={(e) => { e.stopPropagation(); previous(); }}><ChevronLeft className="h-5 w-5" /></button>
-                  <button aria-label="Suivant" className="rounded-full bg-black/45 p-2 backdrop-blur" onClick={(e) => { e.stopPropagation(); next(); }}><ChevronRight className="h-5 w-5" /></button>
-                </div>
-              )}
             </div>
-          </div>
-          {images.length > 1 && (
-            <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
-              {images.map((img: string, i: number) => (
-                <button key={`${img}-${i}`} onClick={() => setGalleryIndex(i)} className={`h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 ${i === galleryIndex ? "border-accent" : "border-transparent opacity-65"}`}>
-                  <img src={img} alt={`${title("title")} — ${i + 1}`} className="h-full w-full object-cover" onError={(e) => { e.currentTarget.src = "/placeholder.jpeg"; }} />
+            <div className="article-cinematic-hero-content">
+              <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-black uppercase tracking-[.16em] text-white/85 sm:text-xs">
+                <span>{article.category || "Actualité"}</span>
+                <span className="text-white/45">•</span>
+                <span>{date(article.published_at || article.created_at)}</span>
+                <span className="text-white/45">•</span>
+                <span>{readingTime} {fr ? "min de lecture" : "min read"}</span>
+              </div>
+              <h1 className="article-cinematic-title mt-4 max-w-[1500px] text-white">
+                {title("title")}
+              </h1>
+              <p className="article-cinematic-excerpt mt-4 max-w-3xl text-white/85">
+                {excerpt}
+              </p>
+              <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/75">
+                <span className="inline-flex items-center gap-2"><User className="h-4 w-4" />{article.author || "AgriCapital"}</span>
+                <span className="inline-flex items-center gap-2"><Eye className="h-4 w-4" />{view} {fr ? "vues" : "views"}</span>
+                {shares > 0 && <span className="inline-flex items-center gap-2"><Share2 className="h-4 w-4" />{shares} {fr ? "partages" : "shares"}</span>}
+              </div>
+              <div className="mt-5 flex items-center gap-2">
+                <button
+                  type="button"
+                  aria-label={fr ? "Partager l'article" : "Share article"}
+                  className="article-glass-control"
+                  onClick={(e) => { e.stopPropagation(); setShareOpen(true); }}
+                >
+                  <Share2 className="h-4 w-4" />
+                  <span>{fr ? "Partager" : "Share"}</span>
                 </button>
-              ))}
+                {images.length > 1 && (
+                  <div className="article-glass-control">
+                    <span>{galleryIndex + 1} / {images.length}</span>
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-        </section>
-      )}
+            {images.length > 1 && (
+              <div className="absolute bottom-5 right-5 z-20 hidden gap-2 sm:flex">
+                <button aria-label="Précédent" className="article-glass-icon" onClick={(e) => { e.stopPropagation(); previous(); }}><ChevronLeft className="h-5 w-5" /></button>
+                <button aria-label="Suivant" className="article-glass-icon" onClick={(e) => { e.stopPropagation(); next(); }}><ChevronRight className="h-5 w-5" /></button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="rounded-2xl border border-border/70 p-8">
+            <Link to="/new" className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary">
+              <ArrowLeft className="h-4 w-4" />{t.news?.backToNews || (fr ? "Retour aux actualités" : "Back to newsroom")}
+            </Link>
+            <h1 className="mt-6 text-4xl font-black">{title("title")}</h1>
+          </div>
+        )}
 
-      <section className="site-container article-intro-reveal py-8 sm:py-10">
-        <p className="max-w-4xl text-lg leading-8 text-muted-foreground sm:text-xl lg:text-2xl">{excerpt}</p>
+        {images.length > 1 && (
+          <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+            {images.map((img: string, i: number) => (
+              <button key={`${img}-${i}`} onClick={() => setGalleryIndex(i)} className={`h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 ${i === galleryIndex ? "border-accent" : "border-transparent opacity-65"}`}>
+                <img src={img} alt={`${title("title")} — ${i + 1}`} className="h-full w-full object-cover" onError={(e) => { e.currentTarget.src = "/placeholder.jpeg"; }} />
+              </button>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="site-container grid gap-8 pb-10 lg:grid-cols-[minmax(0,920px)_240px] lg:items-start lg:justify-between lg:pb-16 article-story-shell">
