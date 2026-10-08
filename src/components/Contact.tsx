@@ -124,13 +124,11 @@ const Contact = () => {
 
             <Card className="bg-agri-orange/10 border-agri-orange flex-1 min-h-[96px]">
               <CardContent className="p-5 sm:p-6 h-full flex items-center">
-                <h3 className="font-bold text-foreground mb-2">RCCM</h3>
-                <p className="text-sm text-muted-foreground mb-1">
-                  CI-DAL-01-2025-B12-13435
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Fondée en 2025
-                </p>
+                <div>
+                  <h3 className="font-bold text-foreground mb-2">RCCM</h3>
+                  <p className="text-sm text-muted-foreground mb-1">CI-DAL-01-2025-B12-13435</p>
+                  <p className="text-sm text-muted-foreground">Fondée en 2025</p>
+                </div>
               </CardContent>
             </Card>
           </div>
