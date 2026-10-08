@@ -49,7 +49,7 @@ const HomePage = () => {
     if (!target) return;
     let attempts = 0;
     const scroll = () => {
-      const el = document.getElementById(target!);
+      const el = document.getElementById(target || "");
       if (!el) return false;
       window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 82, behavior:"smooth" });
       return true;
@@ -130,7 +130,7 @@ const HomePage = () => {
             <p className="site-eyebrow">{t.home.methodEyebrow}</p>
             <h2 className="site-title home-single-line-title">{t.home.methodTitle}</h2>
           </div>
-          <div className="mt-7 grid gap-4 md:grid-cols-5">
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {[
               ["01",t.home.methodSteps[0].title,t.home.methodSteps[0].desc],
               ["02",t.home.methodSteps[1].title,t.home.methodSteps[1].desc],
@@ -150,8 +150,8 @@ const HomePage = () => {
         <div className="site-container grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
           <div>
             <p className="site-eyebrow !text-accent">Sur le terrain</p>
-            <h2 className="site-title home-evolution-title !text-white">{t.home.evolutionTitle}</h2>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/75">
+            <h2 className="site-title home-evolution-title !text-primary-foreground">{t.home.evolutionTitle}</h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-primary-foreground/75">
               {t.home.evolutionLead}
             </p>
             <Button asChild size="lg" variant="secondary" className="mt-7"><Link to="/evolution">Suivre notre évolution <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
@@ -164,10 +164,10 @@ const HomePage = () => {
               [CheckCircle2,"Terrain","Des opérations visibles et suivies."],
             ].map(([Icon,title,text]) => {
               const I = Icon as typeof FileCheck2;
-              return <div key={String(title)} className="rounded-2xl border border-white/10 bg-white/[.06] p-6">
+              return <div key={String(title)} className="rounded-2xl border border-primary-foreground/10 bg-primary-foreground/[.06] p-6">
                 <I className="h-6 w-6 text-accent" />
                 <h3 className="mt-5 font-bold">{title as string}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/65">{text as string}</p>
+                <p className="mt-2 text-sm leading-relaxed text-primary-foreground/65">{text as string}</p>
               </div>;
             })}
           </div>

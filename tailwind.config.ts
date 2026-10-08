@@ -14,10 +14,12 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["'DM Sans'", "system-ui", "-apple-system", "sans-serif"],
+        sans: ["Manrope", "system-ui", "-apple-system", "sans-serif"],
+        display: ["Sora", "system-ui", "sans-serif"],
         serif: ["'DM Serif Display'", "Georgia", "serif"],
       },
       colors: {
+        cinema: { DEFAULT: "hsl(var(--cinema))", foreground: "hsl(var(--cinema-foreground))" },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
