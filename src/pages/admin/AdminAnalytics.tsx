@@ -1,3 +1,4 @@
+import { csvCell, safeCsvValue } from "@/lib/csv-safe";
 import { useState, useEffect } from "react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -145,7 +146,7 @@ const AdminAnalytics = () => {
       [""],
       ["Top Pages", "Visites"],
       ...topPages.map(p => [p.page_path || "/", p.count.toString()]),
-    ].map(row => row.join(",")).join("\n");
+    ].map(row => row.map(csvCell).join(",")).join("\n");
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const link = document.createElement("a");

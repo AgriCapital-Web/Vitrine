@@ -1,3 +1,4 @@
+import { csvCell, safeCsvValue } from "@/lib/csv-safe";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -156,7 +157,7 @@ const AdminNewsletter = () => {
   };
 
   const handleExport = () => {
-    const csv = subscribers.map(s => `${s.email},${s.subscribed_at},${s.is_active}`).join('\n');
+    const csv = subscribers.map(s => [s.email, s.subscribed_at, s.is_active].map(csvCell).join(',')).join('\n');
     const blob = new Blob([`Email,Date,Actif\n${csv}`], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');

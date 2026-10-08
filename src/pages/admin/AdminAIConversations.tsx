@@ -1,3 +1,4 @@
+import { csvCell, safeCsvValue } from "@/lib/csv-safe";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/admin/AdminLayout";
@@ -268,10 +269,8 @@ const AdminAIConversations = () => {
       conv.messages.forEach(msg => {
         const visitor = conv.visitor;
         const visitorName = visitor ? `${visitor.first_name || ''} ${visitor.last_name || ''}`.trim() : '';
-        const userMsg = msg.user_message.replace(/"/g, '""').replace(/\n/g, ' ');
-        const assistantMsg = msg.assistant_response.replace(/"/g, '""').replace(/\n/g, ' ');
         rows.push(
-          `"${msg.session_id}","${visitorName}","${visitor?.email || ''}","${visitor?.phone || ''}","${format(new Date(msg.created_at), 'dd/MM/yyyy HH:mm')}","${msg.language || 'fr'}","${msg.status || ''}","${msg.model || ''}","${msg.duration_ms || ''}","${msg.tokens_total || ''}","${msg.retry_count ?? ''}","${msg.error_message || ''}","${userMsg}","${assistantMsg}"`
+          [msg.session_id, visitorName, visitor?.email || '', visitor?.phone || '', format(new Date(msg.created_at), 'dd/MM/yyyy HH:mm'), msg.language || 'fr', msg.status || '', msg.model || '', msg.duration_ms || '', msg.tokens_total || '', msg.retry_count ?? '', msg.error_message || '', String(msg.user_message || '').replace(/\n/g, ' '), String(msg.assistant_response || '').replace(/\n/g, ' ')].map(csvCell).join(',')
         );
       });
     });

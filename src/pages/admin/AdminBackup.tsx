@@ -1,3 +1,4 @@
+import { csvCell, safeCsvValue } from "@/lib/csv-safe";
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/admin/AdminLayout";
@@ -306,8 +307,8 @@ const AdminBackup = () => {
         headers.map(h => {
           const val = row[h];
           if (val === null || val === undefined) return "";
-          if (typeof val === "object") return `"${JSON.stringify(val).replace(/"/g, '""')}"`;
-          return `"${String(val).replace(/"/g, '""')}"`;
+          if (typeof val === "object") return csvCell(JSON.stringify(val));
+          return csvCell(val);
         }).join(",")
       )
     ];
