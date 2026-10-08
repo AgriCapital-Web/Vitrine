@@ -339,7 +339,7 @@ const NewsArticle = () => {
         )}
       </section>
 
-      <section className="site-container grid gap-8 pb-10 lg:grid-cols-[minmax(0,920px)_240px] lg:items-start lg:justify-between lg:pb-16 article-story-shell">
+      <section className="site-container grid gap-8 pb-10 lg:grid-cols-[minmax(0,1fr)_240px] lg:items-start lg:justify-between lg:pb-16 article-story-shell">
         <article className="news-prose min-w-0" dangerouslySetInnerHTML={{ __html: safeHtml }} />
         <aside className="hidden lg:block">
           <div className="sticky top-28 rounded-2xl border border-border/70 bg-card p-5">
