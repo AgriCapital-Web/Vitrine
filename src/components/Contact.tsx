@@ -58,9 +58,9 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 max-w-7xl mx-auto items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[.9fr_1.2fr_1fr] gap-5 lg:gap-6 max-w-7xl mx-auto items-start">
           {/* Contact Info */}
-          <div className="space-y-6">
+          <div className="space-y-4 min-w-0">
             <Card className="bg-card border-border">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
@@ -81,7 +81,7 @@ const Contact = () => {
                   <Mail className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-bold text-foreground mb-2">{t.contact.email.title}</h3>
-                    <a href="mailto:contact@agricapital.ci" className="text-muted-foreground hover:text-primary transition-smooth">
+                    <a href="mailto:contact@agricapital.ci" className="text-muted-foreground hover:text-primary transition-smooth break-words">
                       {t.contact.email.value}
                     </a>
                   </div>
@@ -95,7 +95,7 @@ const Contact = () => {
                   <Phone className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-bold text-foreground mb-2">{t.contact.phone.title}</h3>
-                    <a href="tel:+2250564551717" className="text-muted-foreground hover:text-primary transition-smooth">
+                    <a href="tel:+2250564551717" className="text-muted-foreground hover:text-primary transition-smooth break-words">
                       +225 05 64 55 17 17
                     </a>
                   </div>
@@ -138,8 +138,8 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="min-w-0">
             <Card className="bg-card border-border">
-              <CardContent className="p-8">
-                <form onSubmit={handleSubmit} className="space-y-6">
+              <CardContent className="p-5 sm:p-7">
+                <form onSubmit={handleSubmit} className="space-y-4 min-w-0">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
                       {t.contact.form.name} {t.contact.form.required}
@@ -206,7 +206,7 @@ const Contact = () => {
             </Card>
           </div>
 
-          <div className="min-w-0">
+          <div className="min-w-0 md:col-span-2 lg:col-span-1">
             <LocationMap />
           </div>
         </div>

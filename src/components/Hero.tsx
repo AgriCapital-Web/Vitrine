@@ -200,139 +200,39 @@ const Hero = () => {
         });
         setSlides(merged);
       });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const next = useCallback(() => setCurrent((p) => (p + 1) % slides.length), [slides.length]);
-  const prev = useCallback(() => setCurrent((p) => (p - 1 + slides.length) % slides.length), [slides.length]);
-
-  useEffect(() => {
-    if (isPaused) return;
-    const id = setInterval(next, 6500);
-    return () => clearInterval(id);
-  }, [next, isPaused]);
-
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const slide = slides[current];
-  const t = (rec: Record<Language, string>) => rec[language] || rec.fr;
-
-  return (
-    <section
-      id="hero"
-      className="relative pt-20 lg:pt-24 pb-10 lg:pb-16 bg-secondary/40"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
-      <div className="container mx-auto px-3 sm:px-4">
-        <div className="relative overflow-hidden rounded-2xl lg:rounded-3xl shadow-strong bg-card">
-          {/* Slides */}
-          <div className="relative aspect-[4/5] sm:aspect-[16/10] lg:aspect-[21/9] xl:aspect-[24/9]">
-            {slides.map((s, i) => (
-              <div
-                key={i}
-                className={`absolute inset-0 transition-opacity duration-[1200ms] ease-out ${current === i ? "z-[1]" : "z-0"}`}
-                style={{ opacity: current === i ? 1 : 0, pointerEvents: current === i ? "auto" : "none" }}
-              >
-                <img
-                  src={s.image}
-                  alt={t(s.title)}
-                  className={`absolute inset-0 w-full h-full object-cover hero-slide-image ${current === i ? "hero-slide-image-active" : ""}`}
-                  loading={i === 0 ? "eager" : "lazy"}
-                  draggable={false}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/50 to-black/20 sm:bg-gradient-to-r sm:from-black/80 sm:via-black/45 sm:to-transparent" />
-                <div className="absolute inset-0 flex items-end sm:items-center">
-                  <div className={`w-full px-5 sm:px-10 lg:px-16 pb-8 sm:pb-0 ${current === i ? "hero-content-active" : ""}`}>
-                    <div className="max-w-xl lg:max-w-2xl">
-                      <div className="inline-flex items-center gap-2 mb-3 sm:mb-4">
-                        <span className="w-8 h-[2px] bg-accent rounded" />
-                        <span className="text-white text-xs sm:text-sm font-bold uppercase tracking-[0.18em] drop-shadow-md">
-                          {t(s.eyebrow)}
-                        </span>
-                      </div>
-                      <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-3 sm:mb-5">
-                        {t(s.title)}
-                      </h1>
-                      <p className="text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed mb-5 sm:mb-7 max-w-lg">
-                        {t(s.description)}
-                      </p>
-                      <div className="flex flex-col sm:flex-row gap-3">
-                        <ContactCTA>
-                          <Button
-                            size="lg"
-                            className="bg-accent hover:bg-accent/90 text-white border-0 rounded-full font-semibold group min-h-[48px] px-6"
-                          >
-                            {contactCtaLabel(language)}
-                            <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                          </Button>
-                        </ContactCTA>
-                        <Button
-                          size="lg"
-                          onClick={() => scrollToSection("contact")}
-                          variant="outline"
-                          className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border-white/40 rounded-full font-semibold min-h-[48px] px-6"
-                        >
-                          {language === "en" ? "Contact us" : language === "ar" ? "اتصل بنا" : language === "es" ? "Contáctenos" : language === "de" ? "Kontakt" : language === "zh" ? "联系我们" : "Nous contacter"}
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            {/* Manual controls */}
-            <button
-              onClick={prev}
-              aria-label="Previous slide"
-              className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white text-accent hover:bg-accent hover:text-white shadow-medium flex items-center justify-center transition-all active:scale-95"
-            >
-              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-            </button>
-            <button
-              onClick={next}
-              aria-label="Next slide"
-              className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-accent text-white hover:bg-accent/90 shadow-medium flex items-center justify-center transition-all active:scale-95"
-            >
-              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-            </button>
-
-            <div className="absolute left-0 right-0 bottom-0 z-10 h-1 bg-white/15 overflow-hidden">
-              <div key={current} className="hero-progress-bar" />
-            </div>
-
-            {/* Dots */}
-            <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2">
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  aria-label={`Go to slide ${i + 1}`}
-                  className={`h-1.5 rounded-full transition-all ${current === i ? "w-8 bg-white" : "w-1.5 bg-white/60 hover:bg-white/90"}`}
-                />
-              ))}
+    return (
+    <section id="hero" className="pt-[72px] bg-background" onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)}>
+      <div className="hero-stage relative overflow-hidden bg-cinema text-cinema-foreground">
+        {slides.map((s, i) => <div key={i} aria-hidden={current !== i} className={`absolute inset-0 transition-opacity duration-1000 ${current === i ? "opacity-100" : "opacity-0"}`}>
+          <img src={s.image} alt={t(s.title)} className={`absolute inset-0 h-full w-full object-cover hero-slide-image ${current === i ? "hero-slide-image-active" : ""}`} loading={i === 0 ? "eager" : "lazy"} />
+        </div>)}
+        <div className="absolute inset-0 hero-shade" />
+        <div className="site-container relative flex min-h-[530px] h-full flex-col justify-end py-8 sm:py-12">
+          <div key={current} className="hero-content-active">
+            <p className="mb-4 flex items-center gap-3 text-sm font-bold"><span className="h-0.5 w-8 bg-accent" />AgriCapital — {t(slide.eyebrow)}</p>
+            <h1 className="hero-title">{t(slide.title)}</h1>
+            <p className="hero-copy mt-4 text-cinema-foreground/90">{t(slide.description)}</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <ContactCTA><Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">{contactCtaLabel(language)}<ArrowRight /></Button></ContactCTA>
+              <Button size="lg" onClick={() => scrollToSection("contact")} variant="outline" className="article-film-button">{language === "en" ? "Contact us" : "Nous contacter"}</Button>
             </div>
           </div>
+          <div className="mt-7 flex items-center justify-between gap-4 border-t border-cinema-foreground/30 pt-4">
+            <span className="text-xs font-semibold">{String(current + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}</span>
+            <div className="flex gap-2"><Button variant="outline" size="icon" className="article-film-button" onClick={prev} aria-label="Image précédente"><ChevronLeft /></Button><Button variant="outline" size="icon" className="article-film-button" onClick={next} aria-label="Image suivante"><ChevronRight /></Button></div>
+          </div>
         </div>
-
-        <div className="mt-8 grid gap-4 lg:grid-cols-2">
-          {[
-            { title: "Le trésor caché du foncier agricole", text: "Un bref essentiel pour comprendre pourquoi les terres africaines inexploitées peuvent devenir un patrimoine productif et transmissible.", href: "/tresor-foncier" },
-            { title: "Le trésor caché du palmier à huile", text: "Un bref clair sur un arbre stratégique, présent dans le quotidien, productif pendant des décennies et adapté au potentiel ivoirien.", href: "/tresor-palmier" },
-          ].map((item) => (
-            <Link key={item.href} to={item.href} className="group rounded-xl border border-primary/15 bg-card p-5 shadow-soft transition-all hover:-translate-y-1 hover:border-primary/35 hover:shadow-medium">
-              <p className="belife-eyebrow mb-2">Bref investisseur</p>
-              <h2 className="hero-brief-title font-extrabold text-foreground md:text-xl lg:text-2xl">{item.title}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
-              <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-primary">Lire le bref <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
-            </Link>
-          ))}
-        </div>
+        <div className="absolute inset-x-0 bottom-0 h-0.5"><div key={current} className="hero-progress-bar" /></div>
+      </div>
+      <div className="site-container grid gap-0 sm:grid-cols-2 py-6 sm:py-8">
+        {[
+          { title: "Le trésor caché du foncier agricole", text: "Comprendre le potentiel d’un patrimoine productif et transmissible.", href: "/tresor-foncier" },
+          { title: "Le trésor caché du palmier à huile", text: "Un arbre stratégique, au cœur du potentiel agricole ivoirien.", href: "/tresor-palmier" },
+        ].map((item,i) => <Link key={item.href} to={item.href} className={`group py-4 ${i ? "sm:border-l sm:border-border sm:pl-8" : "sm:pr-8"}`}>
+          <p className="text-xs font-bold text-primary mb-2">Bref investisseur</p>
+          <h2 className="hero-brief-title font-bold flex items-start justify-between gap-4">{item.title}<ArrowRight className="h-5 w-5 shrink-0 text-accent transition-transform group-hover:translate-x-1" /></h2>
+          <p className="mt-2 text-sm text-muted-foreground">{item.text}</p>
+        </Link>)}
       </div>
     </section>
   );

@@ -31,8 +31,8 @@ const OffersSummary = () => {
         {offers.map(({ key, icon: Icon, name, tag, desc, points, to }) => (
           <Card key={key} className="h-full border-border/60 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40">
             <CardContent className="flex h-full flex-col p-6 sm:p-7">
-              <div className="mb-4 flex items-center gap-3">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <div className="mb-4 flex items-start gap-3">
+                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <Icon className="h-5 w-5" />
                 </span>
                 <span className="rounded-full bg-secondary px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-foreground">
@@ -49,7 +49,7 @@ const OffersSummary = () => {
                   </li>
                 ))}
               </ul>
-              <div className="mt-6 pt-1">
+              <div className="mt-auto pt-6">
                 <Button asChild>
                   <Link to={to}>
                     {t.offers.cta} {name} <ArrowRight className="ml-2 h-4 w-4" />
