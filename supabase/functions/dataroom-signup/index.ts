@@ -16,6 +16,16 @@ function genCode(len = 6): string {
   return out;
 }
 
+const escapeHtml = (v: string) => v.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
+const MAX_ID_BYTES = 5 * 1024 * 1024;
+function detectDocType(b: Uint8Array): { ext: string; mime: string } | null {
+  if (b.length >= 4 && b[0] === 0x25 && b[1] === 0x50 && b[2] === 0x44 && b[3] === 0x46) return { ext: "pdf", mime: "application/pdf" };
+  if (b.length >= 3 && b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return { ext: "jpg", mime: "image/jpeg" };
+  if (b.length >= 8 && b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) return { ext: "png", mime: "image/png" };
+  if (b.length >= 12 && b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46 && b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50) return { ext: "webp", mime: "image/webp" };
+  return null;
+}
+
 async function sha256(v: string): Promise<string> {
   const data = new TextEncoder().encode(v);
   const buf = await crypto.subtle.digest("SHA-256", data);
@@ -48,10 +58,10 @@ Deno.serve(async (req) => {
     const { data: existing } = await supabase
       .from("dataroom_signatories").select("id").eq("email", cleanEmail).maybeSingle();
     if (existing) {
-      return new Response(JSON.stringify({
-        already_signed: true,
-        message: "Vous avez déjà signé le NDA. Utilisez votre code d'accès ou demandez un renvoi.",
-      }), { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      // Same response as a new signup: never reveal whether an e-mail is registered.
+      return new Response(JSON.stringify({ ok: true, email_sent: true }), {
+        status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     // Upload id document if provided
@@ -59,20 +69,23 @@ Deno.serve(async (req) => {
     if (id_document_base64) {
       const rawBase64 = String(id_document_base64);
       if (rawBase64.length > 7_000_000) throw new Error("Pièce d’identité trop volumineuse (maximum 5 Mo).");
-      try {
-        const bytes = Uint8Array.from(atob(rawBase64.split(",").pop()!), (c) => c.charCodeAt(0));
-        const path = `id-docs/${crypto.randomUUID()}.${(id_document_ext || "jpg").replace(/[^a-z0-9]/gi, "")}`;
-        const { error: upErr } = await supabase.storage.from("dataroom").upload(path, bytes, {
-          contentType: id_document_ext?.includes("pdf") ? "application/pdf" : "image/jpeg",
-          upsert: false,
+      const bytes = Uint8Array.from(atob(rawBase64.split(",").pop()!), (c) => c.charCodeAt(0));
+      if (bytes.length > MAX_ID_BYTES) throw new Error("Pièce d’identité trop volumineuse (maximum 5 Mo).");
+      const kind = detectDocType(bytes);
+      if (!kind) {
+        return new Response(JSON.stringify({ error: "Format de pièce d’identité non accepté (PDF, JPG, PNG ou WEBP)." }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
-        if (!upErr) id_document_url = path;
-      } catch (e) {
-        console.warn("id doc upload failed", e);
       }
+      const path = `id-docs/${crypto.randomUUID()}.${kind.ext}`;
+      const { error: upErr } = await supabase.storage.from("dataroom").upload(path, bytes, {
+        contentType: kind.mime,
+        upsert: false,
+      });
+      if (!upErr) id_document_url = path;
     }
 
-    const code = genCode(6);
+    const code = genCode(16);
     const access_code_hash = await sha256(code);
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? null;
     const ua = req.headers.get("user-agent") ?? null;
@@ -100,9 +113,9 @@ Deno.serve(async (req) => {
             subject: "Votre code d'accès AgriCapital Cloud",
             html: `<div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;padding:24px;color:#111">
               <h2 style="color:#006B43;margin:0 0 12px">Bienvenue sur AgriCapital Cloud</h2>
-              <p>Bonjour ${cleanName},</p>
+              <p>Bonjour ${escapeHtml(cleanName)},</p>
               <p>Votre NDA a bien été signé et enregistré. Voici votre <strong>code d'accès personnel</strong> :</p>
-              <p style="font-size:28px;font-weight:800;letter-spacing:4px;background:#f5f5f5;padding:16px;text-align:center;border-radius:8px;color:#006B43">${code}</p>
+              <p style="font-size:28px;font-weight:800;letter-spacing:2px;background:#f5f5f5;padding:16px;text-align:center;border-radius:8px;color:#006B43">${code}</p>
               <p>Conservez-le précieusement. Il vous permettra de vous reconnecter à tout moment.</p>
               <p style="color:#ED9600;font-weight:600">AgriCapital — Investir la terre. Cultiver l'avenir.</p>
             </div>`,

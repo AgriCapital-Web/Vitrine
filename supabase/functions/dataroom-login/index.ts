@@ -60,7 +60,7 @@ Deno.serve(async (req) => {
         .select("id, full_name, email").eq("email", cleanEmail).maybeSingle();
       const resend = Deno.env.get("RESEND_API_KEY");
       if (existing && resend) {
-        const newCode = genCode(6);
+        const newCode = genCode(16);
         const response = await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: { Authorization: `Bearer ${resend}`, "Content-Type": "application/json" },
