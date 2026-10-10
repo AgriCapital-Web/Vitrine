@@ -53,9 +53,11 @@ const replaceLink = (html: string, rel: string, href: string) => {
 };
 
 const renderArticleShell = (shell: string, article: Record<string, any>, slug: string) => {
-  const title = stripHtml(article.meta_title || localized(article, "title")).slice(0, 200) || "Actualité AgriCapital";
+  // Search crawlers must receive French metadata on the canonical URL.
+  // Prefer explicitly French editorial fields over potentially English SEO fields.
+  const title = stripHtml(localized(article, "title") || article.meta_title).slice(0, 200) || "Actualité AgriCapital";
   const description =
-    stripHtml(article.meta_description || localized(article, "excerpt") || localized(article, "content"))
+    stripHtml(localized(article, "excerpt") || localized(article, "content") || article.meta_description)
       .replace(/#\S+/g, "")
       .slice(0, 300) ||
     "Découvrez les dernières actualités d’AgriCapital.";
