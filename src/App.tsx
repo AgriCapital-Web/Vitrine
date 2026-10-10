@@ -5,7 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { usePageTracking } from "@/hooks/usePageTracking";
-import { lazy, Suspense, useEffect } from "react";
+import { Component, lazy, Suspense, useEffect } from "react";
+import type { ErrorInfo, ReactNode } from "react";
 import { Loader2 } from "lucide-react";
 import ScrollToTop from "@/components/ScrollToTop";
 import { isDataroomHost } from "@/lib/canonical-host";
@@ -59,6 +60,37 @@ const AdminNotifications = lazy(() => import("./pages/admin/AdminNotifications")
 const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
 
 const queryClient = new QueryClient();
+
+class AppErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("[AgriCapital] Page rendering failed:", error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <main className="flex min-h-screen items-center justify-center bg-background px-6 py-16 text-center">
+          <div className="max-w-lg">
+            <p className="text-sm font-bold uppercase tracking-[.18em] text-primary">AgriCapital</p>
+            <h1 className="mt-4 text-2xl font-black text-foreground">Cette page n’a pas pu se charger correctement.</h1>
+            <p className="mt-3 text-muted-foreground">Le site reste disponible. Réessayez la page ou revenez à l’accueil.</p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <button type="button" onClick={() => window.location.reload()} className="rounded-lg bg-primary px-5 py-3 font-semibold text-primary-foreground">Réessayer</button>
+              <a href="/" className="rounded-lg border border-border px-5 py-3 font-semibold text-foreground">Retour à l’accueil</a>
+            </div>
+          </div>
+        </main>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const LoadingFallback = () => (
   <div className="min-h-screen bg-background flex items-center justify-center">
@@ -195,18 +227,20 @@ const AppContent = () => {
 };
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <LanguageProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <ScrollToTop />
-          <AppContent />
-        </BrowserRouter>
-      </TooltipProvider>
-    </LanguageProvider>
-  </QueryClientProvider>
+  <AppErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <LanguageProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTop />
+            <AppContent />
+          </BrowserRouter>
+        </TooltipProvider>
+      </LanguageProvider>
+    </QueryClientProvider>
+  </AppErrorBoundary>
 );
 
 export default App;
