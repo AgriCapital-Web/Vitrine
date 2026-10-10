@@ -86,8 +86,10 @@ const NewsArticle = () => {
     return [...new Set(matches)];
   }, [content]);
 
-  const seoTitle = article?.meta_title || title("title");
-  const seoDescription = article?.meta_description || title("excerpt") || String(title("content") || "")
+  // Use the active language's editorial fields before shared SEO fields.
+  // Search crawlers start in French, while visitors can still use translations.
+  const seoTitle = title("title") || article?.meta_title || "";
+  const seoDescription = title("excerpt") || String(title("content") || article?.meta_description || "")
     .replace(/<[^>]+>/g, " ").replace(/#\S+/g, "").replace(/\s+/g, " ").trim().slice(0, 220);
 
   const excerpt = title("excerpt") || String(title("content") || "")
