@@ -141,7 +141,7 @@ const OffrePage = ({ offer }: { offer: OffreKey }) => {
             <p className="mb-4 inline-block rounded-full bg-primary-foreground/15 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em]">
               {data.eyebrow}
             </p>
-            <h1 className="mb-4 text-2xl font-black leading-[1.04] tracking-[-.04em] sm:text-3xl lg:text-[clamp(2.35rem,3.6vw,4rem)]">{data.title}</h1>
+            <h1 className="mb-5 max-w-[18ch] text-3xl font-black tracking-[-.025em] sm:text-4xl lg:text-[clamp(2.35rem,3.35vw,3.75rem)]" style={{ lineHeight: 1.16, overflowWrap: "normal", wordBreak: "normal" }}>{data.title}</h1>
             <p className="max-w-2xl text-base leading-[1.7] text-primary-foreground/85 sm:text-lg xl:text-xl">{data.intro}</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ContactCTA>
