@@ -77,6 +77,15 @@ const NewsArticle = () => {
   const title = (field: string, item: any = article) =>
     item?.[`${field}_${language}`] || item?.[`${field}_fr`] || item?.[field] || "";
 
+  // Keep every hook before conditional returns. This prevents a hook-order crash
+  // when an article changes from loading to loaded on the first visit.
+  const content = title("content");
+  const extractedHashtags = useMemo(() => {
+    const source = String(content || "");
+    const matches = source.match(/#[\\p{L}\\p{N}_-]+/gu) || [];
+    return [...new Set(matches)];
+  }, [content]);
+
   const seoTitle = article?.meta_title || title("title");
   const seoDescription = article?.meta_description || title("excerpt") || String(title("content") || "")
     .replace(/<[^>]+>/g, " ").replace(/#\S+/g, "").replace(/\s+/g, " ").trim().slice(0, 220);
@@ -180,12 +189,6 @@ const NewsArticle = () => {
     </>;
   }
 
-  const content = title("content");
-  const extractedHashtags = useMemo(() => {
-    const source = String(content || "");
-    const matches = source.match(/#[\p{L}\p{N}_-]+/gu) || [];
-    return [...new Set(matches)];
-  }, [content]);
   const parsed = content.includes("<p") || content.includes("<h2") || content.includes("<figure")
     ? content
     : content.replace(/\n\n/g, "</p><p>").replace(/\n/g, "<br/>");
