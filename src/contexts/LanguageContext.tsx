@@ -67,36 +67,12 @@ const detectBrowserLanguage = (): Language => {
 };
 
 const getInitialLanguage = (): Language => {
-  // Priority 1: URL path language (e.g., /en, /ar, /zh)
-  // This allows explicit language selection via URL
+  // French is the mandatory default on every clean URL.
+  // Another language is used only when explicitly requested in the URL
+  // (for example /en or ?lang=en). Browser settings and stale localStorage
+  // values must not switch direct visits or search landings to English.
   const urlLang = detectLanguageFromURL();
-  if (urlLang) {
-    return urlLang;
-  }
-  
-  // Priority 2: For root URL (/) - detect device language
-  // French is the default for francophone visitors
-  const isRootUrl = window.location.pathname === '/' || window.location.pathname === '';
-  
-  if (isRootUrl) {
-    // Check if user has previously selected a language
-    const saved = localStorage.getItem("language");
-    if (saved && supportedLanguages.includes(saved as Language)) {
-      return saved as Language;
-    }
-    
-    // Detect device/browser language
-    return detectBrowserLanguage();
-  }
-  
-  // Priority 3: Saved preference in localStorage for non-root URLs
-  const saved = localStorage.getItem("language");
-  if (saved && supportedLanguages.includes(saved as Language)) {
-    return saved as Language;
-  }
-  
-  // Priority 4: Browser/system language detection
-  return detectBrowserLanguage();
+  return urlLang || "fr";
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
