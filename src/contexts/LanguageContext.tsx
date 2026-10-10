@@ -25,45 +25,21 @@ const detectLanguageFromURL = (): Language | null => {
 };
 
 const detectBrowserLanguage = (): Language => {
-  // IMPORTANT: French is the PRIMARY and DEFAULT language for AgriCapital
-  // This is because AgriCapital is based in Côte d'Ivoire (francophone country)
-  // and the majority of users are French speakers
-  
-  // Check navigator language (device/system language)
-  const browserLang = navigator.language || (navigator as any).userLanguage;
-  const langCode = browserLang?.split('-')[0]?.toLowerCase();
-  
-  // If browser language is French, return French immediately
-  if (langCode === 'fr') {
-    return 'fr';
-  }
-  
-  // Check navigator languages array (ordered by user preference)
-  const languages = navigator.languages || [];
-  
-  // First priority: Check if French is in the user's preferred languages
-  for (const lang of languages) {
-    const code = lang.split('-')[0].toLowerCase();
-    if (code === 'fr') {
-      return 'fr';
-    }
-  }
-  
-  // Second priority: Check for other supported languages
-  if (langCode && supportedLanguages.includes(langCode as Language)) {
-    return langCode as Language;
-  }
-  
-  for (const lang of languages) {
-    const code = lang.split('-')[0].toLowerCase();
-    if (supportedLanguages.includes(code as Language)) {
+  // Follow the device's primary language first, then its ordered preferences.
+  // French is the fallback for unsupported system languages.
+  const candidates = [
+    navigator.language || (navigator as any).userLanguage || "",
+    ...(navigator.languages || []),
+  ];
+
+  for (const candidate of candidates) {
+    const code = candidate.split("-")[0]?.toLowerCase();
+    if (code && supportedLanguages.includes(code as Language)) {
       return code as Language;
     }
   }
-  
-  // DEFAULT: Always return French as the fallback
-  // This ensures French-speaking users in Côte d'Ivoire see French content
-  return 'fr';
+
+  return "fr";
 };
 
 const getInitialLanguage = (): Language => {
