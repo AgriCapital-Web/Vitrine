@@ -67,12 +67,33 @@ const detectBrowserLanguage = (): Language => {
 };
 
 const getInitialLanguage = (): Language => {
-  // French is the mandatory default on every clean URL.
-  // Another language is used only when explicitly requested in the URL
-  // (for example /en or ?lang=en). Browser settings and stale localStorage
-  // values must not switch direct visits or search landings to English.
+  // An explicit language in the URL always wins.
   const urlLang = detectLanguageFromURL();
-  return urlLang || "fr";
+  if (urlLang) return urlLang;
+
+  // Search engines must always receive the French default metadata/content.
+  // Otherwise a crawler running an English browser can index English titles
+  // for the clean French URLs.
+  const userAgent = typeof navigator !== "undefined" ? navigator.userAgent : "";
+  if (/googlebot|bingbot|yandexbot|duckduckbot|baiduspider|slurp|facebookexternalhit|twitterbot|linkedinbot/i.test(userAgent)) {
+    return "fr";
+  }
+
+  // Respect a deliberate language choice, but ignore old stored preferences
+  // created before system-language detection was made the default.
+  try {
+    const saved = localStorage.getItem("language");
+    const manualChoice = localStorage.getItem("language-manual-choice") === "1";
+    if (manualChoice && saved && supportedLanguages.includes(saved as Language)) {
+      return saved as Language;
+    }
+  } catch {
+    // Storage can be disabled; continue with the device language.
+  }
+
+  // Human visitors follow their device/browser language when supported.
+  // French remains the fallback for Côte d'Ivoire and unsupported locales.
+  return detectBrowserLanguage();
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -81,7 +102,12 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   // Custom setLanguage that also updates localStorage immediately
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem("language", lang);
+    try {
+      localStorage.setItem("language", lang);
+      localStorage.setItem("language-manual-choice", "1");
+    } catch {
+      // Language still changes for the current session when storage is blocked.
+    }
   };
 
   // Listen for URL changes
@@ -89,7 +115,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const urlLang = detectLanguageFromURL();
     if (urlLang && urlLang !== language) {
       setLanguageState(urlLang);
-      localStorage.setItem("language", urlLang);
+      try {
+        localStorage.setItem("language", urlLang);
+      } catch {
+        // URL remains the source of truth when storage is blocked.
+      }
     }
   }, []);
 
