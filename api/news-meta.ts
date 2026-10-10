@@ -45,8 +45,10 @@ export default async function handler(req: Request) {
   const article = rows[0];
   if (!article) return new Response("Article not found", { status: 404 });
 
-  const title = stripHtml(article.meta_title || article.title_fr).slice(0, 200) || "Actualité AgriCapital";
-  const description = stripHtml(article.meta_description || article.excerpt_fr || article.content_fr).slice(0, 300) || "Découvrez les dernières actualités d’AgriCapital.";
+  // This endpoint serves crawlers and previews for canonical French URLs.
+  // Prefer French editorial fields over potentially English SEO fields.
+  const title = stripHtml(article.title_fr || article.title || article.meta_title).slice(0, 200) || "Actualité AgriCapital";
+  const description = stripHtml(article.excerpt_fr || article.content_fr || article.meta_description).slice(0, 300) || "Découvrez les dernières actualités d’AgriCapital.";
   const image = absoluteUrl(article.featured_image || parseImages(article)[0] || "/og-image.png");
   const canonical = BASE_URL + "/new/" + encodeURIComponent(article.slug);
   const published = article.published_at || article.created_at || "";
