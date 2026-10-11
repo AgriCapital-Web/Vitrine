@@ -5,7 +5,11 @@ import ContactSection from "@/components/Contact";
 
 const ContactPage = () => (
   <div className="min-h-screen bg-background">
-    <SEOHead title="Contact — AgriCapital" description="Contactez AgriCapital à Daloa, Haut-Sassandra, Côte d'Ivoire." />
+    <SEOHead
+      title="Contact AgriCapital | Investissement agricole en Côte d’Ivoire"
+      description="Contactez AgriCapital SARL à Gonaté, Daloa, Haut-Sassandra pour parler de plantation clé en main, palmier à huile, foncier agricole, patrimoine agricole ou partenariat."
+      keywords="contact AgriCapital, AgriCapital SARL, Inocent KOFFI, investissement agricole Côte d’Ivoire, plantation clé en main, palmier à huile, foncier agricole, Daloa, Gonaté, Haut-Sassandra, partenariat agricole"
+    />
     <DynamicNavigation />
     <main className="pt-[72px]"><ContactSection /></main>
     <Footer />
