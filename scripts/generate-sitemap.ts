@@ -17,14 +17,24 @@ interface SitemapEntry {
 
 const staticEntries: SitemapEntry[] = [
   { path: "/", changefreq: "weekly", priority: "1.0", alternates: true },
+  { path: "/a-propos", changefreq: "monthly", priority: "0.8", alternates: true },
+  { path: "/notre-approche", changefreq: "monthly", priority: "0.8", alternates: true },
+  { path: "/impact", changefreq: "monthly", priority: "0.7", alternates: true },
+  { path: "/fondateur", changefreq: "monthly", priority: "0.8", alternates: true },
+  { path: "/equipe", changefreq: "monthly", priority: "0.6", alternates: true },
+  { path: "/contact", changefreq: "monthly", priority: "0.7", alternates: true },
   { path: "/solutions", changefreq: "monthly", priority: "0.9", alternates: true },
+  { path: "/palminvest", changefreq: "monthly", priority: "0.8", alternates: true },
+  { path: "/terrapalm", changefreq: "monthly", priority: "0.8", alternates: true },
+  { path: "/palmterroir", changefreq: "monthly", priority: "0.8", alternates: true },
+  { path: "/tresor-foncier", changefreq: "monthly", priority: "0.7", alternates: true },
+  { path: "/tresor-palmier", changefreq: "monthly", priority: "0.7", alternates: true },
   { path: "/evolution", changefreq: "weekly", priority: "0.9", alternates: true },
   { path: "/actualites", changefreq: "daily", priority: "0.9", alternates: true },
   { path: "/temoignages", changefreq: "monthly", priority: "0.7" },
   { path: "/partenariats", changefreq: "monthly", priority: "0.7" },
   { path: "/partnership-request", changefreq: "monthly", priority: "0.6" },
   { path: "/faq", changefreq: "monthly", priority: "0.7" },
-  { path: "/dataroom", changefreq: "monthly", priority: "0.6" },
 ];
 
 async function fetchDynamicEntries(): Promise<SitemapEntry[]> {
