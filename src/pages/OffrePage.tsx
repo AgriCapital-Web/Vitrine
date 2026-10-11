@@ -130,8 +130,13 @@ const OffrePage = ({ offer }: { offer: OffreKey }) => {
   return (
     <div className="public-page min-h-screen">
       <SEOHead
-        title={`${data.name} — Plantation de palmier à huile | AgriCapital`}
+        title={`${data.name} — Plantation de palmier à huile | AgriCapital Côte d’Ivoire`}
         description={data.intro.slice(0, 155)}
+        keywords={offer === "palminvest"
+          ? "PalmInvest, plantation clé en main, investissement agricole Côte d’Ivoire, palmier à huile, actif agricole, patrimoine agricole, foncier agricole, plantation sans terrain, AgriCapital, Inocent KOFFI"
+          : offer === "terrapalm"
+            ? "TerraPalm, gestion de plantation, exploitation agricole, palmier à huile, suivi agronomique, actif agricole productif, patrimoine agricole, Côte d’Ivoire, AgriCapital"
+            : "PalmTerroir, plantation de palmier à huile, propriétaire terrien, création de palmeraie, plantation clé en main, valorisation du foncier, conseil agricole, Côte d’Ivoire, AgriCapital"}
       />
       <DynamicNavigation />
 
