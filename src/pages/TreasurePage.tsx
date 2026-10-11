@@ -41,7 +41,15 @@ const TreasurePage = ({ type }: { type: PageKind }) => {
 
   return (
     <div className="public-page min-h-screen text-foreground">
-      <SEOHead title={`Le trésor caché ${isFoncier ? "du foncier agricole" : "du palmier à huile"} | AgriCapital`} description="Page immersive AgriCapital sur le potentiel agricole ivoirien et les opportunités de plantation de palmier à huile." />
+      <SEOHead
+        title={isFoncier ? "Foncier agricole en Côte d’Ivoire : potentiel et valorisation | AgriCapital" : "Palmier à huile en Côte d’Ivoire : plantation et filière | AgriCapital"}
+        description={isFoncier
+          ? "Comprendre le foncier agricole en Côte d’Ivoire : potentiel des terres, valorisation des parcelles, préparation d’un projet et création d’un patrimoine agricole avec AgriCapital."
+          : "Découvrez le palmier à huile en Côte d’Ivoire : usages, filière, développement de palmeraie, plantation clé en main et accompagnement agricole avec AgriCapital."}
+        keywords={isFoncier
+          ? "foncier agricole, terre agricole Côte d’Ivoire, valorisation foncière, patrimoine agricole, actif réel, investissement agricole, terrain agricole, développement rural, Daloa, Haut-Sassandra, AgriCapital, Inocent KOFFI"
+          : "palmier à huile, plantation de palmier à huile, palmeraie, huile de palme, filière palmier à huile, plantation clé en main, actif agricole, patrimoine agricole, agriculture Côte d’Ivoire, AgriCapital, Inocent KOFFI"}
+      />
       <DynamicNavigation />
       <main>
         <section className="relative flex min-h-[76vh] items-center justify-center overflow-hidden pt-20">
