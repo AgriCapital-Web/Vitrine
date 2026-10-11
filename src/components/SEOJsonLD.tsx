@@ -24,8 +24,8 @@ const SEOJsonLD = () => {
     "founder": {
       "@type": "Person",
       "name": "Inocent KOFFI",
-      "url": "https://ikoffi.agricapital.ci/",
-      "sameAs": ["https://ikoffi.agricapital.ci/", "https://www.linkedin.com/in/inocent-k-4a08b7159/"]
+      "url": "https://www.ikoffi.agricapital.ci/",
+      "sameAs": ["https://www.ikoffi.agricapital.ci/", "https://www.linkedin.com/in/inocent-k-4a08b7159/"]
     },
     "address": {
       "@type": "PostalAddress",
@@ -172,13 +172,13 @@ const SEOJsonLD = () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Person",
-          "@id": "https://ikoffi.agricapital.ci/#person",
+          "@id": "https://www.ikoffi.agricapital.ci/#person",
           "name": "Inocent KOFFI",
-          "url": "https://ikoffi.agricapital.ci/",
+          "url": "https://www.ikoffi.agricapital.ci/",
           "jobTitle": "Fondateur et Gérant d’AgriCapital SARL",
           "worksFor": { "@type": "Organization", "@id": "https://www.agricapital.ci/#organization", "name": "AgriCapital SARL", "url": "https://www.agricapital.ci/" },
           "knowsAbout": ["Investissement agricole", "Patrimoine agricole", "Actifs agricoles productifs", "Foncier agricole", "Plantation clé en main", "Palmier à huile", "Développement agricole en Côte d’Ivoire"],
-          "sameAs": ["https://www.agricapital.ci/", "https://ikoffi.agricapital.ci/"]
+          "sameAs": ["https://www.agricapital.ci/", "https://www.ikoffi.agricapital.ci/"]
         }) }}
       />
       <script
