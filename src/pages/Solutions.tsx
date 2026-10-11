@@ -28,7 +28,7 @@ const Solutions = () => {
           name="description"
           content="Avec ou sans foncier, AgriCapital propose des solutions structurées pour créer, développer et accompagner des plantations de palmier à huile."
         />
-        <link rel="canonical" href="https://agricapital.ci/solutions" />
+        <link rel="canonical" href="https://www.agricapital.ci/solutions" />
       </Helmet>
 
       <DynamicNavigation />
