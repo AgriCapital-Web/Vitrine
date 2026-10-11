@@ -28,6 +28,9 @@ const Solutions = () => {
           name="description"
           content="Avec ou sans foncier, AgriCapital propose des solutions structurées pour créer, développer et accompagner des plantations de palmier à huile."
         />
+        <meta name="keywords" content="solutions agricoles, services agricoles, investissement agricole, plantation clé en main, palmier à huile, patrimoine agricole, actifs réels, foncier agricole, PalmInvest, PalmTerroir, TerraPalm, AgriCapital, Inocent KOFFI, Côte d’Ivoire" />
+        <meta property="og:title" content="Solutions agricoles & plantation clé en main | AgriCapital" />
+        <meta property="og:description" content="Découvrez les solutions AgriCapital pour créer, développer et accompagner une plantation de palmier à huile en Côte d’Ivoire, avec ou sans foncier." />
         <link rel="canonical" href="https://www.agricapital.ci/solutions" />
       </Helmet>
 
