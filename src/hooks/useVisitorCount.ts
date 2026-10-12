@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-const BASE_TOTAL = 4126;
-
 export const useVisitorCount = () => {
   const [totalVisitors, setTotalVisitors] = useState<number>(() => {
     const cached = localStorage.getItem("cached_human_visitor_count_v2");
