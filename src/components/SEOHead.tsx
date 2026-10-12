@@ -21,8 +21,8 @@ const seoByLanguage: Record<Language, {
   locale: string;
 }> = {
   fr: {
-    title: "AgriCapital Côte d’Ivoire | Plantation clé en main & patrimoine agricole",
-    description: "AgriCapital SARL accompagne l’investissement agricole en Côte d’Ivoire : plantation de palmier à huile clé en main, valorisation du foncier, actifs agricoles productifs, patrimoine agricole et accompagnement technique à Daloa, Gonaté et dans le Haut-Sassandra.",
+    title: "AgriCapital | Foncier sécurisé & plantation clé en main en Côte d’Ivoire",
+    description: "AgriCapital facilite l’accès au foncier agricole sécurisé et la création de plantations de palmier à huile clé en main en Côte d’Ivoire, avec ou sans terre. À Gonaté, Daloa et dans le Haut-Sassandra.",
     keywords: "AgriCapital, AgriCapital SARL, Inocent KOFFI, plantation clé en main, plantation agricole clé en main, patrimoine agricole, patrimoine foncier, investissement agricole, investissement agricole Côte d’Ivoire, investir dans la terre, investissement foncier, actif agricole, actifs agricoles productifs, actif réel, actifs réels, palmier à huile, plantation de palmier à huile, palmeraie, culture du palmier à huile, huile de palme, filière palmier à huile, foncier agricole, terre agricole, acquisition de terres agricoles, aménagement de plantation, création de plantation, développement agricole, exploitation agricole, gestion de plantation, accompagnement agricole, conseil agricole, services agricoles intégrés, valorisation du foncier, valorisation des terres, projet agricole, financement agricole, partenariat agricole, agriculture en Côte d’Ivoire, plantation en Côte d’Ivoire, agriculture durable, agriculture productive, patrimoine durable, diversification patrimoniale, transmission patrimoniale, Daloa, Gonaté, Haut-Sassandra, Afrique de l’Ouest, PalmInvest, PalmTerroir, TerraPalm, ikoffi.agricapital.ci",
     locale: "fr_CI",
   },
