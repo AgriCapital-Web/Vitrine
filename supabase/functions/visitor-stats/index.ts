@@ -5,7 +5,7 @@ const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
-const automatedPattern = /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|lovableapp|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i;
+const automatedPattern = /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js|X11; Linux x86_64.*Chrome\/121\.0\.0\.0|Windows NT 10\.0; Win64; x64.*Chrome\/119\.0\.0\.0)/i;
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
@@ -34,7 +34,7 @@ Deno.serve(async (req: Request) => {
       weekly_visitors: weeklyVisitors,
       metric: "distinct_browser_ids",
       window_days: 180,
-      note: "Estimation basée sur les identifiants de navigateur enregistrés; les robots explicitement identifiables sont exclus. Ce n’est pas une mesure parfaite des personnes réelles.",
+      note: "Estimation basée sur les identifiants de navigateur enregistrés; les robots explicitement identifiables sont exclus. Les signatures de navigateur obsolètes à volume anormal sont également exclues. Ce n’est pas une mesure parfaite des personnes réelles.",
       updated_at: new Date().toISOString(),
     }), { headers: { ...corsHeaders, "Content-Type": "application/json", "Cache-Control": "no-store" } });
   } catch (error) {
