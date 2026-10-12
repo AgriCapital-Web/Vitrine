@@ -226,6 +226,13 @@ const AdminNews = () => {
           mediaOption: selectedMediaOption,
           editorialMode,
           sourceImages: formData.images,
+          existingArticle: {
+            title: formData.title_fr,
+            excerpt: formData.excerpt_fr,
+            category: formData.category,
+            slug: formData.slug,
+            isRegeneration: Boolean(editingArticle),
+          },
         },
       });
 
@@ -261,11 +268,12 @@ const AdminNews = () => {
 
       setFormData(prev => ({
         ...prev,
-        title_fr: articleData.title || prev.title_fr,
+        // Never replace the editor's existing title/slug/category during regeneration.
+        title_fr: editingArticle || prev.title_fr.trim() ? prev.title_fr : (articleData.title || prev.title_fr),
         content_fr: htmlContent + hashtagLine,
         excerpt_fr: articleData.excerpt || prev.excerpt_fr,
-        category: articleData.category || prev.category,
-        slug: articleData.slug || prev.slug,
+        category: editingArticle || prev.category !== "general" ? prev.category : (articleData.category || prev.category),
+        slug: editingArticle || prev.slug.trim() ? prev.slug : (articleData.slug || prev.slug),
         images: [...prev.images, ...generatedUrls],
         featured_image: prev.featured_image || prev.images[0] || generatedUrls[0] || "",
         is_published: false,
