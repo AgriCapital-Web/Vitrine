@@ -54,20 +54,20 @@ const renderPublicImages = (article: Record<string, any>, title: string) => {
   }).join("\n");
 };
 
-export default async function handler(req: Request) {
-  const requestUrl = new URL(req.url);
+export default async function handler(req: any, res: any) {
+  const requestUrl = new URL(req.url || "/", BASE_URL);
   const slug = requestUrl.searchParams.get("slug")?.trim();
-  if (!slug) return new Response("Missing slug", { status: 400 });
+  if (!slug) return res.status(400).send("Missing slug");
 
   const response = await fetch(
     SUPABASE_URL + "/rest/v1/news?select=*&slug=eq." + encodeURIComponent(slug) + "&is_published=eq.true&limit=1",
-    { headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}` } },
+    { headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}` }, signal: AbortSignal.timeout(8000), cache: "no-store" },
   );
 
-  if (!response.ok) return new Response("Unable to load article", { status: 502 });
+  if (!response.ok) return res.status(502).send("Unable to load article");
   const rows = await response.json();
   const article = rows[0];
-  if (!article) return new Response("Article not found", { status: 404 });
+  if (!article) return res.status(404).send("Article not found");
 
   // This endpoint serves crawlers and previews for canonical French URLs.
   // Prefer French editorial fields over potentially English SEO fields.
@@ -154,11 +154,7 @@ ${publicImages}
 </body>
 </html>`;
 
-  return new Response(html, {
-    status: 200,
-    headers: {
-      "Content-Type": "text/html; charset=utf-8",
-      "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
-    },
-  });
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
+  return res.status(200).send(html);
 }
