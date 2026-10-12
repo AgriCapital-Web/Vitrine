@@ -3,11 +3,11 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const useVisitorCount = () => {
   const [totalVisitors, setTotalVisitors] = useState<number>(() => {
-    const cached = localStorage.getItem("cached_human_visitor_count_v2");
+    const cached = localStorage.getItem("cached_public_total_visits_v3");
     return cached ? Number(cached) || 0 : 0;
   });
   const [weeklyVisitors, setWeeklyVisitors] = useState<number>(() => {
-    const cached = localStorage.getItem("cached_human_weekly_count_v2");
+    const cached = localStorage.getItem("cached_public_weekly_visits_v3");
     return cached ? Number(cached) || 0 : 0;
   });
   const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +17,13 @@ export const useVisitorCount = () => {
 
     const fetchVisitorCount = async () => {
       try {
-        const { data, error } = await supabase.functions.invoke("visitor-stats", { method: "GET" });
+        // The public counter is a historical cumulative counter, not a distinct-person estimate.
+        // Read it directly so filtering heuristics never replace the historical 9k+ total.
+        const { data, error } = await supabase
+          .from("visitor_counters")
+          .select("total_visitors, weekly_visitors")
+          .eq("id", "public")
+          .maybeSingle();
         if (error) throw error;
 
         const total = Math.max(0, Number(data?.total_visitors) || 0);
@@ -26,8 +32,8 @@ export const useVisitorCount = () => {
         if (!mounted) return;
         setTotalVisitors(total);
         setWeeklyVisitors(weekly);
-        localStorage.setItem("cached_human_visitor_count_v2", String(total));
-        localStorage.setItem("cached_human_weekly_count_v2", String(weekly));
+        localStorage.setItem("cached_public_total_visits_v3", String(total));
+        localStorage.setItem("cached_public_weekly_visits_v3", String(weekly));
       } catch (error) {
         console.warn("visitor-stats:", error);
       } finally {
