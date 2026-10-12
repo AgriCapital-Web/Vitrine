@@ -1,6 +1,39 @@
 {
   "rewrites": [
     {
+      "source": "/new",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": "1; mode=block"
+        }
+      ],
+      "destination": "/api/news-index"
+    },
+    {
+      "source": "/actualites",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": "1; mode=block"
+        }
+      ],
+      "destination": "/api/news-index"
+    },
+    {
+      "source": "/news",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": "1; mode=block"
+        }
+      ],
+      "destination": "/api/news-index"
+    },
+    {
       "source": "/sitemap.xml",
       "destination": "/api/sitemap"
     },
