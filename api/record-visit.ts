@@ -29,6 +29,11 @@ export default async function handler(req: any, res: any) {
 
   const userAgent = clean(req.headers["user-agent"], 1000);
   const automationFlag = Boolean(req.body && typeof req.body === "object" && (req.body as any).automation_flag === true);
+  const incomingReferrer = clean(req.body && typeof req.body === "object" ? (req.body as any).referrer : "", 1000);
+  if (/(?:lovable\.app|lovable\.dev|gpt-engineer-file-uploads)/i.test(incomingReferrer)) {
+    res.setHeader("Cache-Control", "no-store");
+    return res.status(200).json({ ok: true, ignored: true, reason: "preview_referrer" });
+  }
   if (automationFlag || /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js|X11; Linux x86_64.*Chrome\/121\.0\.0\.0|Windows NT 10\.0; Win64; x64.*Chrome\/119\.0\.0\.0)/i.test(userAgent)) {
     res.setHeader("Cache-Control", "no-store");
     return res.status(200).json({ ok: true, ignored: true, reason: "automated_traffic" });
