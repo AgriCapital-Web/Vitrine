@@ -1,6 +1,7 @@
 const SUPABASE_URL = "https://sxsolthkxfavimitoowy.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4c29sdGhreGZhdmltaXRvb3d5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjcxNDcsImV4cCI6MjA4Njg0MzE0N30.H7dkzy1hh1L5kkLIviDtqSrR3rPfCXWoalJHNWv12fE";
 const BASE_URL = "https://www.agricapital.ci";
+// Canonical public routes only; news articles use the /new/:slug canonical path.
 
 const staticPaths = [
   "/", "/a-propos", "/notre-approche", "/impact", "/fondateur", "/equipe",
