@@ -31,7 +31,6 @@ const menuItems: MenuItem[] = [
   { divider: true, label: "Communication" },
   { icon: Mail, label: "Messages contact", path: "/admin/contact-messages" },
   { icon: Send, label: "Campagnes & Newsletter", path: "/admin/campagnes" },
-  { icon: Mail, label: "Import e-mails", path: "/admin/import-emails" },
   { icon: Handshake, label: "Demandes partenariat", path: "/admin/partnership-requests" },
   { icon: UserCircle, label: "Contacts visiteurs", path: "/admin/visitor-contacts" },
   { icon: Bell, label: "Notifications push", path: "/admin/push-notifications" },
