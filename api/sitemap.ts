@@ -1,5 +1,5 @@
 const SUPABASE_URL = "https://sxsolthkxfavimitoowy.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcGkiLCJyZWYiOiJzeHNvbHRoa3hmYXZpbWl0b293eSIsInJvbGUiOiJhcGlfcm9sZSIsImlhdCI6MTc3MTI2NzE0NywiZXhwIjoyMDg2ODQzMTQzfQ.H7dkzy1hh1L5kkLIviDtqSrR3rPfCXWoalJHNWv12fE";
+const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmxlIiwicmVmIjoic3hzb2x0aGt4ZmF2aW1pdG93eSIsInJvbGUiOiJhcGlfcm9sZSIsImlhdCI6MTc3MTI2NzE0NywiZXhwIjoyMDg2ODQzMTQzfQ.H7dkzy1hh1L5kkLIviDtqSrR3rPfCXWoalJHNWv12fE";
 const BASE_URL = "https://www.agricapital.ci";
 
 const staticPaths = [
