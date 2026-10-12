@@ -45,6 +45,7 @@ const AdminAnalytics = () => {
       for (let offset = 0; ; offset += 1000) {
         const { data: batch, error } = await supabase.from("page_visits")
           .select("page_path, user_agent, country, city, referrer, created_at")
+          .gte("created_at", new Date(Date.now() - 180 * 24 * 60 * 60 * 1000).toISOString())
           .order("created_at", { ascending: false }).range(offset, offset + 999);
         if (error) throw error;
         visits.push(...(batch || []));
