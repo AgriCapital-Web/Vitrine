@@ -202,6 +202,12 @@ const HomePage = () => {
               Chaque projet s’inscrit dans un cadre défini : les engagements des parties, les responsabilités et les conditions applicables sont formalisés avant le démarrage. Les éléments fonciers liés au projet, l’identification de l’actif agricole et les étapes de suivi sont documentés selon la situation concernée. La terre et les droits attachés à une plantation sont distingués conformément au cadre contractuel applicable, afin que chacun puisse comprendre la portée de son engagement.
             </p>
           </div>
+          <div className="mt-8 rounded-2xl border border-border/70 bg-card p-6 md:p-8">
+            <h3 className="text-xl font-bold">Transparence et cadre de confiance</h3>
+            <p className="mt-3 max-w-4xl leading-relaxed text-muted-foreground">
+              Chaque projet s’inscrit dans un cadre défini : les engagements des parties, les responsabilités et les conditions applicables sont formalisés avant le démarrage. Les éléments fonciers liés au projet, l’identification de l’actif agricole et les étapes de suivi sont documentés selon la situation concernée. La terre et les droits attachés à une plantation sont distingués conformément au cadre contractuel applicable, afin que chacun puisse comprendre la portée de son engagement.
+            </p>
+          </div>
         </div>
       </section>
 
