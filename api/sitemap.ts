@@ -1,5 +1,5 @@
 const SUPABASE_URL = "https://sxsolthkxfavimitoowy.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmxlIiwicmVmIjoic3hzb2x0aGt4ZmF2aW1pdG93eSIsInJvbGUiOiJhcGlfcm9sZSIsImlhdCI6MTc3MTI2NzE0NywiZXhwIjoyMDg2ODQzMTQzfQ.H7dkzy1hh1L5kkLIviDtqSrR3rPfCXWoalJHNWv12fE";
+const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4c29sdGhreGZhdmltaXRvb3d5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjcxNDcsImV4cCI6MjA4Njg0MzE0N30.H7dkzy1hh1L5kkLIviDtqSrR3rPfCXWoalJHNWv12fE";
 const BASE_URL = "https://www.agricapital.ci";
 
 const staticPaths = [
@@ -21,7 +21,7 @@ export default async function handler() {
   try {
     const response = await fetch(
       SUPABASE_URL + "/rest/v1/news?select=slug,updated_at,published_at&is_published=eq.true&order=published_at.desc&limit=2000",
-      { headers: { apikey: SUPABASE_PUBLISHABLE_KEY } },
+      { headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}` } },
     );
     if (response.ok) {
       const articles = await response.json();
