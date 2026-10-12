@@ -108,12 +108,6 @@ const AdminDashboard = () => {
   };
 
   const fetchAnalytics = async () => {
-    const { data: publicCounter } = await (supabase as any)
-      .from("visitor_counters")
-      .select("total_visitors")
-      .eq("id", "public")
-      .maybeSingle();
-
     // Supabase returns at most 1,000 rows per request by default; paginate so
     // country/device totals are based on the complete visit history.
     const allVisits: any[] = [];
