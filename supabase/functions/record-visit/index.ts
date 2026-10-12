@@ -17,7 +17,7 @@ serve(async (req) => {
     const body = await req.json();
     const pagePath = clean(body?.page_path, 500) || "/";
     const userAgent = clean(body?.user_agent, 1000) || req.headers.get("user-agent") || "";
-    const automatedPattern = /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js|X11; Linux x86_64.*Chrome\/121\.0\.0\.0|Windows NT 10\.0; Win64; x64.*Chrome\/119\.0\.0\.0)/i;
+    const automatedPattern = /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i;
     const incomingReferrer = clean(body?.referrer, 1000) || "";
     if (body?.automation_flag === true || automatedPattern.test(userAgent) || /(?:lovable\.app|lovable\.dev|gpt-engineer-file-uploads)/i.test(incomingReferrer)) {
       return new Response(JSON.stringify({ ok: true, ignored: true, reason: "automated_traffic" }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
