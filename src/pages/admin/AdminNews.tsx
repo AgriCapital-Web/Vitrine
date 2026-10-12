@@ -255,22 +255,20 @@ const AdminNews = () => {
       }
 
       setGenerationStep("Mise en page éditoriale et insertion des médias...");
+      const cleanArticleText = String(articleData.content || "").replace(/(?:^|\n)\s*#[\p{L}\p{N}_-]+(?:\s+#[\p{L}\p{N}_-]+)*\s*(?=\n|$)/gu, "").replace(/<p[^>]*>\s*(?:<strong>)?\s*(?:#[^<\s]+\s*)+(?:<\/strong>)?\s*<\/p>/gi, "");
       const finalMarkdown = injectArticleMedia(
-        articleData.content || "",
+        cleanArticleText,
         formData.images,
         generatedUrls,
         Array.isArray(articleData.mediaPlan) ? articleData.mediaPlan : []
       );
       const htmlContent = markdownToHtml(finalMarkdown);
-      const hashtagLine = Array.isArray(articleData.hashtags) && articleData.hashtags.length
-        ? `\n\n<hr class="my-6 border-border">\n<p class="mb-4 leading-relaxed">${articleData.hashtags.map((h: string) => `<strong>#${h.replace(/^#/, "")}</strong>`).join(" ")}</p>`
-        : "";
 
       setFormData(prev => ({
         ...prev,
         // Never replace the editor's existing title/slug/category during regeneration.
         title_fr: editingArticle || prev.title_fr.trim() ? prev.title_fr : (articleData.title || prev.title_fr),
-        content_fr: htmlContent + hashtagLine,
+        content_fr: htmlContent,
         excerpt_fr: articleData.excerpt || prev.excerpt_fr,
         category: editingArticle || prev.category !== "general" ? prev.category : (articleData.category || prev.category),
         slug: editingArticle || prev.slug.trim() ? prev.slug : (articleData.slug || prev.slug),
