@@ -240,6 +240,52 @@ ${mediaInstruction}`;
     if (lockedTitle) article.title = lockedTitle;
     if (lockedCategory) article.category = lockedCategory;
     if (lockedSlug) article.slug = lockedSlug;
+ 
+    // Mandatory editorial QA pass: remove off-topic passages and unsupported facts before returning.
+    const qaResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + LOVABLE_API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "google/gemini-3-flash-preview",
+        temperature: 0.1,
+        messages: [
+          {
+            role: "system",
+            content: "Tu es le contrôleur éditorial final d’AgriCapital. Compare l’article à la matière source et au titre imposé. Réécris le contenu pour supprimer tout passage hors sujet, toute digression, toute répétition et tout détail factuel non justifié par la source. Ne change jamais le sujet, l’angle central, les personnes, les lieux, les dates ou les chiffres. N’invente aucun fait. Si la source est trop courte, raccourcis l’article au lieu de remplir. Préserve exactement les marqueurs [[IMAGE_1]], [[IMAGE_2]], [[AI_IMAGE_1]], etc. si présents. Retourne uniquement un objet JSON valide avec les champs content et excerpt. Pas de markdown autour du JSON."
+          },
+          {
+            role: "user",
+            content: "TITRE IMPOSÉ : " + (lockedTitle || article.title || "") +
+              "\nEXTRAIT EXISTANT : " + lockedExcerpt +
+              "\nSOURCE DE VÉRITÉ :\n" + sanitizedInput +
+              "\n\nARTICLE À AUDITER :\n" + String(article.content || "").slice(0, 14000) +
+              "\n\nVérifie chaque paragraphe. Le résultat doit rester strictement dans le sujet du titre. Retourne seulement un objet JSON avec content et excerpt."
+          }
+        ],
+      }),
+    });
+
+    if (!qaResponse.ok) {
+      console.error("Editorial QA failed:", qaResponse.status);
+      throw new Error("La vérification éditoriale a échoué. Aucun article non vérifié n’a été renvoyé ; veuillez réessayer.");
+    }
+    const qaPayload = await qaResponse.json();
+    const qaRaw = qaPayload.choices?.[0]?.message?.content || "";
+    const qaArticle = parseAIJson(qaRaw);
+    if (typeof qaArticle.content !== "string" || !qaArticle.content.trim()) {
+      throw new Error("La vérification éditoriale n’a pas produit de contenu exploitable.");
+    }
+    article.content = qaArticle.content.trim();
+    if (typeof qaArticle.excerpt === "string" && qaArticle.excerpt.trim()) {
+      article.excerpt = qaArticle.excerpt.trim();
+    }
+    if (lockedTitle) article.title = lockedTitle;
+    if (lockedCategory) article.category = lockedCategory;
+    if (lockedSlug) article.slug = lockedSlug;
+
 
     const contentCaps: Record<string, number> = { flash: 4500, standard: 9000, immersive: 14000, reportage: 12000 };
     const cap = contentCaps[editorialMode] || 3500;
