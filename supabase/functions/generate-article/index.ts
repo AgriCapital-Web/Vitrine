@@ -141,14 +141,14 @@ RÈGLES DE FIABILITÉ :
 - Tu peux analyser et mettre en perspective les faits fournis, mais une analyse ne doit jamais être présentée comme un fait.
 - Si la matière est trop courte pour affirmer un détail, ne l'invente pas.
 - Ne présente jamais AgriCapital comme une banque, une ONG ou un fonds.
-- Utilise le vocabulaire : particuliers et professionnels, propriétaires fonciers, patrimoine agricole, plantation clé en main, sécurisation foncière, suivi technique et traçabilité.
+- Utilise le vocabulaire : particuliers et professionnels, propriétaires fonciers, patrimoine agricole, plantation clé en main, transparence, cadre contractuel clair, suivi documenté et traçabilité.
+- N’utilise aucun hashtag, mot-dièse ou liste de tags sociaux, ni dans le titre, ni dans le corps, ni à la fin.
 
 STRUCTURE JSON :
 {
   "title": "Titre éditorial",
   "content": "Article complet en Markdown avec les marqueurs [[IMAGE_1]] quand nécessaire",
   "excerpt": "Extrait de 1 à 3 phrases",
-  "hashtags": ["agriculture", "Côte d'Ivoire"],
   "category": "actualites",
   "slug": "titre-url-friendly",
   "imagePrompts": [],
@@ -254,7 +254,7 @@ ${mediaInstruction}`;
         messages: [
           {
             role: "system",
-            content: "Tu es le contrôleur éditorial final d’AgriCapital. Compare l’article à la matière source et au titre imposé. Réécris le contenu pour supprimer tout passage hors sujet, toute digression, toute répétition et tout détail factuel non justifié par la source. Ne change jamais le sujet, l’angle central, les personnes, les lieux, les dates ou les chiffres. N’invente aucun fait. Si la source est trop courte, raccourcis l’article au lieu de remplir. Préserve exactement les marqueurs [[IMAGE_1]], [[IMAGE_2]], [[AI_IMAGE_1]], etc. si présents. Retourne uniquement un objet JSON valide avec les champs content et excerpt. Pas de markdown autour du JSON."
+            content: "Tu es le contrôleur éditorial final d’AgriCapital. Compare l’article à la matière source et au titre imposé. Réécris le contenu pour supprimer tout passage hors sujet, toute digression, toute répétition, tout hashtag et tout détail factuel non justifié par la source. Ne change jamais le sujet, l’angle central, les personnes, les lieux, les dates ou les chiffres. N’invente aucun fait. Si la source est trop courte, raccourcis l’article au lieu de remplir. Préserve exactement les marqueurs [[IMAGE_1]], [[IMAGE_2]], [[AI_IMAGE_1]], etc. si présents. Retourne uniquement un objet JSON valide avec les champs content et excerpt. Ne produis aucun hashtag ni section de tags. Pas de markdown autour du JSON."
           },
           {
             role: "user",
@@ -262,7 +262,7 @@ ${mediaInstruction}`;
               "\nEXTRAIT EXISTANT : " + lockedExcerpt +
               "\nSOURCE DE VÉRITÉ :\n" + sanitizedInput +
               "\n\nARTICLE À AUDITER :\n" + String(article.content || "").slice(0, 14000) +
-              "\n\nVérifie chaque paragraphe. Le résultat doit rester strictement dans le sujet du titre. Retourne seulement un objet JSON avec content et excerpt."
+              "\n\nVérifie chaque paragraphe. Le résultat doit rester strictement dans le sujet du titre et ne contenir aucun hashtag, mot-dièse ou section de tags sociaux. Retourne seulement un objet JSON avec content et excerpt."
           }
         ],
       }),
@@ -278,7 +278,10 @@ ${mediaInstruction}`;
     if (typeof qaArticle.content !== "string" || !qaArticle.content.trim()) {
       throw new Error("La vérification éditoriale n’a pas produit de contenu exploitable.");
     }
-    article.content = qaArticle.content.trim();
+    article.content = qaArticle.content.trim()
+      .replace(/<p[^>]*>\s*(?:<strong>)?\s*(?:#[^<\s]+\s*)+(?:<\/strong>)?\s*<\/p>/gi, "")
+      .replace(/(?:^|\n)\s*#[\p{L}\p{N}_-]+(?:\s+#[\p{L}\p{N}_-]+)*\s*(?=\n|$)/gu, "");
+    delete article.hashtags;
     if (typeof qaArticle.excerpt === "string" && qaArticle.excerpt.trim()) {
       article.excerpt = qaArticle.excerpt.trim();
     }
