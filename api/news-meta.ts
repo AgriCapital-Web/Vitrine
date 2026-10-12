@@ -33,11 +33,11 @@ const parseImages = (article: Record<string, any>) => {
 
 const sanitizeRichHtml = (value: unknown) => {
   let html = String(value ?? "");
-  html = html.replace(/<\\s*(script|style|iframe|object|embed|form|input|button|textarea|select|meta|link)[^>]*>[\\s\\S]*?<\\s*\\/\\s*\\1\\s*>/gi, "");
-  html = html.replace(/<\\s*(script|style|iframe|object|embed|form|input|button|textarea|select|meta|link)\\b[^>]*\\/?\\s*>/gi, "");
-  html = html.replace(/\\s+on[a-z]+\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+)/gi, "");
-  html = html.replace(/\\s+(href|src|xlink:href)\\s*=\\s*(["'])\\s*javascript:[\\s\\S]*?\\2/gi, "");
-  html = html.replace(/\\s+srcdoc\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+)/gi, "");
+  html = html.replace(/<\s*(script|style|iframe|object|embed|form|input|button|textarea|select|meta|link)[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, "");
+  html = html.replace(/<\s*(script|style|iframe|object|embed|form|input|button|textarea|select|meta|link)\b[^>]*\/?\s*>/gi, "");
+  html = html.replace(/\s+on[a-z]+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "");
+  html = html.replace(/\s+(href|src|xlink:href)\s*=\s*(["'])\s*javascript:[\s\S]*?\2/gi, "");
+  html = html.replace(/\s+srcdoc\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "");
   return html;
 };
 
@@ -47,13 +47,14 @@ const renderPublicImages = (article: Record<string, any>, title: string) => {
   const seen = new Set<string>();
   return entries.map((entry: any) => {
     const url = typeof entry === "string" ? entry : String(entry?.url || entry?.src || "");
-    if (!/^https?:\\/\\//i.test(url) || seen.has(url)) return "";
+    if (!/^https?:\/\//i.test(url) || seen.has(url)) return "";
     seen.add(url);
     const caption = typeof entry === "object" && entry ? String(entry.caption_fr || entry.caption || entry.alt || "") : "";
     return '<figure><img src="' + escapeHtml(url) + '" alt="' + escapeHtml(caption || title) + '" loading="lazy"><figcaption>' + escapeHtml(caption) + '</figcaption></figure>';
-  }).join("\\n");
+  }).join("\n");
 };
-\nexport default async function handler(req: Request) {
+
+export default async function handler(req: Request) {
   const requestUrl = new URL(req.url);
   const slug = requestUrl.searchParams.get("slug")?.trim();
   if (!slug) return new Response("Missing slug", { status: 400 });
