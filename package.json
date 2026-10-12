@@ -7,7 +7,7 @@
     "predev": "bunx tsx scripts/generate-sitemap.ts",
     "dev": "vite",
     "prebuild": "bunx tsx scripts/generate-sitemap.ts",
-    "build": "vite build && npm install --no-save --package-lock=false playwright && npx playwright install-deps chromium && npx playwright install chromium && bunx tsx scripts/generate-news-meta.ts && node scripts/prerender-public-pages.mjs",
+    "build": "vite build && npm install --no-save --package-lock=false playwright-core @sparticuz/chromium && bunx tsx scripts/generate-news-meta.ts && node scripts/prerender-public-pages.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"
