@@ -6,7 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Eye, TrendingUp, Users, Globe, Calendar, Download } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|lovableapp|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(String(value || ""));\n\ninterface VisitData {
+const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|lovableapp|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(String(value || ""));
+
+interface VisitData {
   page_path: string;
   count: number;
 }
@@ -29,7 +31,9 @@ const AdminAnalytics = () => {
   const [topReferrers, setTopReferrers] = useState<{ referrer: string; count: number }[]>([]);
   const [topCountries, setTopCountries] = useState<{ country: string; count: number }[]>([]);
   const [topCities, setTopCities] = useState<{ city: string; count: number }[]>([]);
-  const [topDevices, setTopDevices] = useState<CountItem[]>([]);\n  const [suspectedBotVisits, setSuspectedBotVisits] = useState(0);
+  const [topDevices, setTopDevices] = useState<CountItem[]>([]);
+  const [suspectedBotVisits, setSuspectedBotVisits] = useState(0);
+  const [suspectedBotVisits, setSuspectedBotVisits] = useState(0);
 
   useEffect(() => {
     fetchAnalytics();
@@ -38,118 +42,66 @@ const AdminAnalytics = () => {
   const fetchAnalytics = async () => {
     setIsLoading(true);
     try {
-      const { data: publicCounter } = await (supabase as any)
-        .from("visitor_counters")
-        .select("total_visitors, weekly_visitors")
-        .eq("id", "public")
-        .maybeSingle();
-      setTotalVisits(Number(publicCounter?.total_visitors) || 0);
-      setWeekVisits(Number(publicCounter?.weekly_visitors) || 0);
-
-      // Today visits
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const { count: todayCount } = await supabase
-        .from("page_visits")
-        .select("*", { count: "exact", head: true })
-        .gte("created_at", today.toISOString());
-      setTodayVisits(todayCount || 0);
-
-      // Month visits
-      const monthAgo = new Date();
-      monthAgo.setMonth(monthAgo.getMonth() - 1);
-      const { count: monthCount } = await supabase
-        .from("page_visits")
-        .select("*", { count: "exact", head: true })
-        .gte("created_at", monthAgo.toISOString());
-      setMonthVisits(monthCount || 0);
-
-      // Read the complete visit history in pages; Supabase otherwise caps
-      // each response at 1,000 rows and silently undercounts countries/devices.
       const visits: any[] = [];
       for (let offset = 0; ; offset += 1000) {
-        const { data: batch, error } = await supabase
-          .from("page_visits")
+        const { data: batch, error } = await supabase.from("page_visits")
           .select("page_path, user_agent, country, city, referrer, created_at")
-          .order("created_at", { ascending: false })
-          .range(offset, offset + 999);
+          .order("created_at", { ascending: false }).range(offset, offset + 999);
         if (error) throw error;
         visits.push(...(batch || []));
         if (!batch || batch.length < 1000) break;
       }
+      const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent));
+      setSuspectedBotVisits(visits.length - humanVisits.length);
+      const now = new Date();
+      const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
+      const weekStart = new Date(now); weekStart.setDate(weekStart.getDate() - 6); weekStart.setHours(0, 0, 0, 0);
+      const monthStart = new Date(now); monthStart.setDate(monthStart.getDate() - 30);
+      setTotalVisits(humanVisits.length);
+      setTodayVisits(humanVisits.filter((v: any) => new Date(v.created_at) >= todayStart).length);
+      setWeekVisits(humanVisits.filter((v: any) => new Date(v.created_at) >= weekStart).length);
+      setMonthVisits(humanVisits.filter((v: any) => new Date(v.created_at) >= monthStart).length);
 
-      {
-        const pageCount: Record<string, number> = {};
-        visits.forEach((v) => {
-          pageCount[v.page_path] = (pageCount[v.page_path] || 0) + 1;
-        });
-        const sorted = Object.entries(pageCount)
-          .map(([page_path, count]) => ({ page_path, count }))
-          .sort((a, b) => b.count - a.count)
-          .slice(0, 10);
-        setTopPages(sorted);
-
-        const deviceCounts: Record<string, number> = {};
-        humanVisits.forEach((visit: any) => {
-          const ua = String(visit.user_agent || "").toLowerCase();
-          const device = /ipad|tablet|kindle|silk/.test(ua)
-            ? "Tablette"
-            : /mobile|iphone|ipod|android/.test(ua)
-              ? "Téléphone"
-              : ua ? "Ordinateur" : "Non déterminé";
-          deviceCounts[device] = (deviceCounts[device] || 0) + 1;
-        });
-        setTopDevices(Object.entries(deviceCounts)
-          .map(([label, count]) => ({ label, count }))
-          .sort((a, b) => b.count - a.count));
-      }
-
-      // Real geography and referrers, aggregated from the complete paginated visit history.
-      const countries: Record<string, number> = {}, cities: Record<string, number> = {};
-      visits.forEach((v: any) => {
-        if (v.country) countries[v.country] = (countries[v.country] || 0) + 1;
-        if (v.city) cities[v.city] = (cities[v.city] || 0) + 1;
-      });
-      setTopCountries(Object.entries(countries).map(([country,count])=>({country,count})).sort((a,b)=>b.count-a.count));
-      setTopCities(Object.entries(cities).map(([city,count])=>({city,count})).sort((a,b)=>b.count-a.count));
-
-      // Top referrers
-      {
-        const refCount: Record<string, number> = {};
-        visits.forEach((v: any) => {
-          if (v.referrer) {
-            refCount[v.referrer] = (refCount[v.referrer] || 0) + 1;
-          }
-        });
-        const sortedRefs = Object.entries(refCount)
-          .map(([referrer, count]) => ({ referrer, count }))
-          .sort((a, b) => b.count - a.count)
-          .slice(0, 5);
-        setTopReferrers(sortedRefs);
-      }
-
-      // Daily visits for last 7 days
-      const dailyData: DailyVisit[] = [];
+      const pageCount: Record<string, number> = {};
+      const deviceCounts: Record<string, number> = {};
+      const countryCounts: Record<string, number> = {};
+      const cityCounts: Record<string, number> = {};
+      const refCounts: Record<string, number> = {};
+      const dailyCounts: Record<string, number> = {};
       for (let i = 6; i >= 0; i--) {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
-        date.setHours(0, 0, 0, 0);
-        const nextDate = new Date(date);
-        nextDate.setDate(nextDate.getDate() + 1);
-
-        const { count } = await supabase
-          .from("page_visits")
-          .select("*", { count: "exact", head: true })
-          .gte("created_at", date.toISOString())
-          .lt("created_at", nextDate.toISOString());
-
-        dailyData.push({
-          date: date.toLocaleDateString("fr-FR", { weekday: "short", day: "numeric" }),
-          count: count || 0,
-        });
+        const date = new Date(now); date.setDate(date.getDate() - i); date.setHours(0, 0, 0, 0);
+        dailyCounts[date.toISOString().split("T")[0]] = 0;
       }
-      setDailyVisits(dailyData);
-
+      humanVisits.forEach((v: any) => {
+        const path = v.page_path || "/";
+        pageCount[path] = (pageCount[path] || 0) + 1;
+        if (v.country) countryCounts[v.country] = (countryCounts[v.country] || 0) + 1;
+        if (v.city) cityCounts[v.city] = (cityCounts[v.city] || 0) + 1;
+        const ua = String(v.user_agent || "").toLowerCase();
+        const device = /ipad|tablet|kindle|silk/.test(ua) ? "Tablette"
+          : /mobile|iphone|ipod|android/.test(ua) ? "Téléphone"
+          : ua ? "Ordinateur" : "Non déterminé";
+        deviceCounts[device] = (deviceCounts[device] || 0) + 1;
+        if (v.referrer) {
+          try {
+            const source = new URL(v.referrer).hostname.replace(/^www\./, "");
+            refCounts[source] = (refCounts[source] || 0) + 1;
+          } catch {
+            refCounts["Référent non reconnu"] = (refCounts["Référent non reconnu"] || 0) + 1;
+          }
+        }
+        const date = new Date(v.created_at);
+        const day = date.toISOString().split("T")[0];
+        if (dailyCounts[day] !== undefined) dailyCounts[day] += 1;
+      });
+      setTopPages(Object.entries(pageCount).map(([page_path, count]) => ({ page_path, count })).sort((a,b)=>b.count-a.count).slice(0,10));
+      setTopDevices(Object.entries(deviceCounts).map(([label,count])=>({label,count})).sort((a,b)=>b.count-a.count));
+      setTopCountries(Object.entries(countryCounts).map(([country,count])=>({country,count})).sort((a,b)=>b.count-a.count));
+      setTopCities(Object.entries(cityCounts).map(([city,count])=>({city,count})).sort((a,b)=>b.count-a.count).slice(0,10));
+      setTopReferrers(Object.entries(refCounts).map(([referrer,count])=>({referrer,count})).sort((a,b)=>b.count-a.count).slice(0,10));
+      setDailyVisits(Object.entries(dailyCounts).map(([date,count])=>({
+        date: new Date(date).toLocaleDateString("fr-FR", { weekday: "short", day: "numeric" }), count
+      })));
     } catch (error) {
       console.error("Error fetching analytics:", error);
     } finally {
@@ -167,7 +119,8 @@ const AdminAnalytics = () => {
       [""],
       ["Top Pages", "Visites"],
       ...topPages.map(p => [p.page_path || "/", p.count.toString()]),
-    ].map(row => row.map(csvCell).join(",")).join("\n");
+    ].map(row => row.map(csvCell).join(",")).join("
+");
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const link = document.createElement("a");
@@ -189,6 +142,7 @@ const AdminAnalytics = () => {
   return (
     <AdminLayout title="Analytiques">
       <div className="space-y-6">
+        <Card><CardHeader><CardTitle>Robots et automatisations détectés</CardTitle><CardDescription>Conservés dans l’historique, mais exclus des indicateurs de trafic humain estimé.</CardDescription></CardHeader><CardContent><p className="text-3xl font-bold">{suspectedBotVisits.toLocaleString()}</p><p className="text-xs text-muted-foreground">Sur les 180 derniers jours disponibles. Le filtre reconnaît les agents connus et navigateurs headless, sans identifier tous les robots possibles.</p></CardContent></Card>
         {/* Export Button */}
         <div className="flex justify-end">
           <Button onClick={handleExport} variant="outline" className="gap-2">
@@ -203,7 +157,7 @@ const AdminAnalytics = () => {
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                 <Eye className="w-4 h-4" />
-                Visites Totales
+                Visites détectées (180 jours)
               </CardTitle>
             </CardHeader>
             <CardContent>
