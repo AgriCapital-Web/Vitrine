@@ -24,6 +24,8 @@ const AdminDashboard = () => {
   const [todayVisits, setTodayVisits] = useState(0);
   const [weekVisits, setWeekVisits] = useState(0);
   const [topPages, setTopPages] = useState<PageVisit[]>([]);
+  const [topCountries, setTopCountries] = useState<{ country: string; count: number }[]>([]);
+  const [topDevices, setTopDevices] = useState<{ device: string; count: number }[]>([]);
   const [dailyVisits, setDailyVisits] = useState<DailyVisit[]>([]);
   const [newsletterCount, setNewsletterCount] = useState(0);
   const [testimonialCount, setTestimonialCount] = useState(0);
@@ -114,7 +116,7 @@ const AdminDashboard = () => {
 
     const { data: allVisits } = await supabase
       .from("page_visits")
-      .select("page_path, created_at, visitor_id")
+      .select("page_path, created_at, visitor_id, country, user_agent")
       .order("created_at", { ascending: false });
 
     const visits = allVisits || [];
@@ -160,6 +162,25 @@ const AdminDashboard = () => {
       .sort((a, b) => b.visit_count - a.visit_count)
       .slice(0, 10);
     setTopPages(sorted);
+
+    const countryCounts: Record<string, number> = {};
+    const deviceCounts: Record<string, number> = {};
+    visits.forEach((visit: any) => {
+      if (visit.country) countryCounts[visit.country] = (countryCounts[visit.country] || 0) + 1;
+      const ua = String(visit.user_agent || "").toLowerCase();
+      const device = /ipad|tablet|kindle|silk/.test(ua)
+        ? "Tablette"
+        : /mobile|iphone|ipod|android/.test(ua)
+          ? "Téléphone"
+          : ua ? "Ordinateur" : "Non déterminé";
+      deviceCounts[device] = (deviceCounts[device] || 0) + 1;
+    });
+    setTopCountries(Object.entries(countryCounts)
+      .map(([country, count]) => ({ country, count }))
+      .sort((a, b) => b.count - a.count).slice(0, 6));
+    setTopDevices(Object.entries(deviceCounts)
+      .map(([device, count]) => ({ device, count }))
+      .sort((a, b) => b.count - a.count));
 
     setDailyVisits(Object.entries(dailyCounts).map(([date, visits]) => ({
       date: new Date(date).toLocaleDateString("fr-FR", { weekday: "short", day: "numeric" }),
@@ -287,6 +308,30 @@ const AdminDashboard = () => {
                   Messages {unreadMessages > 0 && <span className="text-orange-500">({unreadMessages} non lus)</span>}
                 </p>
               </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Audience geography and device mix */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader><CardTitle>Pays des visiteurs</CardTitle></CardHeader>
+            <CardContent>
+              {topCountries.length ? <div className="space-y-3">
+                {topCountries.map((item) => <div key={item.country} className="flex justify-between text-sm">
+                  <span>{item.country}</span><span className="font-medium tabular-nums">{item.count}</span>
+                </div>)}
+              </div> : <p className="text-sm text-muted-foreground">Les pays apparaîtront au fil des visites avec géolocalisation disponible.</p>}
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader><CardTitle>Types d’appareils</CardTitle></CardHeader>
+            <CardContent>
+              {topDevices.length ? <div className="space-y-3">
+                {topDevices.map((item) => <div key={item.device} className="flex justify-between text-sm">
+                  <span>{item.device}</span><span className="font-medium tabular-nums">{item.count}</span>
+                </div>)}
+              </div> : <p className="text-sm text-muted-foreground">Aucune donnée d’appareil disponible.</p>}
             </CardContent>
           </Card>
         </div>
