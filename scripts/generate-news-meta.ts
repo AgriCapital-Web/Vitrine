@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
 const SUPABASE_URL = "https://sxsolthkxfavimitoowy.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4c29sdGhreGZhdmltaXRvd3kiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc3MTI2NzE0NywiZXhwIjoyMDg2ODQzMTQzfQ.H7dkzy1hh1L5kkLIviDtqSrR3rPfCXWoalJHNWv12fE";
+const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4c29sdGhreGZhdmltaXRvb3d5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjcxNDcsImV4cCI6MjA4Njg0MzE0N30.H7dkzy1hh1L5kkLIviDtqSrR3rPfCXWoalJHNWv12fE";
 const BASE_URL = "https://www.agricapital.ci";
 
 const escapeHtml = (value: unknown) =>
@@ -165,7 +165,7 @@ const main = async () => {
   const shell = await readFile(join(process.cwd(), "dist/index.html"), "utf8");
   const response = await fetch(
     SUPABASE_URL + "/rest/v1/news?select=*&is_published=eq.true&order=published_at.desc",
-    { headers: { apikey: SUPABASE_PUBLISHABLE_KEY } },
+    { headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}` } },
   );
 
   if (!response.ok) {
