@@ -27,6 +27,13 @@ export default async function handler(req: any, res: any) {
     return res.status(500).json({ error: "Analytics configuration unavailable" });
   }
 
+  const userAgent = clean(req.headers["user-agent"], 1000);
+  const automationFlag = Boolean(req.body && typeof req.body === "object" && (req.body as any).automation_flag === true);
+  if (automationFlag || /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|lovableapp|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(userAgent)) {
+    res.setHeader("Cache-Control", "no-store");
+    return res.status(200).json({ ok: true, ignored: true, reason: "automated_traffic" });
+  }
+
   const countryCode = clean(req.headers["x-vercel-ip-country"] || req.headers["cf-ipcountry"], 8).toUpperCase();
   const country = COUNTRY_NAMES[countryCode] || countryCode;
   const city = decodeHeader(req.headers["x-vercel-ip-city"], 120);
