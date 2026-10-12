@@ -114,12 +114,21 @@ const AdminDashboard = () => {
       .eq("id", "public")
       .maybeSingle();
 
-    const { data: allVisits } = await supabase
-      .from("page_visits")
-      .select("page_path, created_at, visitor_id, country, user_agent")
-      .order("created_at", { ascending: false });
+    // Supabase returns at most 1,000 rows per request by default; paginate so
+    // country/device totals are based on the complete visit history.
+    const allVisits: any[] = [];
+    for (let offset = 0; ; offset += 1000) {
+      const { data: batch, error } = await supabase
+        .from("page_visits")
+        .select("page_path, created_at, visitor_id, country, user_agent")
+        .order("created_at", { ascending: false })
+        .range(offset, offset + 999);
+      if (error) throw error;
+      allVisits.push(...(batch || []));
+      if (!batch || batch.length < 1000) break;
+    }
 
-    const visits = allVisits || [];
+    const visits = allVisits;
     const totalUnique = new Set(visits.map((v) => v.visitor_id).filter(Boolean)).size;
     setTotalVisits(Math.max(Number(publicCounter?.total_visitors) || 0, totalUnique));
 
@@ -177,7 +186,7 @@ const AdminDashboard = () => {
     });
     setTopCountries(Object.entries(countryCounts)
       .map(([country, count]) => ({ country, count }))
-      .sort((a, b) => b.count - a.count).slice(0, 6));
+      .sort((a, b) => b.count - a.count));
     setTopDevices(Object.entries(deviceCounts)
       .map(([device, count]) => ({ device, count }))
       .sort((a, b) => b.count - a.count));
