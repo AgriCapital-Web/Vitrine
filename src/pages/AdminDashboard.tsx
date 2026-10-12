@@ -116,6 +116,7 @@ const AdminDashboard = () => {
       const { data: batch, error } = await supabase
         .from("page_visits")
         .select("page_path, created_at, visitor_id, country, user_agent")
+        .gte("created_at", new Date(Date.now() - 180 * 24 * 60 * 60 * 1000).toISOString())
         .order("created_at", { ascending: false })
         .range(offset, offset + 999);
       if (error) throw error;
@@ -151,7 +152,7 @@ const AdminDashboard = () => {
     setTodayVisits(todayVisitors.size);
     setWeekVisits(weekVisitors.size);
 
-    const sorted = Object.entries(pageCount).map(([page_path, count]) => ({ page_path, count }))
+    const sorted = Object.entries(pageCount).map(([page_path, count]) => ({ page_path, visit_count: count }))
       .sort((a, b) => b.count - a.count).slice(0, 10);
     setTopPages(sorted);
 
@@ -185,9 +186,9 @@ const AdminDashboard = () => {
     setTopReferrers(Object.entries(refCount).map(([referrer, count]) => ({ referrer, count })).sort((a, b) => b.count - a.count).slice(0, 10));
     setSuspectedBotVisits(visits.length - humanVisits.length);
 
-    setDailyVisits(Object.entries(dailyCounts).map(([date, count]) => ({
+    setDailyVisits(Object.entries(dailyCounts).map(([date, visits]) => ({
       date: new Date(date).toLocaleDateString("fr-FR", { weekday: "short", day: "numeric" }),
-      count,
+      visits,
     })));
   };
 
@@ -216,7 +217,7 @@ const AdminDashboard = () => {
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold">{totalVisits.toLocaleString()}</p>
-              <p className="text-xs text-muted-foreground">{todayVisits} visite(s) enregistrée(s) aujourd’hui</p>
+              <p className="text-xs text-muted-foreground">{todayVisits} visiteur(s) distinct(s) détecté(s) aujourd’hui</p>
             </CardContent>
           </Card>
 
@@ -229,7 +230,7 @@ const AdminDashboard = () => {
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-green-600">{weekVisits.toLocaleString()}</p>
-              <p className="text-xs text-muted-foreground">Visites enregistrées sur 7 jours</p>
+              <p className="text-xs text-muted-foreground">Visiteurs distincts détectés sur 7 jours</p>
             </CardContent>
           </Card>
 
@@ -318,7 +319,7 @@ const AdminDashboard = () => {
         {/* Audience geography and device mix */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
-            <CardHeader><CardTitle>Pays des visiteurs</CardTitle></CardHeader>
+            <CardHeader><CardTitle>Visites par pays</CardTitle></CardHeader>
             <CardContent>
               {topCountries.length ? <div className="space-y-3">
                 {topCountries.map((item) => <div key={item.country} className="flex justify-between text-sm">
@@ -328,7 +329,7 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
           <Card>
-            <CardHeader><CardTitle>Types d’appareils</CardTitle></CardHeader>
+            <CardHeader><CardTitle>Appareils détectés</CardTitle></CardHeader>
             <CardContent>
               {topDevices.length ? <div className="space-y-3">
                 {topDevices.map((item) => <div key={item.device} className="flex justify-between text-sm">
