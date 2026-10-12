@@ -24,15 +24,24 @@ export const usePageTracking = () => {
         if (Date.now() - last < 30 * 60 * 1000) return;
         sessionStorage.setItem(key, String(Date.now()));
 
-        const { error } = await supabase.functions.invoke("record-visit", {
-          body: {
-            page_path: location.pathname,
-            visitor_id: getVisitorId(),
-            user_agent: navigator.userAgent,
-            referrer: document.referrer || null,
-          },
+        const visitPayload = {
+          page_path: location.pathname,
+          visitor_id: getVisitorId(),
+          user_agent: navigator.userAgent,
+          referrer: document.referrer || null,
+        };
+        // Use the first-party Vercel endpoint so its trusted geo headers can be recorded.
+        const response = await fetch("/api/record-visit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(visitPayload),
+          keepalive: true,
         });
-        if (error) console.warn("record-visit:", error.message);
+        if (!response.ok) {
+          // Preserve basic visit tracking if the geo-aware proxy is unavailable.
+          const { error } = await supabase.functions.invoke("record-visit", { body: visitPayload });
+          if (error) console.warn("record-visit:", error.message);
+        }
       } catch {
         // Analytics must never block navigation.
       }
