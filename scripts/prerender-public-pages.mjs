@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, unlink, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 
@@ -89,6 +89,13 @@ try {
       console.warn("[prerender] Route failed; keeping SPA fallback:", route, String(error));
     }
   }
+  // Keep these endpoints dynamic so newly published news is immediately discoverable.
+  // Vercel serves existing static files before rewrites, so remove the prerendered
+  // listing/sitemap files to let the crawler-specific rewrites reach live API handlers.
+  for (const relative of ["sitemap.xml", "actualites/index.html", "new/index.html", "news/index.html"]) {
+    await unlink(join(process.cwd(), "dist", relative)).catch(() => {});
+  }
+  console.log("[prerender] Removed static news-index/sitemap files so live crawler rewrites stay current.");
   console.log("[prerender] Rendered", rendered, "public routes; private/admin/data-room routes are excluded.");
 } finally {
   if (browser) await browser.close().catch(() => {});
