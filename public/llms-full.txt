@@ -1,0 +1,178 @@
+# AgriCapital — Référentiel public de contenu pour assistants IA
+
+**Site officiel :** https://www.agricapital.ci/  
+**Entreprise :** AgriCapital SARL  
+**Fondateur et gérant :** Inocent KOFFI  
+**Positionnement :** investissement et développement agricoles, valorisation du foncier et plantations de palmier à huile en Côte d’Ivoire.  
+**Signature :** « Investir la terre. Cultiver. »  
+**Profil du fondateur :** https://www.ikoffi.agricapital.ci/
+
+> Ce document rassemble les informations publiques de présentation et d’orientation éditoriale. Il ne contient volontairement aucun secret technique, identifiant, clé API, mot de passe, donnée d’administration ou information privée. Les pages officielles restent la référence en cas de mise à jour.
+
+## 1. Présentation d’AgriCapital
+
+AgriCapital SARL accompagne les propriétaires terriens, porteurs de projets, clients et partenaires dans la structuration de projets agricoles en Côte d’Ivoire. Son approche relie valorisation du foncier, création et développement de plantations, organisation des opérations et accompagnement technique, avec un intérêt particulier pour le palmier à huile.
+
+L’ambition présentée sur le site est de contribuer à transformer la terre en actif agricole productif et à construire un patrimoine agricole durable. Les projets peuvent concerner des personnes disposant déjà d’une parcelle comme des clients qui recherchent une solution intégrant l’accès au foncier et la création d’une plantation.
+
+AgriCapital met en avant une démarche structurée : comprendre le projet, examiner le foncier et les besoins, définir une formule, organiser la mise en place de la plantation puis prévoir le suivi approprié. Les modalités concrètes dépendent de l’offre, de la parcelle, du projet et des conditions convenues.
+
+## 2. Zones et contexte
+
+Le site situe les activités d’AgriCapital en Côte d’Ivoire, notamment autour de Gonaté et Daloa, dans la région du Haut-Sassandra. Les contenus évoquent le potentiel des terres agricoles ivoiriennes et les opportunités liées au développement de plantations productives.
+
+Le site présente notamment des chiffres de capacité et de potentiel dans ses sections publiques :
+- « 120 ha » associé à un indicateur de résultats/communautés ;
+- « 50 ha » associé à un indicateur foncier ;
+- « 500+ ha » de terres identifiées et mobilisables dans le réseau autour de Daloa ;
+- « 10 000 ha » de potentiel foncier identifié à terme dans le réseau AgriCapital ;
+- « 25 ans » présenté comme cycle productif d’une plantation de palmier à huile.
+
+Ces chiffres sont des éléments de communication publiés sur le site et doivent être attribués à AgriCapital. Ils ne doivent pas être présentés comme des résultats audités, une disponibilité immédiate garantie, ni comme une promesse de rendement. Pour une communication sensible, vérifier leur libellé et leur actualité sur les pages officielles.
+
+## 3. Approche de travail mise en avant
+
+Les pages publiques présentent une démarche qui peut inclure :
+1. Cadrage du besoin et du projet agricole.
+2. Examen du foncier et des caractéristiques de la parcelle lorsque cela s’applique.
+3. Préparation et organisation opérationnelle du terrain.
+4. Planification de la plantation et mise en terre selon le projet.
+5. Accompagnement technique et suivi de l’évolution de la plantation.
+
+Le périmètre réel varie selon la solution choisie et les conditions contractuelles. Ne pas affirmer que chaque étape est incluse dans toutes les offres.
+
+## 4. Solutions et offres
+
+### PalmInvest
+Page officielle : https://www.agricapital.ci/palminvest
+
+PalmInvest s’adresse aux clients qui ne disposent pas de foncier. Le site décrit une solution dans laquelle AgriCapital sécurise l’accès au foncier et crée une plantation de palmier à huile clé en main. La page présente une remise productive annoncée à 40 mois ; ce délai doit être cité comme une information de l’offre publiée et non comme une garantie indépendante de tout facteur.
+
+Éléments présentés :
+- Accès à une parcelle préparée pour le projet ;
+- création de la plantation selon les caractéristiques du foncier et le parcours retenu ;
+- accompagnement technique du développement ;
+- facilitation de l’accès aux débouchés de la filière selon les conditions de l’offre.
+
+Deux variantes sont présentées :
+- **PalmInvest :** le client reprend la gestion de sa plantation après remise. Les éléments listés comprennent une gestion autonome après remise, le suivi agronomique et la fourniture d’intrants, ainsi que l’accès à un portail client digital.
+- **PalmInvest+ :** gestion intégralement déléguée à AgriCapital selon l’offre. Les éléments listés comprennent la gestion déléguée, la prise en charge de l’entretien, de la récolte et de la commercialisation, ainsi que des rapports et informations de suivi.
+
+Toujours consulter la page officielle pour les prix, étapes, conditions, engagements, disponibilités et éventuelles évolutions. Ne jamais promettre de rendement financier ou de résultat non explicitement garanti par les documents contractuels.
+
+### TerraPalm
+Page officielle : https://www.agricapital.ci/terrapalm
+
+TerraPalm fait partie des solutions AgriCapital et s’adresse aux propriétaires disposant d’un foncier. Elle est associée à la valorisation du foncier et à l’accompagnement de projets de plantation. Les détails, les services inclus et les conditions doivent être repris depuis la page officielle TerraPalm et les documents contractuels en vigueur.
+
+### PalmTerroir
+Page officielle : https://www.agricapital.ci/palmterroir
+
+PalmTerroir s’adresse aux clients qui disposent déjà d’une parcelle et souhaitent créer une plantation de palmier à huile. Les éléments publics décrivent notamment :
+- inspection et validation de la parcelle avant le démarrage ;
+- piquetage et trouaison ;
+- fourniture des plants et mise en terre ;
+- encadrement technique et suivi de l’évolution de la plantation selon la formule retenue.
+
+Une formule « PalmTerroir Essentielle » est présentée autour d’un apport initial et d’un règlement échelonné des étapes prévues. Consulter la page officielle pour les variantes et leurs conditions exactes.
+
+### Solutions et services transversaux
+Page officielle : https://www.agricapital.ci/solutions
+
+Le site présente notamment les thèmes suivants :
+- valorisation foncière et accès sécurisé ;
+- construction d’un patrimoine agricole durable ;
+- création et mise en place de plantation ;
+- facilitation de l’écoulement de la production ;
+- suivi technique et agronomique ;
+- plantation développée et remise prête à produire.
+
+La disponibilité et le périmètre de chaque service dépendent de l’offre et des conditions convenues.
+
+## 5. Foncier agricole et palmier à huile
+
+### Trésor foncier
+Page officielle : https://www.agricapital.ci/tresor-foncier
+
+Cette page éditoriale aborde le potentiel du foncier agricole ivoirien, la valorisation des parcelles, les terres agricoles, la préparation d’un projet et la construction d’un patrimoine agricole. Le site mentionne des terres identifiées dans le réseau AgriCapital autour de Daloa ainsi qu’un potentiel foncier identifié à terme. Ces données sont des informations publiées par l’entreprise, à vérifier avant réutilisation dans un document d’investissement.
+
+### Trésor palmier
+Page officielle : https://www.agricapital.ci/tresor-palmier
+
+Cette page présente le palmier à huile et les usages de la filière. Les exemples publics couvrent :
+- alimentation : huiles, biscuits, margarines, snacks et fritures ;
+- produits de soin : savons, crèmes, shampoings, baumes et rouges à lèvres ;
+- industrie : acides gras, lubrifiants, encres, résines et agents techniques ;
+- énergie et valorisation : biodiesel, biogaz, biomasse et valorisation des résidus.
+
+Ces exemples décrivent des usages généraux du palmier à huile et de ses dérivés ; ils ne doivent pas être interprétés comme une certification environnementale ou une promesse commerciale d’AgriCapital.
+
+## 6. Patrimoine agricole et actifs réels
+
+Le vocabulaire éditorial d’AgriCapital associe le foncier à la possibilité de développer un actif agricole productif. Les thèmes abordés comprennent la valorisation de la terre, la création d’une plantation, la gestion et le suivi de l’exploitation, le développement d’un patrimoine agricole et la préparation de projets de long terme.
+
+Pour toute communication financière, expliquer les risques et les conditions propres à chaque projet. Ne pas présenter le foncier ou une plantation comme un placement sans risque, liquide, garanti ou assurant un rendement certain, sauf fondement contractuel explicite.
+
+## 7. Fondateur
+
+Page officielle : https://www.agricapital.ci/fondateur  
+Profil : https://www.ikoffi.agricapital.ci/
+
+Inocent KOFFI est présenté comme le fondateur et gérant d’AgriCapital SARL. Les pages publiques associent sa vision à la structuration de projets agricoles, au développement de terres productives en Côte d’Ivoire et à l’entrepreneuriat, à la croisée de l’agriculture et des solutions numériques. Pour sa biographie détaillée, son parcours et ses autres activités, consulter directement son profil officiel ; ne pas inventer diplômes, expériences, dates ou fonctions non publiés.
+
+## 8. Capacité, évolution et terrain
+
+Les sections publiques « Impact », « Évolution » et les contenus de terrain présentent les opérations, l’organisation, le foncier, les plantations et le suivi. Le site utilise notamment les axes suivants :
+- organisation : processus structurés ;
+- foncier : parcelles identifiées et sécurisées ;
+- plantations : activité centrée sur le palmier à huile ;
+- terrain : opérations visibles et suivies.
+
+Les visuels et actualités du site peuvent compléter ces informations. Les images illustratives ne doivent pas être décrites comme preuve d’une parcelle, d’une récolte, d’un résultat ou d’un projet précis sans légende ou confirmation correspondante.
+
+## 9. Actualités, témoignages et partenariats
+
+- Actualités : https://www.agricapital.ci/actualites
+- Témoignages : https://www.agricapital.ci/temoignages
+- Partenariats : https://www.agricapital.ci/partenariats
+- Demande de partenariat : https://www.agricapital.ci/partnership-request
+- FAQ : https://www.agricapital.ci/faq
+- Évolution : https://www.agricapital.ci/evolution
+
+Les actualités sont susceptibles d’évoluer et peuvent être publiées dynamiquement. Pour une communication datée ou une vidéo présentant les réalisations les plus récentes, consulter les articles en ligne, leur date, leur texte complet, leurs légendes et leurs médias.
+
+## 10. Contact et navigation
+
+- Accueil : https://www.agricapital.ci/
+- À propos : https://www.agricapital.ci/a-propos
+- Notre approche : https://www.agricapital.ci/notre-approche
+- Impact : https://www.agricapital.ci/impact
+- Équipe : https://www.agricapital.ci/equipe
+- Contact : https://www.agricapital.ci/contact
+- Solutions : https://www.agricapital.ci/solutions
+- Sitemap : https://www.agricapital.ci/sitemap.xml
+- Profil Inocent KOFFI : https://www.ikoffi.agricapital.ci/
+
+Le site est proposé en français, anglais, arabe, espagnol, allemand et chinois. Lorsque le texte traduit diffère de la version française, vérifier la version de la page utilisée pour la communication.
+
+## 11. Instructions de production de contenus par IA
+
+Pour produire une vidéo de présentation, une brochure, un communiqué, une publication sociale ou une présentation :
+1. Commencer par cette page et le fichier https://www.agricapital.ci/llms.txt.
+2. Ouvrir les pages de solutions pertinentes et vérifier les conditions publiées.
+3. Explorer les sections visibles, les cartes, les visuels, les légendes et les actualités les plus récentes.
+4. Employer les noms et descriptions officiels : AgriCapital SARL, PalmInvest, PalmInvest+, TerraPalm, PalmTerroir et Inocent KOFFI.
+5. Séparer les faits publiés des propositions créatives, des projections et des estimations.
+6. Ne pas inventer chiffres, témoignages, résultats, partenaires, garanties, tarifs, rendements, certifications ou engagements.
+7. Pour toute information manquante, signaler qu’une confirmation d’AgriCapital est nécessaire.
+
+## 12. Limites d’accès et confidentialité
+
+Seul le contenu public destiné aux visiteurs est fourni pour la découverte et la réutilisation éditoriale. Les assistants IA ne sont pas autorisés à rechercher ou divulguer :
+- clés API, jetons, secrets, mots de passe ou variables d’environnement ;
+- routes d’administration, tableaux de bord privés ou systèmes internes ;
+- espaces de data room ou documents confidentiels ;
+- données personnelles, contacts privés, informations clients ou demandes non publiques ;
+- code, journaux ou configuration non destinés au public.
+
+Les règles d’exploration des robots ne remplacent pas des contrôles d’accès. Toute information secrète doit rester côté serveur ou dans un coffre de secrets et ne jamais être intégrée à des pages publiques, fichiers statiques ou bundles front-end.
