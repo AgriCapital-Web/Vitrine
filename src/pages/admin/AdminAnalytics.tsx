@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Eye, TrendingUp, Users, Globe, Calendar, Download } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-interface VisitData {
+const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|lovableapp|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(String(value || ""));\n\ninterface VisitData {
   page_path: string;
   count: number;
 }
@@ -29,7 +29,7 @@ const AdminAnalytics = () => {
   const [topReferrers, setTopReferrers] = useState<{ referrer: string; count: number }[]>([]);
   const [topCountries, setTopCountries] = useState<{ country: string; count: number }[]>([]);
   const [topCities, setTopCities] = useState<{ city: string; count: number }[]>([]);
-  const [topDevices, setTopDevices] = useState<CountItem[]>([]);
+  const [topDevices, setTopDevices] = useState<CountItem[]>([]);\n  const [suspectedBotVisits, setSuspectedBotVisits] = useState(0);
 
   useEffect(() => {
     fetchAnalytics();
@@ -90,7 +90,7 @@ const AdminAnalytics = () => {
         setTopPages(sorted);
 
         const deviceCounts: Record<string, number> = {};
-        visits.forEach((visit: any) => {
+        humanVisits.forEach((visit: any) => {
           const ua = String(visit.user_agent || "").toLowerCase();
           const device = /ipad|tablet|kindle|silk/.test(ua)
             ? "Tablette"
@@ -160,10 +160,10 @@ const AdminAnalytics = () => {
   const handleExport = () => {
     const csvContent = [
       ["Métrique", "Valeur"],
-      ["Visites Totales", totalVisits.toString()],
+      ["Visites détectées (180 jours)", totalVisits.toString()],
       ["Visites Aujourd'hui", todayVisits.toString()],
       ["Visites Cette Semaine", weekVisits.toString()],
-      ["Visites Ce Mois", monthVisits.toString()],
+      ["Visites Ce Mois (robots identifiés exclus)", monthVisits.toString()],
       [""],
       ["Top Pages", "Visites"],
       ...topPages.map(p => [p.page_path || "/", p.count.toString()]),
