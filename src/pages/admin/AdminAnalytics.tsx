@@ -64,12 +64,21 @@ const AdminAnalytics = () => {
         .gte("created_at", monthAgo.toISOString());
       setMonthVisits(monthCount || 0);
 
-      // Top pages
-      const { data: visits } = await supabase
-        .from("page_visits")
-        .select("page_path, user_agent");
+      // Read the complete visit history in pages; Supabase otherwise caps
+      // each response at 1,000 rows and silently undercounts countries/devices.
+      const visits: any[] = [];
+      for (let offset = 0; ; offset += 1000) {
+        const { data: batch, error } = await supabase
+          .from("page_visits")
+          .select("page_path, user_agent, country, city, referrer")
+          .order("created_at", { ascending: false })
+          .range(offset, offset + 999);
+        if (error) throw error;
+        visits.push(...(batch || []));
+        if (!batch || batch.length < 1000) break;
+      }
 
-      if (visits) {
+      {
         const pageCount: Record<string, number> = {};
         visits.forEach((v) => {
           pageCount[v.page_path] = (pageCount[v.page_path] || 0) + 1;
@@ -95,24 +104,19 @@ const AdminAnalytics = () => {
           .sort((a, b) => b.count - a.count));
       }
 
-      // Real geography from recorded visits
-      const { data: geoData } = await supabase.from("page_visits").select("country, city").not("country", "is", null);
-      if (geoData) {
-        const countries: Record<string, number> = {}, cities: Record<string, number> = {};
-        geoData.forEach((v: any) => { if (v.country) countries[v.country] = (countries[v.country] || 0) + 1; if (v.city) cities[v.city] = (cities[v.city] || 0) + 1; });
-        setTopCountries(Object.entries(countries).map(([country,count])=>({country,count})).sort((a,b)=>b.count-a.count).slice(0,10));
-        setTopCities(Object.entries(cities).map(([city,count])=>({city,count})).sort((a,b)=>b.count-a.count).slice(0,10));
-      }
+      // Real geography and referrers, aggregated from the complete paginated visit history.
+      const countries: Record<string, number> = {}, cities: Record<string, number> = {};
+      visits.forEach((v: any) => {
+        if (v.country) countries[v.country] = (countries[v.country] || 0) + 1;
+        if (v.city) cities[v.city] = (cities[v.city] || 0) + 1;
+      });
+      setTopCountries(Object.entries(countries).map(([country,count])=>({country,count})).sort((a,b)=>b.count-a.count));
+      setTopCities(Object.entries(cities).map(([city,count])=>({city,count})).sort((a,b)=>b.count-a.count));
 
       // Top referrers
-      const { data: referrerData } = await supabase
-        .from("page_visits")
-        .select("referrer")
-        .not("referrer", "is", null);
-
-      if (referrerData) {
+      {
         const refCount: Record<string, number> = {};
-        referrerData.forEach((v) => {
+        visits.forEach((v: any) => {
           if (v.referrer) {
             refCount[v.referrer] = (refCount[v.referrer] || 0) + 1;
           }
