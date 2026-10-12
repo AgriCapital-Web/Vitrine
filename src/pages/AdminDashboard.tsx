@@ -17,7 +17,7 @@ interface DailyVisit {
   visits: number;
 }
 
-const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js|X11; Linux x86_64.*Chrome\/121\.0\.0\.0|Windows NT 10\.0; Win64; x64.*Chrome\/119\.0\.0\.0)/i.test(String(value || ""));
+const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(String(value || ""));
 
 const COLORS = ['hsl(var(--primary))', '#22c55e', '#f59e0b', '#3b82f6', '#8b5cf6'];
 
