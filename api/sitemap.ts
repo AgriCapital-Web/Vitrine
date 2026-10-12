@@ -14,14 +14,14 @@ const xmlEscape = (value: unknown) => String(value ?? "")
   .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
   .replace(/"/g, "&quot;").replace(/'/g, "&apos;");
 
-export default async function handler() {
+export default async function handler(_req: any, res: any) {
   const urls = new Map<string, string>();
   for (const path of staticPaths) urls.set(path, "");
 
   try {
     const response = await fetch(
       SUPABASE_URL + "/rest/v1/news?select=slug,updated_at,published_at&is_published=eq.true&order=published_at.desc&limit=2000",
-      { headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}` } },
+      { headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}` }, signal: AbortSignal.timeout(8000), cache: "no-store" },
     );
     if (response.ok) {
       const articles = await response.json();
@@ -44,12 +44,8 @@ export default async function handler() {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     entries.join("\n") + "\n</urlset>";
 
-  return new Response(xml, {
-    status: 200,
-    headers: {
-      "Content-Type": "application/xml; charset=utf-8",
-      "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600",
-      "X-Content-Type-Options": "nosniff",
-    },
-  });
+  res.setHeader("Content-Type", "application/xml; charset=utf-8");
+  res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  return res.status(200).send(xml);
 }
