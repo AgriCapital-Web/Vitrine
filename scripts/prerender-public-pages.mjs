@@ -72,8 +72,8 @@ try {
       let html = await page.content();
       // The local preview host is intentionally noindex; remove that preview-only
       // signal from snapshots that will be served on the canonical production host.
-      html = html.replace(/<meta\\s+name=["']robots["'][^>]*>/i, '<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">');
-      html = html.replace(/<meta\\s+name=["']googlebot["'][^>]*>\\s*/gi, "");
+      html = html.replace(/<meta\s+name=["']robots["'][^>]*>/i, '<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">');
+      html = html.replace(/<meta\s+name=["']googlebot["'][^>]*>\s*/gi, "");
       const rootText = await page.locator("#root").innerText().catch(() => "");
       if (rootText.trim().length < 40) {
         console.warn("[prerender] Skipped near-empty public route:", route);
