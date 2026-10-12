@@ -7,7 +7,7 @@ AS $function$
 DECLARE
   current_week timestamptz := date_trunc('week', now());
 BEGIN
-  -- Keep all historical visit rows; filter obvious bots and anomalous stale browser signatures from future counter increments.
+  -- Keep historical rows; exclude obvious bots and anomalous stale browser signatures from future counter increments.
   IF COALESCE(NEW.user_agent, '') ~* '(bot|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|playwright|puppeteer|selenium|cypress|webdriver|curl/|wget/|python-requests|node.js|X11; Linux x86_64.*Chrome/121[.]0[.]0[.]0|Windows NT 10[.]0; Win64; x64.*Chrome/119[.]0[.]0[.]0)' THEN
     RETURN NEW;
   END IF;
@@ -22,7 +22,7 @@ BEGIN
       END,
       week_started_at = CASE
         WHEN public.visitor_counters.week_started_at < current_week THEN current_week
-        ELSE public.visitor_counters.weekly_visitors + 1
+        ELSE public.visitor_counters.week_started_at
       END,
       updated_at = now();
   RETURN NEW;
