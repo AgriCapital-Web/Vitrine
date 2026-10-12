@@ -15,7 +15,7 @@ const stripHtml = (value: unknown) => String(value ?? "")
 
 export default async function handler(_req: any, res: any) {
   const response = await fetch(
-    SUPABASE_URL + "/rest/v1/news?select=slug,title_fr,title,excerpt_fr,excerpt,content_fr,featured_image,published_at,updated_at&is_published=eq.true&order=published_at.desc&limit=200",
+    SUPABASE_URL + "/rest/v1/news?select=slug,title_fr,title_en,excerpt_fr,excerpt_en,content_fr,featured_image,published_at,updated_at&is_published=eq.true&order=published_at.desc&limit=200",
     { headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}` }, signal: AbortSignal.timeout(8000), cache: "no-store" },
   );
 
@@ -27,8 +27,8 @@ export default async function handler(_req: any, res: any) {
   const articles = await response.json();
   const cards = articles.map((article: any) => {
     if (typeof article?.slug !== "string" || !/^[a-zA-Z0-9-]+$/.test(article.slug)) return "";
-    const title = stripHtml(article.title_fr || article.title || "Actualité AgriCapital");
-    const description = stripHtml(article.excerpt_fr || article.excerpt || article.content_fr || "").slice(0, 500);
+    const title = stripHtml(article.title_fr || article.title_en || "Actualité AgriCapital");
+    const description = stripHtml(article.excerpt_fr || article.excerpt_en || article.content_fr || "").slice(0, 500);
     const url = BASE_URL + "/new/" + encodeURIComponent(article.slug);
     const image = typeof article.featured_image === "string" && /^https?:\/\//i.test(article.featured_image)
       ? '<img src="' + escapeHtml(article.featured_image) + '" alt="' + escapeHtml(title) + '" loading="lazy">'
