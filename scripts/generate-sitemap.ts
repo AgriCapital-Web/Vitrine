@@ -1,6 +1,6 @@
 /**
  * Génère public/sitemap.xml avant `vite dev` et `vite build`.
- * Domaine canonique unique : agricapital.ci (jamais les miroirs lovable/vercel).
+ * Domaine canonique unique : https://www.agricapital.ci.
  */
 import { writeFileSync } from "fs";
 import { resolve } from "path";
@@ -24,6 +24,7 @@ const staticEntries: SitemapEntry[] = [
   { path: "/equipe", changefreq: "monthly", priority: "0.6", alternates: true },
   { path: "/contact", changefreq: "monthly", priority: "0.7", alternates: true },
   { path: "/solutions", changefreq: "monthly", priority: "0.9", alternates: true },
+  { path: "/plantation-cle-en-main", changefreq: "monthly", priority: "0.9", alternates: true },
   { path: "/palminvest", changefreq: "monthly", priority: "0.8", alternates: true },
   { path: "/terrapalm", changefreq: "monthly", priority: "0.8", alternates: true },
   { path: "/palmterroir", changefreq: "monthly", priority: "0.8", alternates: true },
@@ -33,7 +34,6 @@ const staticEntries: SitemapEntry[] = [
   { path: "/actualites", changefreq: "daily", priority: "0.9", alternates: true },
   { path: "/temoignages", changefreq: "monthly", priority: "0.7" },
   { path: "/partenariats", changefreq: "monthly", priority: "0.7" },
-  { path: "/partnership-request", changefreq: "monthly", priority: "0.6" },
   { path: "/faq", changefreq: "monthly", priority: "0.7" },
 ];
 
@@ -50,7 +50,7 @@ async function fetchDynamicEntries(): Promise<SitemapEntry[]> {
     const rows = (await res.json()) as { slug: string | null }[];
     return rows
       .filter((r) => !!r.slug)
-      .map((r) => ({ path: `/actualites/${r.slug}`, changefreq: "monthly" as const, priority: "0.8", alternates: true }));
+      .map((r) => ({ path: `/new/${r.slug}`, changefreq: "monthly" as const, priority: "0.8", alternates: true }));
   } catch {
     return [];
   }
