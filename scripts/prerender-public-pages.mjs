@@ -43,7 +43,7 @@ try {
   const isPublicPath = (path) => {
     if (!path.startsWith("/") || path.startsWith("//")) return false;
     if (/\.(?:js|css|png|jpe?g|webp|svg|ico|xml|json|pdf|woff2?)$/i.test(path)) return false;
-    if (/^\/(?:admin|admin-setup|dataroom|data(?:\/|$)|cloud(?:\/|$)|agricapital-cloud|api)(?:\/|$)/i.test(path)) return false;
+    if (/^\/(?:admin|admin-setup|dataroom|data|cloud|agricapital-cloud|api)(?:\/|$)/i.test(path)) return false;
     return true;
   };
 
