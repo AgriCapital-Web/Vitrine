@@ -89,6 +89,7 @@ const AdminAnalytics = () => {
             refCounts["Référent non reconnu"] = (refCounts["Référent non reconnu"] || 0) + 1;
           }
         }
+        if (!v.referrer) refCounts["Direct / référent absent"] = (refCounts["Direct / référent absent"] || 0) + 1;
         const date = new Date(v.created_at);
         const day = date.toISOString().split("T")[0];
         if (dailyCounts[day] !== undefined) dailyCounts[day] += 1;
