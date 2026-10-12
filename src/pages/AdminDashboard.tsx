@@ -17,7 +17,7 @@ interface DailyVisit {
   visits: number;
 }
 
-const COLORS = ['hsl(var(--primary))', '#22c55e', '#f59e0b', '#3b82f6', '#8b5cf6'];
+const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|lovableapp|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(String(value || ""));\n\nconst COLORS = ['hsl(var(--primary))', '#22c55e', '#f59e0b', '#3b82f6', '#8b5cf6'];
 
 const AdminDashboard = () => {
   const [totalVisits, setTotalVisits] = useState(0);
@@ -151,7 +151,7 @@ const AdminDashboard = () => {
       dailyCounts[key] = 0;
     }
 
-    visits.forEach((visit) => {
+    humanVisits.forEach((visit) => {
       const date = new Date(visit.created_at);
       const path = visit.page_path || "/";
       pageCount[path] = (pageCount[path] || 0) + 1;
@@ -217,7 +217,7 @@ const AdminDashboard = () => {
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                 <Eye className="w-4 h-4" />
-                Visiteurs cumulés
+                Visiteurs distincts estimés (180 j)
               </CardTitle>
             </CardHeader>
             <CardContent>
