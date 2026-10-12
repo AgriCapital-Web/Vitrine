@@ -19,7 +19,11 @@ export default async function handler(_req: any, res: any) {
     { headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}` }, signal: AbortSignal.timeout(8000), cache: "no-store" },
   );
 
-  if (!response.ok) return res.status(502).send("Unable to load public news");
+  if (!response.ok) {
+    const errorBody = await response.text().catch(() => "");
+    console.error("[news-index] Supabase request failed", response.status, errorBody.slice(0, 300));
+    return res.status(502).send("Unable to load public news");
+  }
   const articles = await response.json();
   const cards = articles.map((article: any) => {
     if (typeof article?.slug !== "string" || !/^[a-zA-Z0-9-]+$/.test(article.slug)) return "";
