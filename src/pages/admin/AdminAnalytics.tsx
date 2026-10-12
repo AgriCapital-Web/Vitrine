@@ -11,6 +11,8 @@ interface VisitData {
   count: number;
 }
 
+interface CountItem { label: string; count: number }
+
 interface DailyVisit {
   date: string;
   count: number;
@@ -27,6 +29,7 @@ const AdminAnalytics = () => {
   const [topReferrers, setTopReferrers] = useState<{ referrer: string; count: number }[]>([]);
   const [topCountries, setTopCountries] = useState<{ country: string; count: number }[]>([]);
   const [topCities, setTopCities] = useState<{ city: string; count: number }[]>([]);
+  const [topDevices, setTopDevices] = useState<CountItem[]>([]);
 
   useEffect(() => {
     fetchAnalytics();
@@ -64,7 +67,7 @@ const AdminAnalytics = () => {
       // Top pages
       const { data: visits } = await supabase
         .from("page_visits")
-        .select("page_path");
+        .select("page_path, user_agent");
 
       if (visits) {
         const pageCount: Record<string, number> = {};
@@ -76,6 +79,20 @@ const AdminAnalytics = () => {
           .sort((a, b) => b.count - a.count)
           .slice(0, 10);
         setTopPages(sorted);
+
+        const deviceCounts: Record<string, number> = {};
+        visits.forEach((visit: any) => {
+          const ua = String(visit.user_agent || "").toLowerCase();
+          const device = /ipad|tablet|kindle|silk/.test(ua)
+            ? "Tablette"
+            : /mobile|iphone|ipod|android/.test(ua)
+              ? "Téléphone"
+              : ua ? "Ordinateur" : "Non déterminé";
+          deviceCounts[device] = (deviceCounts[device] || 0) + 1;
+        });
+        setTopDevices(Object.entries(deviceCounts)
+          .map(([label, count]) => ({ label, count }))
+          .sort((a, b) => b.count - a.count));
       }
 
       // Real geography from recorded visits
@@ -257,6 +274,26 @@ const AdminAnalytics = () => {
           <Card><CardHeader><CardTitle>Pays des visites réelles</CardTitle><CardDescription>Uniquement les visites enregistrées depuis la correction du tracking.</CardDescription></CardHeader><CardContent>{topCountries.length ? <div className="space-y-2">{topCountries.map(x=><div key={x.country} className="flex justify-between text-sm"><span>{x.country}</span><span className="font-medium">{x.count}</span></div>)}</div> : <p className="text-muted-foreground">Aucune donnée géographique réelle pour le moment.</p>}</CardContent></Card>
           <Card><CardHeader><CardTitle>Villes des visites réelles</CardTitle><CardDescription>Les villes apparaîtront au fur et à mesure des nouvelles visites.</CardDescription></CardHeader><CardContent>{topCities.length ? <div className="space-y-2">{topCities.map(x=><div key={x.city} className="flex justify-between text-sm"><span>{x.city}</span><span className="font-medium">{x.count}</span></div>)}</div> : <p className="text-muted-foreground">Aucune donnée géographique réelle pour le moment.</p>}</CardContent></Card>
         </div>
+
+        {/* Device breakdown derived from recorded user-agent strings */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Types d’appareils</CardTitle>
+            <CardDescription>Estimation à partir du navigateur déclaré lors des visites enregistrées.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {topDevices.length ? (
+              <div className="space-y-3">
+                {topDevices.map((device) => (
+                  <div key={device.label} className="flex items-center justify-between text-sm">
+                    <span>{device.label}</span>
+                    <span className="font-medium tabular-nums">{device.count} visites</span>
+                  </div>
+                ))}
+              </div>
+            ) : <p className="text-muted-foreground">Aucune donnée d’appareil disponible.</p>}
+          </CardContent>
+        </Card>
 
         {/* Top Pages & Referrers */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
