@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Eye, TrendingUp, Users, Globe, Calendar, Download } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js|X11; Linux x86_64.*Chrome\/121\.0\.0\.0|Windows NT 10\.0; Win64; x64.*Chrome\/119\.0\.0\.0)/i.test(String(value || ""));
+const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(String(value || ""));
 
 interface VisitData {
   page_path: string;
