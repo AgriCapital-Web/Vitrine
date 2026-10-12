@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 
@@ -38,7 +38,19 @@ try {
   page.setDefaultNavigationTimeout(45000);
 
   let rendered = 0;
-  for (const route of PUBLIC_ROUTES) {
+  const queue = [...PUBLIC_ROUTES];
+  const visited = new Set();
+  const isPublicPath = (path) => {
+    if (!path.startsWith("/") || path.startsWith("//")) return false;
+    if (/\.(?:js|css|png|jpe?g|webp|svg|ico|xml|json|pdf|woff2?)$/i.test(path)) return false;
+    if (/^\/(?:admin|admin-setup|dataroom|data(?:\/|$)|cloud(?:\/|$)|agricapital-cloud|api)(?:\/|$)/i.test(path)) return false;
+    return true;
+  };
+
+  while (queue.length && visited.size < 250) {
+    const route = queue.shift();
+    if (!route || visited.has(route)) continue;
+    visited.add(route);
     try {
       await page.goto(ORIGIN + route, { waitUntil: "domcontentloaded", timeout: 45000 });
       await page.waitForFunction(() => {
@@ -47,6 +59,15 @@ try {
       }, { timeout: 20000 }).catch(() => {});
       // Give lazy route chunks and public content queries time to settle.
       await page.waitForTimeout(1800);
+      const discovered = await page.locator("a[href]").evaluateAll((anchors, origin) => anchors.map((anchor) => {
+        try {
+          const url = new URL(anchor.href, origin);
+          return url.origin === origin ? url.pathname.replace(/\/+$/, "") || "/" : null;
+        } catch { return null; }
+      }), ORIGIN);
+      for (const path of discovered) {
+        if (path && isPublicPath(path) && !visited.has(path) && !queue.includes(path)) queue.push(path);
+      }
       const html = await page.content();
       const rootText = await page.locator("#root").innerText().catch(() => "");
       if (rootText.trim().length < 40) {
