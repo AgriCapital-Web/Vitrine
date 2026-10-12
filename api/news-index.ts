@@ -13,13 +13,13 @@ const stripHtml = (value: unknown) => String(value ?? "")
   .replace(/&nbsp;/gi, " ")
   .replace(/\s+/g, " ").trim();
 
-export default async function handler() {
+export default async function handler(_req: any, res: any) {
   const response = await fetch(
     SUPABASE_URL + "/rest/v1/news?select=slug,title_fr,title,excerpt_fr,excerpt,content_fr,featured_image,published_at,updated_at,category&is_published=eq.true&order=published_at.desc&limit=200",
-    { headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}` } },
+    { headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}` }, signal: AbortSignal.timeout(8000), cache: "no-store" },
   );
 
-  if (!response.ok) return new Response("Unable to load public news", { status: 502 });
+  if (!response.ok) return res.status(502).send("Unable to load public news");
   const articles = await response.json();
   const cards = articles.map((article: any) => {
     if (typeof article?.slug !== "string" || !/^[a-zA-Z0-9-]+$/.test(article.slug)) return "";
@@ -50,12 +50,8 @@ export default async function handler() {
     (cards || "<p>Aucune actualité publiée pour le moment.</p>") +
     '<p><a href="' + BASE_URL + '">Retour au site AgriCapital</a></p></main></body></html>';
 
-  return new Response(html, {
-    status: 200,
-    headers: {
-      "Content-Type": "text/html; charset=utf-8",
-      "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600",
-      "X-Content-Type-Options": "nosniff",
-    },
-  });
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  return res.status(200).send(html);
 }
