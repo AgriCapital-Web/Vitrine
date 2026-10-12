@@ -6,7 +6,7 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": "(facebookexternalhit|facebot|twitterbot|linkedinbot|whatsapp|telegrambot|pinterestbot|slackbot|discordbot|googlebot|google-inspectiontool|bingbot|applebot|duckduckbot|embedly|quora link preview|skypeuripreview|vkshare|redditbot)"
+          "value": "(facebookexternalhit|facebot|twitterbot|linkedinbot|whatsapp|telegrambot|pinterestbot|slackbot|discordbot|googlebot|google-inspectiontool|bingbot|applebot|duckduckbot|embedly|quora link preview|skypeuripreview|vkshare|redditbot|GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-SearchBot|Claude-User|PerplexityBot|Perplexity-User|Google-Extended|Gemini-Deep-Research|Applebot-Extended|Bytespider|CCBot|cohere-ai|YouBot)"
         }
       ],
       "destination": "/api/news-meta?slug=:slug"
@@ -17,7 +17,7 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": "(facebookexternalhit|facebot|twitterbot|linkedinbot|whatsapp|telegrambot|pinterestbot|slackbot|discordbot|googlebot|google-inspectiontool|bingbot|applebot|duckduckbot|embedly|quora link preview|skypeuripreview|vkshare|redditbot)"
+          "value": "(facebookexternalhit|facebot|twitterbot|linkedinbot|whatsapp|telegrambot|pinterestbot|slackbot|discordbot|googlebot|google-inspectiontool|bingbot|applebot|duckduckbot|embedly|quora link preview|skypeuripreview|vkshare|redditbot|GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-SearchBot|Claude-User|PerplexityBot|Perplexity-User|Google-Extended|Gemini-Deep-Research|Applebot-Extended|Bytespider|CCBot|cohere-ai|YouBot)"
         }
       ],
       "destination": "/api/news-meta?slug=:slug"
@@ -28,7 +28,7 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": "(facebookexternalhit|facebot|twitterbot|linkedinbot|whatsapp|telegrambot|pinterestbot|slackbot|discordbot|googlebot|google-inspectiontool|bingbot|applebot|duckduckbot|embedly|quora link preview|skypeuripreview|vkshare|redditbot)"
+          "value": "(facebookexternalhit|facebot|twitterbot|linkedinbot|whatsapp|telegrambot|pinterestbot|slackbot|discordbot|googlebot|google-inspectiontool|bingbot|applebot|duckduckbot|embedly|quora link preview|skypeuripreview|vkshare|redditbot|GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-SearchBot|Claude-User|PerplexityBot|Perplexity-User|Google-Extended|Gemini-Deep-Research|Applebot-Extended|Bytespider|CCBot|cohere-ai|YouBot)"
         }
       ],
       "destination": "/api/news-meta?slug=:slug"
