@@ -67,8 +67,6 @@ const AdminBackup = () => {
     { name: "ai_chat_logs", label: "Logs Chat IA", description: "Historique conversations", selected: false },
     { name: "visitor_contacts", label: "Contacts Visiteurs", description: "Coordonnées collectées", selected: true },
     { name: "site_content", label: "Contenu Site", description: "Textes et traductions", selected: true },
-    { name: "site_pages", label: "Pages", description: "Configuration pages", selected: true },
-    { name: "site_sections", label: "Sections", description: "Sections des pages", selected: true },
     { name: "site_menu", label: "Menu", description: "Navigation", selected: true },
     { name: "site_settings", label: "Paramètres", description: "Configuration site", selected: true },
     { name: "email_templates", label: "Templates Email", description: "Modèles emails", selected: true },
