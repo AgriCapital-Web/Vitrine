@@ -35,7 +35,7 @@ try {
   const { chromium } = await import("playwright-core");
   const chromiumBinary = (await import("@sparticuz/chromium")).default;
   browser = await chromium.launch({ headless: true, args: chromiumBinary.args, executablePath: await chromiumBinary.executablePath() });
-  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  const page = await browser.newPage({ locale: "fr-CI", viewport: { width: 1440, height: 1000 } });
   page.setDefaultNavigationTimeout(45000);
 
   let rendered = 0;
