@@ -1,49 +1,96 @@
-# Robots.txt AgriCapital — domaine canonique unique : https://www.agricapital.ci
-# Les miroirs (*.lovable.app, *.vercel.app) sont marqués noindex au runtime.
-
-User-agent: Googlebot
-Allow: /
-
-User-agent: Googlebot-Image
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Slurp
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: YandexBot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: LinkedInBot
-Allow: /
-
-User-agent: WhatsApp
-Allow: /
-
-User-agent: TelegramBot
-Allow: /
+# AgriCapital — exploration du contenu public uniquement
+# Le site public peut être exploré par les moteurs et assistants IA.
+# Ces directives ne constituent PAS un contrôle d'accès aux ressources privées.
 
 User-agent: *
 Allow: /
-
-# Zones privées / non indexables
 Disallow: /admin
 Disallow: /admin/
 Disallow: /admin-setup
-Disallow: /dataroom/vault
+Disallow: /dataroom
+Disallow: /dataroom/
 Disallow: /api/
 Disallow: /404
 
+# Assistants et robots IA : accès aux pages publiques et fichiers de référence.
+User-agent: GPTBot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dataroom
+Disallow: /dataroom/
+Disallow: /api/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dataroom
+Disallow: /dataroom/
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dataroom
+Disallow: /dataroom/
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dataroom
+Disallow: /dataroom/
+Disallow: /api/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dataroom
+Disallow: /dataroom/
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dataroom
+Disallow: /dataroom/
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dataroom
+Disallow: /dataroom/
+Disallow: /api/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dataroom
+Disallow: /dataroom/
+Disallow: /api/
+
+User-agent: Bytespider
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dataroom
+Disallow: /dataroom/
+Disallow: /api/
+
+User-agent: CCBot
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dataroom
+Disallow: /dataroom/
+Disallow: /api/
+
 Sitemap: https://www.agricapital.ci/sitemap.xml
-Host: agricapital.ci
