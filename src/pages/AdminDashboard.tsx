@@ -17,7 +17,9 @@ interface DailyVisit {
   visits: number;
 }
 
-const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|lovableapp|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(String(value || ""));\n\nconst COLORS = ['hsl(var(--primary))', '#22c55e', '#f59e0b', '#3b82f6', '#8b5cf6'];
+const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|lovableapp|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(String(value || ""));
+
+const COLORS = ['hsl(var(--primary))', '#22c55e', '#f59e0b', '#3b82f6', '#8b5cf6'];
 
 const AdminDashboard = () => {
   const [totalVisits, setTotalVisits] = useState(0);
@@ -108,8 +110,6 @@ const AdminDashboard = () => {
   };
 
   const fetchAnalytics = async () => {
-    // Supabase returns at most 1,000 rows per request by default; paginate so
-    // country/device totals are based on the complete visit history.
     const allVisits: any[] = [];
     for (let offset = 0; ; offset += 1000) {
       const { data: batch, error } = await supabase
@@ -123,71 +123,69 @@ const AdminDashboard = () => {
     }
 
     const visits = allVisits;
-    const totalUnique = new Set(visits.map((v) => v.visitor_id).filter(Boolean)).size;
-    setTotalVisits(Math.max(Number(publicCounter?.total_visitors) || 0, totalUnique));
+    const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent));
+    setTotalVisits(new Set(humanVisits.map((v: any) => v.visitor_id).filter(Boolean)).size);
 
     const now = new Date();
-    const todayStart = new Date(now);
-    todayStart.setHours(0, 0, 0, 0);
-    const weekStart = new Date(now);
-    weekStart.setDate(weekStart.getDate() - 6);
-    weekStart.setHours(0, 0, 0, 0);
-
+    const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
+    const weekStart = new Date(now); weekStart.setDate(weekStart.getDate() - 6); weekStart.setHours(0, 0, 0, 0);
     const todayVisitors = new Set<string>();
     const weekVisitors = new Set<string>();
     const pageCount: Record<string, number> = {};
     const dailyCounts: Record<string, number> = {};
-
     for (let i = 6; i >= 0; i--) {
-      const date = new Date(now);
-      date.setDate(date.getDate() - i);
-      const key = date.toISOString().split("T")[0];
-      dailyCounts[key] = 0;
+      const date = new Date(now); date.setDate(date.getDate() - i);
+      dailyCounts[date.toISOString().split("T")[0]] = 0;
     }
-
-    humanVisits.forEach((visit) => {
+    humanVisits.forEach((visit: any) => {
       const date = new Date(visit.created_at);
       const path = visit.page_path || "/";
       pageCount[path] = (pageCount[path] || 0) + 1;
-
       if (date >= todayStart && visit.visitor_id) todayVisitors.add(visit.visitor_id);
       if (date >= weekStart && visit.visitor_id) weekVisitors.add(visit.visitor_id);
-
       const day = date.toISOString().split("T")[0];
       if (dailyCounts[day] !== undefined) dailyCounts[day] += 1;
     });
-
     setTodayVisits(todayVisitors.size);
     setWeekVisits(weekVisitors.size);
 
-    const sorted = Object.entries(pageCount)
-      .map(([page_path, visit_count]) => ({ page_path, visit_count }))
-      .sort((a, b) => b.visit_count - a.visit_count)
-      .slice(0, 10);
+    const sorted = Object.entries(pageCount).map(([page_path, count]) => ({ page_path, count }))
+      .sort((a, b) => b.count - a.count).slice(0, 10);
     setTopPages(sorted);
 
     const countryCounts: Record<string, number> = {};
     const deviceCounts: Record<string, number> = {};
-    visits.forEach((visit: any) => {
+    humanVisits.forEach((visit: any) => {
       if (visit.country) countryCounts[visit.country] = (countryCounts[visit.country] || 0) + 1;
       const ua = String(visit.user_agent || "").toLowerCase();
-      const device = /ipad|tablet|kindle|silk/.test(ua)
-        ? "Tablette"
-        : /mobile|iphone|ipod|android/.test(ua)
-          ? "Téléphone"
-          : ua ? "Ordinateur" : "Non déterminé";
+      const device = /ipad|tablet|kindle|silk/.test(ua) ? "Tablette"
+        : /mobile|iphone|ipod|android/.test(ua) ? "Téléphone"
+        : ua ? "Ordinateur" : "Non déterminé";
       deviceCounts[device] = (deviceCounts[device] || 0) + 1;
     });
-    setTopCountries(Object.entries(countryCounts)
-      .map(([country, count]) => ({ country, count }))
-      .sort((a, b) => b.count - a.count));
-    setTopDevices(Object.entries(deviceCounts)
-      .map(([device, count]) => ({ device, count }))
-      .sort((a, b) => b.count - a.count));
+    setTopCountries(Object.entries(countryCounts).map(([country, count]) => ({ country, count })).sort((a, b) => b.count - a.count));
+    setTopDevices(Object.entries(deviceCounts).map(([device, count]) => ({ device, count })).sort((a, b) => b.count - a.count));
 
-    setDailyVisits(Object.entries(dailyCounts).map(([date, visits]) => ({
+    const cityCounts: Record<string, number> = {};
+    const refCount: Record<string, number> = {};
+    humanVisits.forEach((v: any) => {
+      if (v.city) cityCounts[v.city] = (cityCounts[v.city] || 0) + 1;
+      if (v.referrer) {
+        try {
+          const source = new URL(v.referrer).hostname.replace(/^www\./, "");
+          refCount[source] = (refCount[source] || 0) + 1;
+        } catch {
+          refCount["Référent non reconnu"] = (refCount["Référent non reconnu"] || 0) + 1;
+        }
+      }
+    });
+    setTopCities(Object.entries(cityCounts).map(([city, count]) => ({ city, count })).sort((a, b) => b.count - a.count).slice(0, 10));
+    setTopReferrers(Object.entries(refCount).map(([referrer, count]) => ({ referrer, count })).sort((a, b) => b.count - a.count).slice(0, 10));
+    setSuspectedBotVisits(visits.length - humanVisits.length);
+
+    setDailyVisits(Object.entries(dailyCounts).map(([date, count]) => ({
       date: new Date(date).toLocaleDateString("fr-FR", { weekday: "short", day: "numeric" }),
-      visits,
+      count,
     })));
   };
 
