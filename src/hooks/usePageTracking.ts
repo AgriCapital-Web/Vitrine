@@ -15,7 +15,7 @@ export const usePageTracking = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname.startsWith("/admin")) return;
+    if (location.pathname.startsWith("/admin")) return;\n    if (navigator.webdriver) return;
 
     const track = async () => {
       try {
@@ -27,7 +27,7 @@ export const usePageTracking = () => {
         const visitPayload = {
           page_path: location.pathname,
           visitor_id: getVisitorId(),
-          user_agent: navigator.userAgent,
+          user_agent: navigator.userAgent,\n          automation_flag: Boolean(navigator.webdriver),
           referrer: document.referrer || null,
         };
         // Use the first-party Vercel endpoint so its trusted geo headers can be recorded.
