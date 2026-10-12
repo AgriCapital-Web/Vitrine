@@ -4,13 +4,9 @@ const BASE_URL = "https://www.agricapital.ci";
 
 const staticPaths = [
   "/", "/a-propos", "/notre-approche", "/impact", "/fondateur", "/equipe",
-  "/contact", "/solutions", "/services", "/palminvest", "/terrapalm",
+  "/contact", "/solutions", "/plantation-cle-en-main", "/palminvest", "/terrapalm",
   "/palmterroir", "/tresor-foncier", "/tresor-palmier", "/evolution",
-  "/actualites", "/new", "/news", "/temoignages", "/partenariats", "/partnership-request",
-  "/partenariat-demande", "/partenariat", "/partnerships", "/faq", "/jalons",
-  "/evolution-projet", "/palminvest-plus", "/terrapalm-plus", "/palmterroir-essentielle",
-  "/solutions/palminvest", "/solutions/terrapalm", "/solutions/palmterroir",
-  "/services/palminvest", "/services/terrapalm", "/services/palmterroir"
+  "/actualites", "/temoignages", "/partenariats", "/faq"
 ];
 
 const xmlEscape = (value: unknown) => String(value ?? "")
