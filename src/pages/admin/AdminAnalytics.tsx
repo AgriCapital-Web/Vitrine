@@ -33,7 +33,6 @@ const AdminAnalytics = () => {
   const [topCities, setTopCities] = useState<{ city: string; count: number }[]>([]);
   const [topDevices, setTopDevices] = useState<CountItem[]>([]);
   const [suspectedBotVisits, setSuspectedBotVisits] = useState(0);
-  const [suspectedBotVisits, setSuspectedBotVisits] = useState(0);
 
   useEffect(() => {
     fetchAnalytics();
@@ -119,8 +118,7 @@ const AdminAnalytics = () => {
       [""],
       ["Top Pages", "Visites"],
       ...topPages.map(p => [p.page_path || "/", p.count.toString()]),
-    ].map(row => row.map(csvCell).join(",")).join("
-");
+    ].map(row => row.map(csvCell).join(",")).join("\n");
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const link = document.createElement("a");
