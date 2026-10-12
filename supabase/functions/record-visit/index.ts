@@ -16,6 +16,11 @@ serve(async (req) => {
   try {
     const body = await req.json();
     const pagePath = clean(body?.page_path, 500) || "/";
+    const userAgent = clean(body?.user_agent, 1000) || req.headers.get("user-agent") || "";
+    const automatedPattern = /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|lovableapp|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i;
+    if (body?.automation_flag === true || automatedPattern.test(userAgent)) {
+      return new Response(JSON.stringify({ ok: true, ignored: true, reason: "automated_traffic" }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    }
     const visitorId = clean(body?.visitor_id, 200);
     if (!visitorId) return new Response(JSON.stringify({ ok: false }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
@@ -46,7 +51,7 @@ serve(async (req) => {
     const { error } = await supabase.from("page_visits").insert({
       page_path: pagePath,
       visitor_id: visitorId,
-      user_agent: clean(body?.user_agent, 1000),
+      user_agent: userAgent,
       referrer: clean(body?.referrer, 1000),
       country_code: countryCode,
       country,
