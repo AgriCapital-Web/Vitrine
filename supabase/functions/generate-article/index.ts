@@ -81,7 +81,7 @@ serve(async (req) => {
   }
 
   try {
-    const { rawInput, mediaOption = "auto", editorialMode = "reportage", sourceImages = [] } = await req.json();
+    const { rawInput, mediaOption = "auto", editorialMode = "reportage", sourceImages = [], existingArticle = null } = await req.json();
     const normalizedImages = Array.isArray(sourceImages)
       ? sourceImages.filter((url: unknown) => typeof url === "string" && /^https?:\/\//i.test(url)).slice(0, 12)
       : [];
@@ -161,10 +161,27 @@ STRUCTURE JSON :
 
 ${mediaInstruction}`;
 
-    const userText = `Matière éditoriale fournie par l'utilisateur :
-${sanitizedInput}
-
-Analyse maintenant le texte et, si des images sont fournies, analyse-les une par une avant de construire l'article.`;
+    const context = existingArticle && typeof existingArticle === "object" ? existingArticle : {};
+    const lockedTitle = typeof context.title === "string" ? context.title.trim().slice(0, 300) : "";
+    const lockedSlug = typeof context.slug === "string" ? context.slug.trim().slice(0, 180) : "";
+    const lockedCategory = typeof context.category === "string" ? context.category.trim().slice(0, 100) : "";
+    const lockedExcerpt = typeof context.excerpt === "string" ? context.excerpt.trim().slice(0, 1200) : "";
+    const isRegeneration = context.isRegeneration === true;
+    const userText = "GARDE-FOU CONTEXTUEL OBLIGATOIRE\n" +
+      "Mode : " + (isRegeneration ? "RÉGÉNÉRATION ARTICLE EXISTANT" : "RÉDACTION À PARTIR DE LA MATIÈRE FOURNIE") + "\n" +
+      "Titre-source : " + (lockedTitle || "(aucun)") + "\n" +
+      "Extrait-source : " + (lockedExcerpt || "(aucun)") + "\n" +
+      "Catégorie-source : " + (lockedCategory || "(aucune)") + "\n" +
+      "Slug-source : " + (lockedSlug || "(aucun)") + "\n\n" +
+      "RÈGLES NON NÉGOCIABLES :\n" +
+      "- " + (lockedTitle ? "Le titre est verrouillé : retourne exactement ce titre." : "Si un titre existe dans la matière, conserve-le.") + "\n" +
+      "- " + (isRegeneration ? "Améliore cet article existant sans changer son sujet, son angle, ses faits, ses personnes, ses lieux, ses dates, son objectif ni son périmètre." : "Développe uniquement le sujet clairement demandé.") + "\n" +
+      "- La matière utilisateur et les métadonnées ci-dessus sont la seule source de vérité. Aucun fait, chiffre, citation, partenariat, témoignage, date, promesse ou événement ne peut être inventé.\n" +
+      "- N’ajoute pas de digressions, de sujets voisins ni de paragraphes génériques pour atteindre une longueur cible. Si la matière est limitée, rédige plus court.\n" +
+      "- Chaque paragraphe doit servir directement le titre et le sujet-source. Si une information manque, omets-la au lieu de la deviner.\n" +
+      "- " + (lockedCategory ? "Conserve la catégorie existante." : "Ne choisis une catégorie que si elle correspond clairement au sujet.") + "\n\n" +
+      "Matière éditoriale fournie par l’utilisateur :\n" + sanitizedInput + "\n\n" +
+      "Analyse cette matière. Si des images sont fournies, décris uniquement ce qui est visiblement vérifiable et n’en déduis aucun fait incertain.";
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -219,6 +236,10 @@ Analyse maintenant le texte et, si des images sont fournies, analyse-les une par
     };
 
     const article = parseAIJson(rawContent);
+    // Enforce immutable identity fields server-side; do not rely on model compliance.
+    if (lockedTitle) article.title = lockedTitle;
+    if (lockedCategory) article.category = lockedCategory;
+    if (lockedSlug) article.slug = lockedSlug;
 
     const contentCaps: Record<string, number> = { flash: 4500, standard: 9000, immersive: 14000, reportage: 12000 };
     const cap = contentCaps[editorialMode] || 3500;
