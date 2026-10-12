@@ -34,7 +34,7 @@ const Footer = () => {
             <img src={logoWhite} alt="AgriCapital" className="h-12 sm:h-14 w-auto mb-5" loading="lazy" />
             <p className="text-primary-foreground/75 text-sm leading-7 max-w-sm">{t.footer.description}</p>
             <p className="text-primary-foreground/55 text-[11px] font-bold uppercase tracking-[0.16em] mt-5">{t.footer.capitalSocial}</p>
-            <p className="mt-3 max-w-sm text-[11px] leading-5 text-primary-foreground/55">AgriCapital SARL · Capital social : 5 000 000 FCFA · RCCM : CI-DAL-01-2025-B12-13435 · Siège : Daloa–Gonaté, Haut-Sassandra, Côte d’Ivoire.</p>
+            <p className="mt-3 max-w-sm text-[11px] leading-5 text-primary-foreground/55">AgriCapital SARL · Capital social : 5 000 000 FCFA · RCCM : CI-DAL-01-2025-B12-13435 · Siège : Daloa–Gonaté, Quartier Belleville, lot 1814, îlot 230, Haut-Sassandra, Côte d’Ivoire.</p>
           </div>
 
           <div>
