@@ -32,8 +32,9 @@ try {
   }
   if (!ready) throw new Error("Vite preview did not start in time");
 
-  const { chromium } = await import("playwright");
-  browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
+  const { chromium } = await import("playwright-core");
+  const chromiumBinary = (await import("@sparticuz/chromium")).default;
+  browser = await chromium.launch({ headless: true, args: chromiumBinary.args, executablePath: await chromiumBinary.executablePath() });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   page.setDefaultNavigationTimeout(45000);
 
