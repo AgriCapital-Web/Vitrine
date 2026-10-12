@@ -95,7 +95,11 @@ try {
   for (const relative of ["sitemap.xml", "actualites/index.html", "new/index.html", "news/index.html"]) {
     await unlink(join(process.cwd(), "dist", relative)).catch(() => {});
   }
-  console.log("[prerender] Removed static news-index/sitemap files so live crawler rewrites stay current.");
+  // Vite copies public/ files into dist/, but some deployment adapters may retain
+  // the public sitemap artifact separately. Remove the source artifact too so
+  // /sitemap.xml must resolve to the live API rewrite and includes newly published news.
+  await unlink(join(process.cwd(), "public", "sitemap.xml")).catch(() => {});
+  console.log("[prerender] Removed static news-index/sitemap artifacts so live rewrites stay current.");
   console.log("[prerender] Rendered", rendered, "public routes; private/admin/data-room routes are excluded.");
 } finally {
   if (browser) await browser.close().catch(() => {});
