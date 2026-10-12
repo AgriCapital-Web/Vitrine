@@ -27,7 +27,7 @@ const AdminDashboard = () => {
   const [weekVisits, setWeekVisits] = useState(0);
   const [topPages, setTopPages] = useState<PageVisit[]>([]);
   const [topCountries, setTopCountries] = useState<{ country: string; count: number }[]>([]);
-  const [topDevices, setTopDevices] = useState<{ device: string; count: number }[]>([]);
+  const [topDevices, setTopDevices] = useState<{ device: string; count: number }[]>([]);\n  const [suspectedBotVisits, setSuspectedBotVisits] = useState(0);
   const [dailyVisits, setDailyVisits] = useState<DailyVisit[]>([]);
   const [newsletterCount, setNewsletterCount] = useState(0);
   const [testimonialCount, setTestimonialCount] = useState(0);
@@ -123,7 +123,7 @@ const AdminDashboard = () => {
     }
 
     const visits = allVisits;
-    const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent));
+    const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent));\n    setSuspectedBotVisits(visits.length - humanVisits.length);
     setTotalVisits(new Set(humanVisits.map((v: any) => v.visitor_id).filter(Boolean)).size);
 
     const now = new Date();
@@ -333,6 +333,13 @@ const AdminDashboard = () => {
                   <span>{item.device}</span><span className="font-medium tabular-nums">{item.count}</span>
                 </div>)}
               </div> : <p className="text-sm text-muted-foreground">Aucune donnée d’appareil disponible.</p>}
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader><CardTitle>Robots et automatisations filtrés</CardTitle></CardHeader>
+            <CardContent>
+              <p className="text-3xl font-bold">{suspectedBotVisits.toLocaleString()}</p>
+              <p className="text-xs text-muted-foreground">Visites conservées dans l’historique, exclues des indicateurs de trafic humain estimé.</p>
             </CardContent>
           </Card>
         </div>
