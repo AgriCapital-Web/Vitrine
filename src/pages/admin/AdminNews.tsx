@@ -145,7 +145,7 @@ const AdminNews = () => {
         slug,
         images: JSON.stringify(data.images),
         videos: JSON.stringify(data.videos),
-        published_at: data.is_published ? new Date().toISOString() : null
+        published_at: data.is_published ? (editingArticle?.published_at || new Date().toISOString()) : null
       };
       if (editingArticle) {
         const { error } = await supabase.from("news").update(payload).eq("id", editingArticle.id);
@@ -276,8 +276,8 @@ const AdminNews = () => {
         slug: editingArticle || prev.slug.trim() ? prev.slug : (articleData.slug || prev.slug),
         images: [...prev.images, ...generatedUrls],
         featured_image: prev.featured_image || prev.images[0] || generatedUrls[0] || "",
-        is_published: false,
-        is_featured: false,
+        is_published: editingArticle ? prev.is_published : false,
+        is_featured: editingArticle ? prev.is_featured : false,
       }));
 
       toast.success(
