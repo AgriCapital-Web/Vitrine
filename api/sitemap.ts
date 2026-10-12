@@ -6,8 +6,11 @@ const staticPaths = [
   "/", "/a-propos", "/notre-approche", "/impact", "/fondateur", "/equipe",
   "/contact", "/solutions", "/services", "/palminvest", "/terrapalm",
   "/palmterroir", "/tresor-foncier", "/tresor-palmier", "/evolution",
-  "/actualites", "/new", "/temoignages", "/partenariats", "/partnership-request",
-  "/faq"
+  "/actualites", "/new", "/news", "/temoignages", "/partenariats", "/partnership-request",
+  "/partenariat-demande", "/partenariat", "/partnerships", "/faq", "/jalons",
+  "/evolution-projet", "/palminvest-plus", "/terrapalm-plus", "/palmterroir-essentielle",
+  "/solutions/palminvest", "/solutions/terrapalm", "/solutions/palmterroir",
+  "/services/palminvest", "/services/terrapalm", "/services/palmterroir"
 ];
 
 const xmlEscape = (value: unknown) => String(value ?? "")
