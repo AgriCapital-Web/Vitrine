@@ -115,7 +115,7 @@ const AdminDashboard = () => {
     for (let offset = 0; ; offset += 1000) {
       const { data: batch, error } = await supabase
         .from("page_visits")
-        .select("page_path, created_at, visitor_id, country, user_agent")
+        .select("page_path, created_at, visitor_id, country, user_agent, referrer")
         .gte("created_at", new Date(Date.now() - 180 * 24 * 60 * 60 * 1000).toISOString())
         .order("created_at", { ascending: false })
         .range(offset, offset + 999);
@@ -125,7 +125,7 @@ const AdminDashboard = () => {
     }
 
     const visits = allVisits;
-    const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent));
+    const humanVisits = visits.filter((v: any) => !isAutomatedVisit(v));
     setSuspectedBotVisits(visits.length - humanVisits.length);
     setTotalVisits(new Set(humanVisits.map((v: any) => v.visitor_id).filter(Boolean)).size);
 
@@ -342,7 +342,7 @@ const AdminDashboard = () => {
             <CardHeader><CardTitle>Robots et profils de navigateur suspects</CardTitle></CardHeader>
             <CardContent>
               <p className="text-3xl font-bold">{suspectedBotVisits.toLocaleString()}</p>
-              <p className="text-xs text-muted-foreground">Visites conservées dans l’historique, exclues des indicateurs de trafic humain estimé. Les deux signatures de navigateur obsolètes à volume anormal sont aussi classées comme suspectes.</p>
+              <p className="text-xs text-muted-foreground">Visites conservées dans l’historique, exclues des indicateurs de trafic humain estimé. Les signatures automatisées et les référents de prévisualisation sont aussi exclus.</p>
             </CardContent>
           </Card>
         </div>
