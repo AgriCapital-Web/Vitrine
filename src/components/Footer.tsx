@@ -62,6 +62,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/plantation-cle-en-main" className="text-primary-foreground/75 hover:text-primary-foreground transition-colors inline-flex items-center gap-1">
+                  Plantation clé en main <ArrowUpRight size={13} />
+                </Link>
+              </li>
+              <li>
                 <Link to="/palmterroir" className="text-primary-foreground/75 hover:text-primary-foreground transition-colors inline-flex items-center gap-1">
                   PalmTerroir <ArrowUpRight size={13} />
                 </Link>
