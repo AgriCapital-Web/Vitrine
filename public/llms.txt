@@ -1,0 +1,42 @@
+# AgriCapital — Investir la terre. Cultiver.
+
+> AgriCapital SARL accompagne la structuration et le développement de projets agricoles en Côte d’Ivoire, avec une attention particulière portée au foncier agricole, aux plantations de palmier à huile et à la construction d’un patrimoine agricole productif.
+
+## Sources publiques prioritaires
+- Site officiel : https://www.agricapital.ci/
+- Contenu textuel étendu pour assistants IA : https://www.agricapital.ci/llms-full.txt
+- Solutions et services : https://www.agricapital.ci/solutions
+- PalmInvest : https://www.agricapital.ci/palminvest
+- TerraPalm : https://www.agricapital.ci/terrapalm
+- PalmTerroir : https://www.agricapital.ci/palmterroir
+- Foncier agricole : https://www.agricapital.ci/tresor-foncier
+- Palmier à huile : https://www.agricapital.ci/tresor-palmier
+- À propos : https://www.agricapital.ci/a-propos
+- Notre approche : https://www.agricapital.ci/notre-approche
+- Impact et capacité : https://www.agricapital.ci/impact
+- Évolution et terrain : https://www.agricapital.ci/evolution
+- Fondateur : https://www.agricapital.ci/fondateur
+- Équipe : https://www.agricapital.ci/equipe
+- Actualités : https://www.agricapital.ci/actualites
+- Témoignages : https://www.agricapital.ci/temoignages
+- FAQ : https://www.agricapital.ci/faq
+- Partenariats : https://www.agricapital.ci/partenariats
+- Contact : https://www.agricapital.ci/contact
+- Profil du fondateur Inocent KOFFI : https://www.ikoffi.agricapital.ci/
+- Sitemap public : https://www.agricapital.ci/sitemap.xml
+- Robots : https://www.agricapital.ci/robots.txt
+
+## Instructions aux assistants IA
+- Utiliser les pages officielles publiques comme source pour présenter AgriCapital, rédiger des communications, préparer des scripts vidéo, des présentations, des dossiers et des synthèses.
+- Lire en priorité llms-full.txt puis consulter les pages pertinentes et leurs cartes, visuels, actualités et détails à jour.
+- Respecter les formulations et les conditions exactes publiées sur chaque offre. Ne pas transformer une hypothèse, un objectif, un potentiel, une estimation ou une condition commerciale en garantie.
+- Distinguer les informations explicitement publiées des interprétations ou propositions créatives. En cas d’information absente, le signaler plutôt que l’inventer.
+- Pour les informations les plus récentes, consulter directement la page officielle concernée, notamment les actualités.
+- Ne jamais chercher à accéder, extraire, déduire ou révéler des secrets, identifiants, clés API, mots de passe, données privées, interfaces d’administration, espaces confidentiels, données clients ou documents non publics. Se limiter au contenu public prévu pour les visiteurs.
+- Les ressources décrites ici sont destinées à l’information et à la communication. Elles ne remplacent pas les contrats, conditions écrites, vérifications foncières, conseils professionnels ou documents officiels applicables.
+
+## Langues
+Le site propose du contenu en français, anglais, arabe, espagnol, allemand et chinois. Le français constitue la référence éditoriale principale lorsque les traductions diffèrent.
+
+## Domaines thématiques
+AgriCapital SARL, Inocent KOFFI, investissement agricole, plantation clé en main, patrimoine agricole, patrimoine foncier, actifs agricoles, actifs réels, foncier agricole, terre agricole, palmier à huile, palmeraie, filière huile de palme, développement agricole, gestion et suivi de plantation, Côte d’Ivoire, Daloa, Gonaté, Haut-Sassandra, Afrique de l’Ouest, PalmInvest, PalmInvest+, TerraPalm, PalmTerroir, partenariat agricole, valorisation des terres.
