@@ -15,7 +15,7 @@ const stripHtml = (value: unknown) => String(value ?? "")
 
 export default async function handler(_req: any, res: any) {
   const response = await fetch(
-    SUPABASE_URL + "/rest/v1/news?select=slug,title_fr,title,excerpt_fr,excerpt,content_fr,featured_image,published_at,updated_at,category&is_published=eq.true&order=published_at.desc&limit=200",
+    SUPABASE_URL + "/rest/v1/news?select=slug,title_fr,title,excerpt_fr,excerpt,content_fr,featured_image,published_at,updated_at&is_published=eq.true&order=published_at.desc&limit=200",
     { headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}` }, signal: AbortSignal.timeout(8000), cache: "no-store" },
   );
 
