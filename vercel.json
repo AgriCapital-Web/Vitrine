@@ -6,7 +6,7 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": "(googlebot|google-inspectiontool|bingbot|applebot|duckduckbot|GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-SearchBot|Claude-User|PerplexityBot|Perplexity-User|Google-Extended|Gemini-Deep-Research|Applebot-Extended|Bytespider|CCBot|cohere-ai|YouBot)"
+          "value": "(Googlebot|googlebot|Google-InspectionTool|google-inspectiontool|Bingbot|bingbot|Applebot|applebot|DuckDuckBot|duckduckbot|GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-SearchBot|Claude-User|PerplexityBot|Perplexity-User|Google-Extended|Gemini-Deep-Research|Applebot-Extended|Bytespider|CCBot|cohere-ai|YouBot)"
         }
       ],
       "destination": "/api/plantation-cle-en-main"
