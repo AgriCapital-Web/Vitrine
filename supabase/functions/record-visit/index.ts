@@ -38,10 +38,10 @@ serve(async (req) => {
     }
 
     const cf = (req as Request & { cf?: Record<string, string> }).cf || {};
-    const countryCode = clean(cf.country, 8);
-    const country = clean(cf.country, 100);
-    const city = clean(cf.city, 120);
-    const region = clean(cf.region, 120);
+    const countryCode = clean(cf.country, 8) || clean(body?.geo_country_code, 8) || clean(req.headers.get("x-vercel-ip-country"), 8);
+    const country = clean(cf.country_name, 100) || clean(body?.geo_country, 100) || countryCode;
+    const city = clean(cf.city, 120) || clean(body?.geo_city, 120);
+    const region = clean(cf.region, 120) || clean(body?.geo_region, 120);
 
     const { error } = await supabase.from("page_visits").insert({
       page_path: pagePath,
