@@ -122,6 +122,45 @@ const renderArticleShell = (shell: string, article: Record<string, any>, slug: s
   return html.replace("</head>", "  " + jsonLd + "\n</head>");
 };
 
+
+const sanitizeRichHtml = (value: unknown) => {
+  let html = String(value ?? "");
+  html = html.replace(/<\\s*(script|style|iframe|object|embed|form|input|button|textarea|select|meta|link)[^>]*>[\\s\\S]*?<\\s*\\/\\s*\\1\\s*>/gi, "");
+  html = html.replace(/<\\s*(script|style|iframe|object|embed|form|input|button|textarea|select|meta|link)\\b[^>]*\\/?\\s*>/gi, "");
+  html = html.replace(/\\s+on[a-z]+\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+)/gi, "");
+  html = html.replace(/\\s+(href|src|xlink:href)\\s*=\\s*(["'])\\s*javascript:[\\s\\S]*?\\2/gi, "");
+  html = html.replace(/\\s+srcdoc\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+)/gi, "");
+  return html;
+};
+
+const renderArticleContent = (shell: string, article: Record<string, any>) => {
+  const title = stripHtml(localized(article, "title") || article.meta_title).slice(0, 200) || "Actualité AgriCapital";
+  const excerpt = stripHtml(localized(article, "excerpt") || "").slice(0, 500);
+  const content = sanitizeRichHtml(localized(article, "content"));
+  const images = (() => {
+    try {
+      const value = Array.isArray(article.images) ? article.images : JSON.parse(article.images || "[]");
+      return Array.isArray(value) ? value : [];
+    } catch { return []; }
+  })();
+  const imageHtml = images.map((item: unknown, index: number) => {
+    const url = typeof item === "string" ? item : String((item as any)?.url || (item as any)?.src || "");
+    if (!url || !/^https?:\\/\\//i.test(url)) return "";
+    const caption = typeof item === "object" && item ? String((item as any).caption_fr || (item as any).caption || "") : "";
+    return '<figure><img src="' + escapeHtml(url) + '" alt="' + escapeHtml(caption || title) + '" loading="lazy"><figcaption>' + escapeHtml(caption) + '</figcaption></figure>';
+  }).join("\\n");
+  const featured = article.featured_image && /^https?:\\/\\//i.test(String(article.featured_image))
+    ? '<figure><img src="' + escapeHtml(article.featured_image) + '" alt="' + escapeHtml(title) + '"></figure>'
+    : "";
+  const date = article.published_at || article.created_at || "";
+  const body = '<main id="main-content" class="public-article-content"><article><header><p>AgriCapital · Actualités</p><h1>' + escapeHtml(title) + '</h1>' +
+    (date ? '<time datetime="' + escapeHtml(date) + '">' + escapeHtml(date.slice(0, 10)) + '</time>' : "") +
+    (excerpt ? '<p class="article-excerpt">' + escapeHtml(excerpt) + '</p>' : "") + '</header>' +
+    featured + '<div class="article-body">' + content + '</div>' + imageHtml +
+    '<p><a href="/actualites">Toutes les actualités AgriCapital</a></p></article></main>';
+  return shell.replace(/<div id="root"><\\/div>/i, '<div id="root">' + body + '</div>');
+};
+
 const main = async () => {
   const shell = await readFile(join(process.cwd(), "dist/index.html"), "utf8");
   const response = await fetch(
@@ -139,7 +178,7 @@ const main = async () => {
 
   for (const article of articles) {
     if (!article?.slug) continue;
-    const page = renderArticleShell(shell, article, article.slug);
+    const page = renderArticleContent(renderArticleShell(shell, article, article.slug), article);
     for (const prefix of ["new", "actualites", "news"]) {
       const target = join(process.cwd(), "dist", prefix, article.slug, "index.html");
       await mkdir(dirname(target), { recursive: true });
