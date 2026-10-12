@@ -30,7 +30,30 @@ const parseImages = (article: Record<string, any>) => {
   }
 };
 
-export default async function handler(req: Request) {
+
+const sanitizeRichHtml = (value: unknown) => {
+  let html = String(value ?? "");
+  html = html.replace(/<\\s*(script|style|iframe|object|embed|form|input|button|textarea|select|meta|link)[^>]*>[\\s\\S]*?<\\s*\\/\\s*\\1\\s*>/gi, "");
+  html = html.replace(/<\\s*(script|style|iframe|object|embed|form|input|button|textarea|select|meta|link)\\b[^>]*\\/?\\s*>/gi, "");
+  html = html.replace(/\\s+on[a-z]+\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+)/gi, "");
+  html = html.replace(/\\s+(href|src|xlink:href)\\s*=\\s*(["'])\\s*javascript:[\\s\\S]*?\\2/gi, "");
+  html = html.replace(/\\s+srcdoc\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+)/gi, "");
+  return html;
+};
+
+const renderPublicImages = (article: Record<string, any>, title: string) => {
+  const images = parseImages(article);
+  const entries = [article.featured_image, ...images].filter(Boolean);
+  const seen = new Set<string>();
+  return entries.map((entry: any) => {
+    const url = typeof entry === "string" ? entry : String(entry?.url || entry?.src || "");
+    if (!/^https?:\\/\\//i.test(url) || seen.has(url)) return "";
+    seen.add(url);
+    const caption = typeof entry === "object" && entry ? String(entry.caption_fr || entry.caption || entry.alt || "") : "";
+    return '<figure><img src="' + escapeHtml(url) + '" alt="' + escapeHtml(caption || title) + '" loading="lazy"><figcaption>' + escapeHtml(caption) + '</figcaption></figure>';
+  }).join("\\n");
+};
+\nexport default async function handler(req: Request) {
   const requestUrl = new URL(req.url);
   const slug = requestUrl.searchParams.get("slug")?.trim();
   if (!slug) return new Response("Missing slug", { status: 400 });
@@ -80,10 +103,14 @@ export default async function handler(req: Request) {
 
   const jsonLd = JSON.stringify(schema).replace(/<\//g, "<\\/");
 
+  const articleBody = sanitizeRichHtml(article.content_fr || article.content || "");
+  const excerpt = stripHtml(article.excerpt_fr || article.excerpt || "").slice(0, 500);
+  const publicImages = renderPublicImages(article, title);
   const html = `<!doctype html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escapeHtml(title)}</title>
 <meta name="description" content="${escapeHtml(description)}">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
@@ -112,10 +139,16 @@ export default async function handler(req: Request) {
 <script type="application/ld+json">${jsonLd}</script>
 </head>
 <body>
-<main>
-<h1>${escapeHtml(title)}</h1>
-<p>${escapeHtml(description)}</p>
-<p><a href="${escapeHtml(canonical)}">Lire l’actualité sur AgriCapital</a></p>
+<main id="main-content" class="public-article-content">
+<article>
+<header><p>AgriCapital · Actualités</p><h1>${escapeHtml(title)}</h1>
+${published ? '<time datetime="' + escapeHtml(published) + '">' + escapeHtml(published.slice(0, 10)) + '</time>' : ''}
+${excerpt ? '<p class="article-excerpt">' + escapeHtml(excerpt) + '</p>' : ''}
+</header>
+<div class="article-body">${articleBody}</div>
+${publicImages}
+<p><a href="${escapeHtml(canonical)}">Lire l’actualité sur AgriCapital</a> · <a href="${BASE_URL}/actualites">Toutes les actualités</a></p>
+</article>
 </main>
 </body>
 </html>`;
