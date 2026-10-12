@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Eye, TrendingUp, Users, Globe, Calendar, Download } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|lovableapp|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(String(value || ""));
+const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js|X11; Linux x86_64.*Chrome\/121\.0\.0\.0|Windows NT 10\.0; Win64; x64.*Chrome\/119\.0\.0\.0)/i.test(String(value || ""));
 
 interface VisitData {
   page_path: string;
@@ -141,7 +141,7 @@ const AdminAnalytics = () => {
   return (
     <AdminLayout title="Analytiques">
       <div className="space-y-6">
-        <Card><CardHeader><CardTitle>Robots et automatisations détectés</CardTitle><CardDescription>Conservés dans l’historique, mais exclus des indicateurs de trafic humain estimé.</CardDescription></CardHeader><CardContent><p className="text-3xl font-bold">{suspectedBotVisits.toLocaleString()}</p><p className="text-xs text-muted-foreground">Sur les 180 derniers jours disponibles. Le filtre reconnaît les agents connus et navigateurs headless, sans identifier tous les robots possibles.</p></CardContent></Card>
+        <Card><CardHeader><CardTitle>Robots et profils de navigateur suspects</CardTitle><CardDescription>Conservés dans l’historique, mais exclus des indicateurs de trafic humain estimé.</CardDescription></CardHeader><CardContent><p className="text-3xl font-bold">{suspectedBotVisits.toLocaleString()}</p><p className="text-xs text-muted-foreground">Sur les 180 derniers jours disponibles. Le filtre reconnaît les agents connus, les navigateurs headless et deux signatures de navigateur obsolètes à volume anormal. Certains robots peuvent encore se présenter comme des navigateurs ordinaires.</p></CardContent></Card>
         {/* Export Button */}
         <div className="flex justify-end">
           <Button onClick={handleExport} variant="outline" className="gap-2">
