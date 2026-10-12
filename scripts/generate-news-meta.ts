@@ -125,11 +125,11 @@ const renderArticleShell = (shell: string, article: Record<string, any>, slug: s
 
 const sanitizeRichHtml = (value: unknown) => {
   let html = String(value ?? "");
-  html = html.replace(/<\\s*(script|style|iframe|object|embed|form|input|button|textarea|select|meta|link)[^>]*>[\\s\\S]*?<\\s*\\/\\s*\\1\\s*>/gi, "");
-  html = html.replace(/<\\s*(script|style|iframe|object|embed|form|input|button|textarea|select|meta|link)\\b[^>]*\\/?\\s*>/gi, "");
-  html = html.replace(/\\s+on[a-z]+\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+)/gi, "");
-  html = html.replace(/\\s+(href|src|xlink:href)\\s*=\\s*(["'])\\s*javascript:[\\s\\S]*?\\2/gi, "");
-  html = html.replace(/\\s+srcdoc\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+)/gi, "");
+  html = html.replace(/<\s*(script|style|iframe|object|embed|form|input|button|textarea|select|meta|link)[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, "");
+  html = html.replace(/<\s*(script|style|iframe|object|embed|form|input|button|textarea|select|meta|link)\b[^>]*\/?\s*>/gi, "");
+  html = html.replace(/\s+on[a-z]+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "");
+  html = html.replace(/\s+(href|src|xlink:href)\s*=\s*(["'])\s*javascript:[\s\S]*?\2/gi, "");
+  html = html.replace(/\s+srcdoc\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "");
   return html;
 };
 
@@ -143,13 +143,13 @@ const renderArticleContent = (shell: string, article: Record<string, any>) => {
       return Array.isArray(value) ? value : [];
     } catch { return []; }
   })();
-  const imageHtml = images.map((item: unknown, index: number) => {
+  const imageHtml = images.map((item: unknown) => {
     const url = typeof item === "string" ? item : String((item as any)?.url || (item as any)?.src || "");
-    if (!url || !/^https?:\\/\\//i.test(url)) return "";
+    if (!url || !/^https?:\/\//i.test(url)) return "";
     const caption = typeof item === "object" && item ? String((item as any).caption_fr || (item as any).caption || "") : "";
     return '<figure><img src="' + escapeHtml(url) + '" alt="' + escapeHtml(caption || title) + '" loading="lazy"><figcaption>' + escapeHtml(caption) + '</figcaption></figure>';
-  }).join("\\n");
-  const featured = article.featured_image && /^https?:\\/\\//i.test(String(article.featured_image))
+  }).join("\n");
+  const featured = article.featured_image && /^https?:\/\//i.test(String(article.featured_image))
     ? '<figure><img src="' + escapeHtml(article.featured_image) + '" alt="' + escapeHtml(title) + '"></figure>'
     : "";
   const date = article.published_at || article.created_at || "";
@@ -158,7 +158,7 @@ const renderArticleContent = (shell: string, article: Record<string, any>) => {
     (excerpt ? '<p class="article-excerpt">' + escapeHtml(excerpt) + '</p>' : "") + '</header>' +
     featured + '<div class="article-body">' + content + '</div>' + imageHtml +
     '<p><a href="/actualites">Toutes les actualités AgriCapital</a></p></article></main>';
-  return shell.replace(/<div id="root"><\\/div>/i, '<div id="root">' + body + '</div>');
+  return shell.replace(/<div id="root"><\/div>/i, '<div id="root">' + body + '</div>');
 };
 
 const main = async () => {
