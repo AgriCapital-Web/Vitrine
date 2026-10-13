@@ -269,9 +269,9 @@ ${mediaInstruction}`;
     });
 
     if (!qaResponse.ok) {
-      console.error("Editorial QA failed:", qaResponse.status);
-      throw new Error("La vérification éditoriale a échoué. Aucun article non vérifié n’a été renvoyé ; veuillez réessayer.");
-    }
+      console.warn("Editorial QA unavailable; returning source-constrained draft for editor review:", qaResponse.status);
+      article.qaWarning = "La vérification éditoriale automatique n’a pas pu être terminée. Relisez l’article avant publication.";
+    } else {
     const qaPayload = await qaResponse.json();
     const qaRaw = qaPayload.choices?.[0]?.message?.content || "";
     const qaArticle = parseAIJson(qaRaw);
@@ -284,6 +284,7 @@ ${mediaInstruction}`;
     delete article.hashtags;
     if (typeof qaArticle.excerpt === "string" && qaArticle.excerpt.trim()) {
       article.excerpt = qaArticle.excerpt.trim();
+    }
     }
     if (lockedTitle) article.title = lockedTitle;
     if (lockedCategory) article.category = lockedCategory;
