@@ -87,6 +87,17 @@ interface NewsArticle {
   created_at: string;
 }
 
+const parseMediaArray = (value: unknown): string[] => {
+  if (Array.isArray(value)) return value.filter((item): item is string => typeof item === "string");
+  if (typeof value !== "string" || !value.trim()) return [];
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === "string") : [];
+  } catch {
+    return [];
+  }
+};
+
 type MediaOption = "with-image" | "with-video" | "with-both" | "with-gallery" | "text-only";
 
 const MEDIA_OPTIONS: { id: MediaOption; icon: any; label: string; desc: string }[] = [
@@ -412,8 +423,8 @@ const AdminNews = () => {
       excerpt_fr: a.excerpt_fr || "", excerpt_en: a.excerpt_en || "", excerpt_ar: a.excerpt_ar || "",
       excerpt_es: a.excerpt_es || "", excerpt_de: a.excerpt_de || "", excerpt_zh: a.excerpt_zh || "",
       featured_image: a.featured_image || "",
-      images: Array.isArray(a.images) ? a.images : [],
-      videos: Array.isArray(a.videos) ? a.videos : [],
+      images: parseMediaArray(a.images),
+      videos: parseMediaArray(a.videos),
       category: a.category, is_published: a.is_published, is_featured: a.is_featured, author: a.author
     });
     setIsDialogOpen(true);
