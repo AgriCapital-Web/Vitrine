@@ -30,6 +30,7 @@ const News = lazy(() => import("./pages/News"));
 const NewsArticle = lazy(() => import("./pages/NewsArticle"));
 const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
 const Solutions = lazy(() => import("./pages/Solutions"));
+const PlantationCleEnMain = lazy(() => import("./pages/PlantationCleEnMain"));
 const OfferingDetail = lazy(() => import("./pages/OfferingDetail"));
 const OffrePage = lazy(() => import("./pages/OffrePage"));
 const Partenariats = lazy(() => import("./pages/Partenariats"));
@@ -145,6 +146,7 @@ const AppContent = () => {
         <Route path="/tresor-palmier" element={<TreasurePage type="palmier" />} />
 
         {/* Solutions / Services / Partenariats */}
+        <Route path="/plantation-cle-en-main" element={<PlantationCleEnMain />} />
         <Route path="/solutions" element={<Solutions />} />
         <Route path="/services" element={<Solutions />} />
         <Route path="/palminvest" element={<OffrePage offer="palminvest" />} />
