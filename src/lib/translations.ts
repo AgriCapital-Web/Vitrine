@@ -161,7 +161,7 @@ const fr = {
       approach: "Modèle structuré",
       expansion: "Fort potentiel d'expansion sur le territoire national",
       sdg: "Suivi agronomique rigoureux sur toute la durée contractuelle",
-      transparency: "Transparence contractuelle, traçabilité des opérations et suivi des flux financiers",
+      transparency: "Des engagements contractuels clairs, un suivi documenté des opérations et des flux financiers.",
     },
     cta: "Nous contacter",
   },
