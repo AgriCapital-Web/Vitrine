@@ -407,7 +407,7 @@ const en: DeepPartial<typeof fr> = {
     why: "Why choose AgriCapital?",
     pillars: {
       accessibility: { title: "Lasting Heritage", desc: "Build a tangible agricultural asset that appreciates over time. A concrete alternative to diversify your investments and prepare for the future." },
-      expertise: { title: "Full Support", desc: "From land security to marketing: AgriCapital handles the entire process with rigor and transparency." },
+      expertise: { title: "Full Support", desc: "From land security to marketing: AgriCapital handles the entire process with a clearly defined offer and long-term support." },
       sustainability: { title: "Contractual Security", desc: "Formalized commitments, GPS mapping documents and operational traceability." },
     },
   },
