@@ -49,7 +49,7 @@ const fr = {
     why: "Pourquoi choisir AgriCapital ?",
     pillars: {
       accessibility: { title: "Patrimoine Durable", desc: "Constituez un actif agricole tangible qui se valorise dans le temps. Une alternative concrète pour diversifier vos investissements et préparer l'avenir." },
-      expertise: { title: "Accompagnement intégral", desc: "De l’étude du foncier à la valorisation de la production : AgriCapital accompagne les différentes étapes avec rigueur et transparence." },
+      expertise: { title: "Accompagnement intégral", desc: "AgriCapital propose des offres concrètes pour accéder à la création, au développement et à la valorisation d’un patrimoine agricole, avec ou sans terre." },
       sustainability: { title: "Cadre contractuel", desc: "Des engagements formalisés, une documentation cartographique et une traçabilité des opérations." },
     },
   },
