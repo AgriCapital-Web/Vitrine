@@ -440,7 +440,7 @@ const en: DeepPartial<typeof fr> = {
     values: {
       title: "Our Commitments",
       subtitle: "The foundations of our relationship with you",
-      support: { title: "Total Transparency", desc: "Contract and mapping documents delivered from the first payment. Monitoring accessible at all times." },
+      support: { title: "A clear framework", desc: "Clearly defined terms and plantation follow-up over time." },
       innovation: { title: "Technical Excellence", desc: "Selected planting material, quality inputs, agronomic monitoring and technical visits." },
       development: { title: "Long-Term Vision", desc: "A model designed over 28 years to build lasting heritage and generate stable income." },
       transparency: { title: "Contractual Security", desc: "Secured contracts, rigorous legal framework and robust contractual architecture for your peace of mind." },
