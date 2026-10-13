@@ -18,7 +18,7 @@ const SEOJsonLD = () => {
     },
     "image": "https://www.agricapital.ci/og-image.png",
     "description": language === 'fr' 
-      ? "AgriCapital accompagne les propriétaires terriens et petits agriculteurs dans la création et le développement de plantations de palmiers à huile en Côte d'Ivoire."
+      ? "AgriCapital accompagne l’investissement agricole en Côte d’Ivoire, de la réflexion foncière à la création et au suivi de plantations de palmier à huile clé en main, avec ou sans terre."
       : "AgriCapital supports landowners and small farmers in creating and developing oil palm plantations in Ivory Coast.",
     "foundingDate": "2025",
     "founder": {
@@ -94,8 +94,8 @@ const SEOJsonLD = () => {
     "@type": "WebSite",
     "@id": "https://www.agricapital.ci/#website",
     "url": "https://www.agricapital.ci",
-    "name": "AgriCapital - Plantations de Palmiers à Huile",
-    "description": "AgriCapital accompagne les propriétaires terriens en Côte d'Ivoire",
+    "name": "AgriCapital — Investissement agricole et plantation clé en main en Côte d’Ivoire",
+    "description": "AgriCapital accompagne les projets agricoles, le foncier et les plantations de palmier à huile clé en main en Côte d’Ivoire, avec ou sans terre.",
     "publisher": {
       "@id": "https://www.agricapital.ci/#organization"
     },
@@ -177,7 +177,7 @@ const SEOJsonLD = () => {
           "url": "https://www.ikoffi.agricapital.ci/",
           "jobTitle": "Fondateur et Gérant d’AgriCapital SARL",
           "worksFor": { "@type": "Organization", "@id": "https://www.agricapital.ci/#organization", "name": "AgriCapital SARL", "url": "https://www.agricapital.ci/" },
-          "knowsAbout": ["Investissement agricole", "Patrimoine agricole", "Actifs agricoles productifs", "Foncier agricole", "Plantation clé en main", "Palmier à huile", "Développement agricole en Côte d’Ivoire"],
+          "knowsAbout": ["Investissement agricole en Côte d’Ivoire", "Investissement foncier", "Patrimoine agricole", "Actifs agricoles productifs", "Foncier agricole", "Plantation clé en main avec ou sans terre", "Palmier à huile", "Développement agricole à Gonaté et Daloa", "Accompagnement de projets agricoles"],
           "sameAs": ["https://www.agricapital.ci/", "https://www.ikoffi.agricapital.ci/"]
         }) }}
       />
