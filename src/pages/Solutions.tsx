@@ -26,11 +26,11 @@ const Solutions = () => {
         <title>Solutions & Services — AgriCapital</title>
         <meta
           name="description"
-          content="Avec ou sans foncier, AgriCapital propose des solutions structurées pour créer, développer et accompagner des plantations de palmier à huile."
+          content="Avec ou sans terre, AgriCapital accompagne les projets de plantation de palmier à huile clé en main en Côte d’Ivoire, dans un cadre clair, transparent et suivi."
         />
         <meta name="keywords" content="solutions agricoles, services agricoles, investissement agricole, plantation clé en main, palmier à huile, patrimoine agricole, actifs réels, foncier agricole, PalmInvest, PalmTerroir, TerraPalm, AgriCapital, Inocent KOFFI, Côte d’Ivoire" />
         <meta property="og:title" content="Solutions agricoles & plantation clé en main | AgriCapital" />
-        <meta property="og:description" content="Découvrez les solutions AgriCapital pour créer, développer et accompagner une plantation de palmier à huile en Côte d’Ivoire, avec ou sans foncier." />
+        <meta property="og:description" content="Découvrez les solutions AgriCapital pour une plantation de palmier à huile clé en main, avec ou sans terre, avec des engagements clairs et un suivi documenté." />
         <link rel="canonical" href="https://www.agricapital.ci/solutions" />
       </Helmet>
 
