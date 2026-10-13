@@ -220,7 +220,7 @@ const AdminNews = () => {
   // AI ARTICLE GENERATOR
   // ====================
   const generateArticleWithAI = async () => {
-    const rawInput = formData.content_fr.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    const rawInput = formData.content_fr.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() || formData.title_fr.trim();
     if (!rawInput) {
       toast.error("Écrivez la matière de départ ou l’idée de l’article");
       return;
