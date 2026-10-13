@@ -143,8 +143,8 @@ const AdminNews = () => {
       const payload = {
         ...data,
         slug,
-        images: JSON.stringify(data.images),
-        videos: JSON.stringify(data.videos),
+        images: data.images,
+        videos: data.videos,
         published_at: data.is_published ? (editingArticle?.published_at || new Date().toISOString()) : null
       };
       if (editingArticle) {
