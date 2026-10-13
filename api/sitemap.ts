@@ -5,7 +5,7 @@ const BASE_URL = "https://www.agricapital.ci";
 
 const staticPaths = [
   "/", "/a-propos", "/notre-approche", "/impact", "/fondateur", "/equipe",
-  "/contact", "/solutions", "/plantation-cle-en-main", "/palminvest", "/terrapalm",
+  "/contact", "/solutions", "/palminvest", "/terrapalm",
   "/palmterroir", "/tresor-foncier", "/tresor-palmier", "/evolution",
   "/actualites", "/temoignages", "/partenariats", "/faq"
 ];
