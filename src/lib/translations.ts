@@ -85,7 +85,7 @@ const fr = {
       support: { title: "Un cadre défini", desc: "Des modalités claires et un suivi de la plantation dans la durée." },
       innovation: { title: "Excellence Technique", desc: "plants sélectionnés, intrants de qualité et suivi technique et agronomique rigoureux." },
       development: { title: "Vision Long Terme", desc: "Un modèle pensé pour construire un patrimoine durable et créer de la valeur dans la durée." },
-      transparency: { title: "Cadre contractuel", desc: "Des engagements formalisés et une traçabilité des opérations." },
+      transparency: { title: "Engagements clairs", desc: "Une offre définie, des engagements contractuels et un suivi documenté des opérations." },
     },
   },
   approach: {
