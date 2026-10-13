@@ -125,7 +125,7 @@ const AdminDashboard = () => {
     }
 
     const visits = allVisits;
-    const humanVisits = visits.filter((v: any) => !isAutomatedVisit(v));
+    const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent));
     setSuspectedBotVisits(visits.length - humanVisits.length);
     setTotalVisits(new Set(humanVisits.map((v: any) => v.visitor_id).filter(Boolean)).size);
 
@@ -153,7 +153,7 @@ const AdminDashboard = () => {
     setWeekVisits(weekVisitors.size);
 
     const sorted = Object.entries(pageCount).map(([page_path, count]) => ({ page_path, visit_count: count }))
-      .sort((a, b) => b.count - a.count).slice(0, 10);
+      .sort((a, b) => b.visit_count - a.visit_count).slice(0, 10);
     setTopPages(sorted);
 
     const countryCounts: Record<string, number> = {};
