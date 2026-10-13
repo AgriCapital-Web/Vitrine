@@ -101,59 +101,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="site-section bg-secondary/25" id="investissement-agricole-cote-ivoire">
-        <div className="site-container">
-          <div className="max-w-4xl">
-            <p className="site-eyebrow">{isEn ? "Agricultural investment" : "Investissement agricole"}</p>
-            <h2 className="site-title">
-              {isEn ? "Build agricultural assets and long-term value from land" : "Transformer la terre en actif agricole et construire un patrimoine durable"}
-            </h2>
-            <p className="site-lead">
-              {isEn
-                ? "AgriCapital SARL supports landowners, project owners and partners in structuring agricultural projects in Côte d’Ivoire. Our approach connects land development, plantation creation, field operations and technical support, with a particular focus on oil palm."
-                : "AgriCapital SARL accompagne les propriétaires terriens, porteurs de projets et partenaires dans la structuration de projets agricoles en Côte d’Ivoire. Notre approche relie valorisation du foncier, création de plantation, organisation des opérations et accompagnement technique, avec un savoir-faire centré notamment sur le palmier à huile."}
-            </p>
-          </div>
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
-            <article className="rounded-2xl border border-border/70 bg-card p-6">
-              <h3 className="text-lg font-bold">{isEn ? "Turnkey plantation" : "Plantation clé en main"}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                {isEn ? "Project scoping, plot preparation, planting plans, operational coordination and field monitoring according to the project’s needs." : "Étude du projet, préparation de parcelle, planification de plantation, coordination opérationnelle et suivi de terrain selon les besoins du projet."}
-              </p>
-              <Link className="mt-4 inline-flex font-semibold text-primary underline underline-offset-4" to="/solutions">{isEn ? "Explore our solutions" : "Découvrir nos solutions"}</Link>
-            </article>
-            <article className="rounded-2xl border border-border/70 bg-card p-6">
-              <h3 className="text-lg font-bold">{isEn ? "Oil palm & productive land" : "Palmier à huile et foncier productif"}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                {isEn ? "A structured approach to oil palm plantation development, agricultural land valuation and productive farm management." : "Une approche structurée du développement de palmeraies, de la valorisation des terres agricoles et de l’organisation des exploitations productives."}
-              </p>
-              <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
-                <Link className="font-semibold text-primary underline underline-offset-4" to="/palminvest">PalmInvest</Link>
-                <Link className="font-semibold text-primary underline underline-offset-4" to="/terrapalm">TerraPalm</Link>
-                <Link className="font-semibold text-primary underline underline-offset-4" to="/palmterroir">PalmTerroir</Link>
-              </div>
-            </article>
-            <article className="rounded-2xl border border-border/70 bg-card p-6">
-              <h3 className="text-lg font-bold">{isEn ? "Agricultural heritage & real assets" : "Patrimoine agricole et actifs réels"}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                {isEn ? "Understand land ownership, agricultural asset development, project governance and the practical steps required before committing capital." : "Comprendre le foncier, le développement d’actifs agricoles, la gouvernance de projet et les étapes pratiques à examiner avant d’engager des ressources."}
-              </p>
-              <Link className="mt-4 inline-flex font-semibold text-primary underline underline-offset-4" to="/tresor-foncier">{isEn ? "Learn about agricultural land" : "Explorer le potentiel du foncier"}</Link>
-            </article>
-          </div>
-          <div className="mt-8 rounded-2xl border border-border/70 bg-background p-6 md:p-8">
-            <h3 className="text-xl font-bold">{isEn ? "Inocent KOFFI, founder of AgriCapital" : "Inocent KOFFI, fondateur d’AgriCapital"}</h3>
-            <p className="mt-3 max-w-4xl leading-relaxed text-muted-foreground">
-              {isEn ? "Inocent KOFFI leads AgriCapital’s vision of structured agricultural projects and productive land in Côte d’Ivoire. Discover his professional journey, entrepreneurial vision and work across agriculture and digital solutions." : "Inocent KOFFI porte la vision d’AgriCapital autour de projets agricoles structurés et du développement de terres productives en Côte d’Ivoire. Découvrez son parcours, sa vision entrepreneuriale et ses activités à la croisée de l’agriculture et des solutions numériques."}
-            </p>
-            <div className="mt-5 flex flex-wrap gap-4">
-              <Link className="font-semibold text-primary underline underline-offset-4" to="/fondateur">{isEn ? "Meet the founder" : "Découvrir le fondateur"}</Link>
-              <a className="font-semibold text-primary underline underline-offset-4" href="https://ikoffi.agricapital.ci/" target="_blank" rel="noopener noreferrer">ikoffi.agricapital.ci</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <OffersSummary />
 
       <section className="site-section bg-secondary/45" id="impact">
