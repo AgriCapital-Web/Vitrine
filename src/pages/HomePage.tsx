@@ -148,6 +148,7 @@ const HomePage = () => {
             </p>
             <div className="mt-5 flex flex-wrap gap-4">
               <Link className="font-semibold text-primary underline underline-offset-4" to="/fondateur">{isEn ? "Meet the founder" : "Découvrir le fondateur"}</Link>
+              <Link className="font-semibold text-primary underline underline-offset-4" to="/temoignages">{isEn ? "Client stories" : "Présentation et témoignages clients"}</Link>
               <a className="font-semibold text-primary underline underline-offset-4" href="https://ikoffi.agricapital.ci/" target="_blank" rel="noopener noreferrer">ikoffi.agricapital.ci</a>
             </div>
           </div>
