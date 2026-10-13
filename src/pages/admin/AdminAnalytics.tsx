@@ -51,7 +51,7 @@ const AdminAnalytics = () => {
         visits.push(...(batch || []));
         if (!batch || batch.length < 1000) break;
       }
-      const humanVisits = visits.filter((v: any) => !isAutomatedVisit(v));
+      const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent));
       setSuspectedBotVisits(visits.length - humanVisits.length);
       const now = new Date();
       const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
