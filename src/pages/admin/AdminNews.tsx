@@ -885,7 +885,7 @@ const AdminNews = () => {
                           <div className="flex flex-wrap items-center gap-2 mt-3 text-xs text-muted-foreground">
                             <span className="flex items-center gap-1">
                               <Calendar className="w-3 h-3" />
-                              {new Date(article.created_at).toLocaleDateString('fr-FR')}
+                              {new Date(article.published_at || article.created_at).toLocaleDateString('fr-FR')}
                             </span>
                             <span className="flex items-center gap-1">
                               <Eye className="w-3 h-3" />{article.views_count} vues
