@@ -22,7 +22,9 @@ interface DailyVisit {
 
 const AdminAnalytics = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [totalVisits, setTotalVisits] = useState(0);\n  const [historicalTotal, setHistoricalTotal] = useState(0);\n  const [historicalWeekly, setHistoricalWeekly] = useState(0);
+  const [totalVisits, setTotalVisits] = useState(0);
+  const [historicalTotal, setHistoricalTotal] = useState(0);
+  const [historicalWeekly, setHistoricalWeekly] = useState(0);
   const [todayVisits, setTodayVisits] = useState(0);
   const [weekVisits, setWeekVisits] = useState(0);
   const [monthVisits, setMonthVisits] = useState(0);
@@ -123,7 +125,9 @@ const AdminAnalytics = () => {
   const handleExport = () => {
     const csvContent = [
       ["Métrique", "Valeur"],
-      ["Compteur historique cumulé", historicalTotal.toString()],\n      ["Compteur historique de la semaine", historicalWeekly.toString()],\n      ["Visites non classées comme automatisées (180 jours)", totalVisits.toString()],
+      ["Compteur historique cumulé", historicalTotal.toString()],
+      ["Compteur historique de la semaine", historicalWeekly.toString()],
+      ["Visites non classées comme automatisées (180 jours)", totalVisits.toString()],
       ["Visites Aujourd'hui", todayVisits.toString()],
       ["Visites Cette Semaine", weekVisits.toString()],
       ["Visites Ce Mois (robots identifiés exclus)", monthVisits.toString()],
