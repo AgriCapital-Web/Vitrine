@@ -200,7 +200,7 @@ const HomePage = () => {
           <div className="mt-8 rounded-2xl border border-border/70 bg-card p-6 md:p-8">
             <h3 className="text-xl font-bold">Transparence et cadre de confiance</h3>
             <p className="mt-3 max-w-4xl leading-relaxed text-muted-foreground">
-              Chez AgriCapital, la confiance se construit par la clarté des engagements, un cadre contractuel défini et un suivi documenté du projet. Chaque situation est examinée dans son contexte afin que les responsabilités, les conditions applicables et la progression du projet soient compréhensibles, de la préparation au suivi sur le terrain.
+              Chez AgriCapital, la transparence repose sur un cadre foncier documenté, des engagements contractuels clairement présentés et un suivi documenté de l’avancement. Les conditions, les responsabilités et les étapes prévues sont expliquées avant l’engagement, puis la progression du projet est suivie dans la durée. Le cadre est adapté à la situation et à l’offre retenue.
             </p>
           </div>
         </div>
