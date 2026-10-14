@@ -22,7 +22,7 @@ const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschr
 const COLORS = ['hsl(var(--primary))', '#22c55e', '#f59e0b', '#3b82f6', '#8b5cf6'];
 
 const AdminDashboard = () => {
-  const [totalVisits, setTotalVisits] = useState(0);
+  const [totalVisits, setTotalVisits] = useState(0);\n  const [uniqueVisitors, setUniqueVisitors] = useState(0);\n  const [weeklyCounter, setWeeklyCounter] = useState(0);
   const [todayVisits, setTodayVisits] = useState(0);
   const [weekVisits, setWeekVisits] = useState(0);
   const [topPages, setTopPages] = useState<PageVisit[]>([]);
@@ -207,17 +207,17 @@ const AdminDashboard = () => {
         </div>
 
         {/* Main Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <Card className="bg-gradient-to-br from-primary/10 to-primary/5">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                 <Eye className="w-4 h-4" />
-                Visiteurs distincts estimés (180 j)
+                Visites cumulées (compteur historique)
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold">{totalVisits.toLocaleString()}</p>
-              <p className="text-xs text-muted-foreground">{todayVisits} visiteur(s) distinct(s) détecté(s) aujourd’hui</p>
+              <p className="text-xs text-muted-foreground">Compteur historique conservé, sans remise à zéro</p>
             </CardContent>
           </Card>
 
@@ -225,12 +225,25 @@ const AdminDashboard = () => {
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                 <TrendingUp className="w-4 h-4" />
-                Suivi cette semaine
+                Compteur de la semaine
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold text-green-600">{weekVisits.toLocaleString()}</p>
-              <p className="text-xs text-muted-foreground">Visiteurs distincts détectés sur 7 jours</p>
+              <p className="text-3xl font-bold text-green-600">{weeklyCounter.toLocaleString()}</p>
+              <p className="text-xs text-muted-foreground">Historique hebdomadaire, avec l’ancienne méthode incluse</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-primary/10 to-primary/5">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                Visiteurs distincts estimés (180 j)
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl font-bold">{uniqueVisitors.toLocaleString()}</p>
+              <p className="text-xs text-muted-foreground">{todayVisits} aujourd’hui · {weekVisits} sur 7 jours, après exclusion des robots identifiés</p>
             </CardContent>
           </Card>
 
