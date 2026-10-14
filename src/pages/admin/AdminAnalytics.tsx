@@ -7,6 +7,7 @@ import { Loader2, Eye, TrendingUp, Users, Globe, Calendar, Download } from "luci
 import { supabase } from "@/integrations/supabase/client";
 
 const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(String(value || ""));
+const isPreviewReferrer = (value: unknown) => /(?:lovable\.app|lovable\.dev|gpt-engineer-file-uploads)/i.test(String(value || ""));
 
 interface VisitData {
   page_path: string;
