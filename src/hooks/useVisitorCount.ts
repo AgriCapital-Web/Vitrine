@@ -60,7 +60,7 @@ export const useVisitorCount = () => {
         localStorage.setItem("cached_public_weekly_visits_v5", String(weekly));
       } catch (error) {
         console.warn("visitor-stats:", error);
-        // Keep the latest valid v4 cache if the service is temporarily unavailable.
+        // Keep the latest valid cumulative cache if the service is temporarily unavailable.
       } finally {
         if (mounted) setIsLoading(false);
       }
