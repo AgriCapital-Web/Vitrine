@@ -63,7 +63,7 @@ const AdminAnalytics = () => {
         setHistoricalWeekly(Number(counter.weekly_visitors) || 0);
       }
 
-      const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent));
+      const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent) && !isPreviewReferrer(v.referrer));
       setSuspectedBotVisits(visits.length - humanVisits.length);
       const now = new Date();
       const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
