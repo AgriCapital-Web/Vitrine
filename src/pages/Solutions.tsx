@@ -147,6 +147,20 @@ const Solutions = () => {
         </section>
 
         <section className="container mx-auto px-4 md:px-6 mb-14">
+          <Card className="border border-primary/20 bg-card">
+            <CardContent className="p-6 md:p-8">
+              <div className="max-w-4xl">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary mb-3">Notre engagement</p>
+                <h2 className="text-xl md:text-2xl font-extrabold text-primary mb-3">La transparence, à chaque étape du projet</h2>
+                <p className="text-sm md:text-base text-foreground/85 leading-relaxed">
+                  Notre démarche s’appuie sur des éléments fonciers documentés, des étapes contractuelles claires et un suivi de l’évolution de la plantation. Les engagements et les modalités sont présentés selon l’offre retenue, afin que chaque client comprenne le cadre du projet, les étapes prévues et les points de suivi — sans promesse de rendement garanti.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+
+        <section className="container mx-auto px-4 md:px-6 mb-14">
           <div className="max-w-4xl">
             <h2 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-accent underline underline-offset-4 mb-4">
               {t.home.clientPortalTitle}
