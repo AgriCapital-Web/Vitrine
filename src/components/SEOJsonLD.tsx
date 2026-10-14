@@ -146,7 +146,7 @@ const SEOJsonLD = () => {
         "acceptedAnswer": {
           "@type": "Answer",
           "text": language === 'fr'
-            ? "AgriCapital propose un accompagnement de projets agricoles et de plantations de palmier à huile selon les offres retenues, avec des modalités précisées dans le cadre contractuel."
+            ? "AgriCapital propose un modèle intégré comprenant : plants certifiés, intrants, support technique, formation, suivi régulier et garantie de rachat sur 20 ans."
             : "AgriCapital offers an integrated model including: certified plants, inputs, technical support, training, regular monitoring, and a 20-year buyback guarantee."
         }
       }
