@@ -22,7 +22,7 @@ interface DailyVisit {
 
 const AdminAnalytics = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [totalVisits, setTotalVisits] = useState(0);
+  const [totalVisits, setTotalVisits] = useState(0);\n  const [historicalTotal, setHistoricalTotal] = useState(0);\n  const [historicalWeekly, setHistoricalWeekly] = useState(0);
   const [todayVisits, setTodayVisits] = useState(0);
   const [weekVisits, setWeekVisits] = useState(0);
   const [monthVisits, setMonthVisits] = useState(0);
@@ -51,6 +51,16 @@ const AdminAnalytics = () => {
         visits.push(...(batch || []));
         if (!batch || batch.length < 1000) break;
       }
+      const { data: counter, error: counterError } = await supabase
+        .from("visitor_counters")
+        .select("total_visitors, weekly_visitors")
+        .eq("id", "public")
+        .maybeSingle();
+      if (!counterError && counter) {
+        setHistoricalTotal(Number(counter.total_visitors) || 0);
+        setHistoricalWeekly(Number(counter.weekly_visitors) || 0);
+      }
+
       const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent));
       setSuspectedBotVisits(visits.length - humanVisits.length);
       const now = new Date();
@@ -113,7 +123,7 @@ const AdminAnalytics = () => {
   const handleExport = () => {
     const csvContent = [
       ["Métrique", "Valeur"],
-      ["Visites détectées (180 jours)", totalVisits.toString()],
+      ["Compteur historique cumulé", historicalTotal.toString()],\n      ["Compteur historique de la semaine", historicalWeekly.toString()],\n      ["Visites non classées comme automatisées (180 jours)", totalVisits.toString()],
       ["Visites Aujourd'hui", todayVisits.toString()],
       ["Visites Cette Semaine", weekVisits.toString()],
       ["Visites Ce Mois (robots identifiés exclus)", monthVisits.toString()],
@@ -142,6 +152,7 @@ const AdminAnalytics = () => {
   return (
     <AdminLayout title="Analytiques">
       <div className="space-y-6">
+        <Card className="border-primary/20"><CardHeader><CardTitle>Compteur historique conservé</CardTitle><CardDescription>Ce total historique n’est pas recalculé à partir des visiteurs uniques. Les anciennes données restent intactes.</CardDescription></CardHeader><CardContent className="flex flex-wrap items-end gap-8"><div><p className="text-3xl font-bold">{historicalTotal.toLocaleString()}</p><p className="text-xs text-muted-foreground">Visites cumulées</p></div><div><p className="text-2xl font-semibold">{historicalWeekly.toLocaleString()}</p><p className="text-xs text-muted-foreground">Compteur de la semaine, historique inclus</p></div></CardContent></Card>
         <Card><CardHeader><CardTitle>Robots et profils de navigateur suspects</CardTitle><CardDescription>Conservés dans l’historique, mais exclus des indicateurs de trafic humain estimé.</CardDescription></CardHeader><CardContent><p className="text-3xl font-bold">{suspectedBotVisits.toLocaleString()}</p><p className="text-xs text-muted-foreground">Sur les 180 derniers jours disponibles. Le filtre reconnaît les agents connus, les navigateurs headless et deux signatures de navigateur obsolètes à volume anormal. Certains robots peuvent encore se présenter comme des navigateurs ordinaires.</p></CardContent></Card>
         {/* Export Button */}
         <div className="flex justify-end">
@@ -157,7 +168,7 @@ const AdminAnalytics = () => {
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                 <Eye className="w-4 h-4" />
-                Visites détectées (180 jours)
+                Visites non classées comme automatisées (180 jours)
               </CardTitle>
             </CardHeader>
             <CardContent>
