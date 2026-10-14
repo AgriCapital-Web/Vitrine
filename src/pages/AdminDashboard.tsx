@@ -127,7 +127,7 @@ const AdminDashboard = () => {
     }
 
     const visits = allVisits;
-    const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent));
+    const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent) && !isPreviewReferrer(v.referrer));
     setSuspectedBotVisits(visits.length - humanVisits.length);
     setUniqueVisitors(new Set(humanVisits.map((v: any) => v.visitor_id).filter(Boolean)).size);
 
