@@ -18,7 +18,7 @@ const SEOJsonLD = () => {
     },
     "image": "https://www.agricapital.ci/og-image.png",
     "description": language === 'fr' 
-      ? "AgriCapital accompagne l’investissement agricole en Côte d’Ivoire, de la réflexion foncière à la création et au suivi de plantations de palmier à huile clé en main, avec ou sans terre."
+      ? "AgriCapital facilite l’accès au foncier agricole et aux plantations de palmier à huile clé en main, avec ou sans terre, à Gonaté et Daloa."
       : "AgriCapital supports landowners and small farmers in creating and developing oil palm plantations in Ivory Coast.",
     "foundingDate": "2025",
     "founder": {
@@ -123,7 +123,7 @@ const SEOJsonLD = () => {
           "@type": "Answer",
           "text": language === 'fr'
             ? "AgriCapital est une entreprise ivoirienne qui accompagne les propriétaires terriens et petits agriculteurs dans la création et le développement de plantations de palmiers à huile, sans barrières financières."
-            : "AgriCapital is an Ivorian company that supports landowners and small farmers in creating and developing oil palm plantations without financial barriers."
+            : "AgriCapital supports agricultural projects and turnkey oil palm plantations in Côte d’Ivoire, with or without land, according to the selected offer and applicable terms."
         }
       },
       {
@@ -146,7 +146,7 @@ const SEOJsonLD = () => {
         "acceptedAnswer": {
           "@type": "Answer",
           "text": language === 'fr'
-            ? "AgriCapital propose un modèle intégré comprenant : plants certifiés, intrants, support technique, formation, suivi régulier et garantie de rachat sur 20 ans."
+            ? "AgriCapital propose un accompagnement de projets agricoles et de plantations de palmier à huile selon les offres retenues, avec des modalités précisées dans le cadre contractuel."
             : "AgriCapital offers an integrated model including: certified plants, inputs, technical support, training, regular monitoring, and a 20-year buyback guarantee."
         }
       }
