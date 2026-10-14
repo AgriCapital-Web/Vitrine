@@ -18,6 +18,7 @@ interface DailyVisit {
 }
 
 const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|shapbot|reflectionbot|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(String(value || ""));
+const isPreviewReferrer = (value: unknown) => /(?:lovable\.app|lovable\.dev|gpt-engineer-file-uploads)/i.test(String(value || ""));
 
 const COLORS = ['hsl(var(--primary))', '#22c55e', '#f59e0b', '#3b82f6', '#8b5cf6'];
 
