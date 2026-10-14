@@ -22,7 +22,9 @@ const isAutomatedUA = (value: unknown) => /(?:\bbot\b|crawler|spider|headlesschr
 const COLORS = ['hsl(var(--primary))', '#22c55e', '#f59e0b', '#3b82f6', '#8b5cf6'];
 
 const AdminDashboard = () => {
-  const [totalVisits, setTotalVisits] = useState(0);\n  const [uniqueVisitors, setUniqueVisitors] = useState(0);\n  const [weeklyCounter, setWeeklyCounter] = useState(0);
+  const [totalVisits, setTotalVisits] = useState(0);
+  const [uniqueVisitors, setUniqueVisitors] = useState(0);
+  const [weeklyCounter, setWeeklyCounter] = useState(0);
   const [todayVisits, setTodayVisits] = useState(0);
   const [weekVisits, setWeekVisits] = useState(0);
   const [topPages, setTopPages] = useState<PageVisit[]>([]);
@@ -127,7 +129,18 @@ const AdminDashboard = () => {
     const visits = allVisits;
     const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent));
     setSuspectedBotVisits(visits.length - humanVisits.length);
-    setTotalVisits(new Set(humanVisits.map((v: any) => v.visitor_id).filter(Boolean)).size);
+    setUniqueVisitors(new Set(humanVisits.map((v: any) => v.visitor_id).filter(Boolean)).size);
+
+    // Use the historical counter for cumulative visits; keep the filtered unique estimate separate.
+    const { data: counter, error: counterError } = await supabase
+      .from("visitor_counters")
+      .select("total_visitors, weekly_visitors")
+      .eq("id", "public")
+      .maybeSingle();
+    if (!counterError && counter) {
+      setTotalVisits(Number(counter.total_visitors) || 0);
+      setWeeklyCounter(Number(counter.weekly_visitors) || 0);
+    }
 
     const now = new Date();
     const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
