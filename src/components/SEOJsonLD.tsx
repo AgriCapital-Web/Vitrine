@@ -122,7 +122,7 @@ const SEOJsonLD = () => {
         "acceptedAnswer": {
           "@type": "Answer",
           "text": language === 'fr'
-            ? "AgriCapital est une entreprise ivoirienne qui accompagne les propriétaires terriens et petits agriculteurs dans la création et le développement de plantations de palmiers à huile, sans barrières financières."
+            ? "AgriCapital accompagne les porteurs de projets agricoles, avec ou sans terre, dans la création et le développement de plantations de palmier à huile selon l’offre retenue."
             : "AgriCapital supports agricultural projects and turnkey oil palm plantations in Côte d’Ivoire, with or without land, according to the selected offer and applicable terms."
         }
       },
