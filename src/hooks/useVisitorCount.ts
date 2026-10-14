@@ -11,13 +11,11 @@ export const useVisitorCount = () => {
   // Prefer the last known cumulative value while the authoritative database request runs.
   const readCachedTotal = () => Math.max(0, ...[
     "cached_public_total_visits_v5",
-    "cached_public_total_visits_v4",
     "cached_visitor_count",
   ].map((key) => Number(localStorage.getItem(key) || 0)).filter(Number.isFinite));
   const [totalVisitors, setTotalVisitors] = useState<number>(() => readCachedTotal());
   const [weeklyVisitors, setWeeklyVisitors] = useState<number>(() => Math.max(0,
     Number(localStorage.getItem("cached_public_weekly_visits_v5")
-      || localStorage.getItem("cached_public_weekly_visits_v4")
       || localStorage.getItem("cached_weekly_count") || 0) || 0
   ));
   const [isLoading, setIsLoading] = useState(true);
