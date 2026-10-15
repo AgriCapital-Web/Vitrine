@@ -17,7 +17,7 @@ const sectionMap: Record<string, string> = {
   accueil:"hero", home:"hero", hero:"hero", "a-propos":"apropos", about:"apropos", apropos:"apropos",
   "notre-approche":"approche", approach:"approche", approche:"approche", impact:"impact", capacite:"impact",
   capacity:"impact", jalons:"evolution", milestones:"evolution",
-  partenariat:"partenariat", partnership:"partnership",
+  partenariat:"partenariat", partnership:"partenariat",
   contact:"contact", actualites:"actualites", news:"actualites", equipe:"equipe", team:"equipe",
   solutions:"offres", services:"offres", offres:"offres", offers:"offres", "comment-ca-marche":"approche", "how-it-works":"approche",
 };
