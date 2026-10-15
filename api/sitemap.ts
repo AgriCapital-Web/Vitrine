@@ -4,10 +4,10 @@ const BASE_URL = "https://www.agricapital.ci";
 // Canonical public routes only; news articles use the /new/:slug canonical path.
 
 const staticPaths = [
-  "/", "/a-propos", "/notre-approche", "/impact", "/fondateur", "/equipe",
+  "/", "/a-propos", "/notre-approche", "/impact", "/equipe",
   "/contact", "/solutions", "/palminvest", "/terrapalm",
   "/palmterroir", "/tresor-foncier", "/tresor-palmier", "/evolution",
-  "/actualites", "/temoignages", "/partenariats", "/faq"
+  "/actualites", "/partenariats", "/faq"
 ];
 
 const xmlEscape = (value: unknown) => String(value ?? "")

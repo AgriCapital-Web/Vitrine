@@ -16,8 +16,8 @@ import { useLanguage, Language } from "@/contexts/LanguageContext";
 const sectionMap: Record<string, string> = {
   accueil:"hero", home:"hero", hero:"hero", "a-propos":"apropos", about:"apropos", apropos:"apropos",
   "notre-approche":"approche", approach:"approche", approche:"approche", impact:"impact", capacite:"impact",
-  capacity:"impact", jalons:"evolution", milestones:"evolution", fondateur:"fondateur", founder:"fondateur",
-  partenariat:"partenariat", partnership:"partenariat", temoignages:"temoignages", testimonials:"temoignages",
+  capacity:"impact", jalons:"evolution", milestones:"evolution",
+  partenariat:"partenariat", partnership:"partnership",
   contact:"contact", actualites:"actualites", news:"actualites", equipe:"equipe", team:"equipe",
   solutions:"offres", services:"offres", offres:"offres", offers:"offres", "comment-ca-marche":"approche", "how-it-works":"approche",
 };
@@ -62,7 +62,7 @@ const HomePage = () => {
   const isEn = language === "en";
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-background" data-site-build="agricapital-modern-2026-10-03">
+    <div className="min-h-screen overflow-x-hidden bg-background" data-site-build="agricapital-clean-home-2026-10-15">
       <SEOHead />
       <SEOJsonLD />
       <DynamicNavigation />

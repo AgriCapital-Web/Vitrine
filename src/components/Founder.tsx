@@ -73,14 +73,6 @@ const Founder = () => {
                   <p className="text-sm text-muted-foreground italic mb-2">
                     {t.founder.signature}
                   </p>
-                  <a 
-                    href="https://www.ikoffi.agricapital.ci" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm text-primary hover:text-primary/80 transition-colors underline"
-                  >
-                    🌐 www.ikoffi.agricapital.ci
-                  </a>
                 </div>
 
                 <div className="border-l-4 border-agri-green pl-6 py-2">

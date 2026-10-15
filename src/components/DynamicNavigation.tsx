@@ -37,7 +37,6 @@ const menuConfig: MenuItem[] = [
     label: { fr: "Ressources", en: "Resources", ar: "الموارد", es: "Recursos", de: "Ressourcen", zh: "资源" },
     children: [
       { label: { fr: "Actualités", en: "News", ar: "الأخبار", es: "Noticias", de: "Nachrichten", zh: "新闻" }, action: "/new", isRoute: true },
-      { label: { fr: "Témoignages", en: "Testimonials", ar: "الشهادات", es: "Testimonios", de: "Referenzen", zh: "推荐" }, action: "/temoignages", isRoute: true },
       { label: { fr: "FAQ", en: "FAQ", ar: "الأسئلة", es: "FAQ", de: "FAQ", zh: "常见问题" }, action: "/faq", isRoute: true },
       { label: { fr: "Le trésor caché du foncier", en: "The hidden treasure of land", ar: "الكنز الخفي للأرض", es: "El tesoro oculto de la tierra", de: "Der verborgene Schatz des Bodens", zh: "土地的隐藏宝藏" }, action: "/tresor-foncier", isRoute: true },
       { label: { fr: "Le trésor caché du palmier", en: "The hidden treasure of oil palm", ar: "الكنز الخفي لنخيل الزيت", es: "El tesoro oculto de la palma aceitera", de: "Der verborgene Schatz der Ölpalme", zh: "油棕的隐藏宝藏" }, action: "/tresor-palmier", isRoute: true },

@@ -15,7 +15,6 @@ import HomePage from "./pages/HomePage";
 import About from "./pages/About";
 import Approach from "./pages/Approach";
 import Capacity from "./pages/Capacity";
-import Founder from "./pages/Founder";
 import TeamPage from "./pages/TeamPage";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
@@ -28,7 +27,6 @@ const Evolution = lazy(() => import("./pages/Evolution"));
 const PartnershipRequest = lazy(() => import("./pages/PartnershipRequest"));
 const News = lazy(() => import("./pages/News"));
 const NewsArticle = lazy(() => import("./pages/NewsArticle"));
-const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
 const Solutions = lazy(() => import("./pages/Solutions"));
 const OfferingDetail = lazy(() => import("./pages/OfferingDetail"));
 const OffrePage = lazy(() => import("./pages/OffrePage"));
@@ -123,9 +121,7 @@ const AppContent = () => {
         <Route path="/impact" element={<Capacity />} />
         {/* Legacy milestones URLs now use the dedicated Evolution page. */}
         <Route path="/jalons" element={<Evolution />} />
-        <Route path="/fondateur" element={<Founder />} />
         <Route path="/partenariat" element={<Partenariats />} />
-        <Route path="/temoignages" element={<TestimonialsPage />} />
         <Route path="/equipe" element={<TeamPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/faq" element={<FAQ />} />
@@ -174,10 +170,8 @@ const AppContent = () => {
         <Route path="/about" element={<About />} />
         <Route path="/approach" element={<Approach />} />
         <Route path="/milestones" element={<Evolution />} />
-        <Route path="/founder" element={<Founder />} />
         <Route path="/partnership" element={<Partenariats />} />
         <Route path="/team" element={<TeamPage />} />
-        <Route path="/testimonials" element={<TestimonialsPage />} />
 
         {/* Language roots */}
         <Route path="/fr" element={<HomePage />} />
