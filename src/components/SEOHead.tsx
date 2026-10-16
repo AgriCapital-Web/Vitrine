@@ -111,7 +111,7 @@ const SEOHead = ({ title, description, image, type = "website", keywords }: SEOH
     const canonical = buildLocalizedUrl(location.pathname, language);
     const finalImage = image
       ? (image.startsWith("http") ? image : `${BASE_URL}${image.startsWith("/") ? image : "/" + image}`)
-      : `${BASE_URL}/og-image.png`;
+      : `${BASE_URL}/Logo_AgriCapital_-V2-4.png`;
 
     document.title = finalTitle;
 
