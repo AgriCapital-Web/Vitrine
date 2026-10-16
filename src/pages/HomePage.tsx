@@ -6,6 +6,7 @@ import Hero from "@/components/Hero";
 import OffersSummary from "@/components/OffersSummary";
 import NewsSection from "@/components/NewsSection";
 import Contact from "@/components/Contact";
+import Partnership from "@/components/Partnership";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import SEOJsonLD from "@/components/SEOJsonLD";
@@ -176,16 +177,7 @@ const HomePage = () => {
 
       <NewsSection />
 
-      <section className="site-section bg-secondary/35" id="partenariat">
-        <div className="site-container grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div>
-            <p className="site-eyebrow">Partenariats</p>
-            <h2 className="site-title">{t.home.partnershipTitle}</h2>
-            <p className="site-lead">{t.home.partnershipLead}</p>
-          </div>
-          <Button asChild size="lg"><Link to="/partenariats">Découvrir les partenariats <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
-        </div>
-      </section>
+      <Partnership />
 
       <Contact />
       <Footer />
