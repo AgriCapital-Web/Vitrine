@@ -1,4 +1,4 @@
-const logoWhite = "/Logo_AgriCapital_-V2-B.png";
+const logoWhite = "/Logo_AgriCapital_-V2-4.png";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HelpCircle, Linkedin, Facebook, MessageCircle, ArrowUpRight } from "lucide-react";
