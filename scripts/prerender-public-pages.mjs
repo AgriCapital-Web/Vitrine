@@ -23,12 +23,12 @@ const server = spawn(process.execPath, [
 let browser;
 try {
   let ready = false;
-  for (let attempt = 0; attempt < 60; attempt++) {
+  for (let attempt = 0; attempt < 30; attempt++) {
     try {
       const response = await fetch(ORIGIN);
       if (response.ok) { ready = true; break; }
     } catch {}
-    await delay(1000);
+    await delay(500);
   }
   if (!ready) throw new Error("Vite preview did not start in time");
 
@@ -36,7 +36,7 @@ try {
   const chromiumBinary = (await import("@sparticuz/chromium")).default;
   browser = await chromium.launch({ headless: true, args: chromiumBinary.args, executablePath: await chromiumBinary.executablePath() });
   const page = await browser.newPage({ locale: "fr-CI", viewport: { width: 1440, height: 1000 } });
-  page.setDefaultNavigationTimeout(45000);
+  page.setDefaultNavigationTimeout(15000);
 
   let rendered = 0;
   const queue = [...PUBLIC_ROUTES];
@@ -48,18 +48,19 @@ try {
     return true;
   };
 
-  while (queue.length && visited.size < 250) {
+  // Bound discovery and per-page waits so one slow route cannot hold up production deployment.
+  while (queue.length && visited.size < 80) {
     const route = queue.shift();
     if (!route || visited.has(route)) continue;
     visited.add(route);
     try {
-      await page.goto(ORIGIN + route, { waitUntil: "domcontentloaded", timeout: 45000 });
+      await page.goto(ORIGIN + route, { waitUntil: "domcontentloaded", timeout: 15000 });
       await page.waitForFunction(() => {
         const root = document.querySelector("#root");
         return !!root && (root.innerText.trim().length > 80 || !!root.querySelector("main"));
-      }, { timeout: 20000 }).catch(() => {});
-      // Give lazy route chunks and public content queries time to settle.
-      await page.waitForTimeout(1800);
+      }, { timeout: 5000 }).catch(() => {});
+      // A short settling window is enough for public page content and lazy route chunks.
+      await page.waitForTimeout(250);
       const discovered = await page.locator("a[href]").evaluateAll((anchors, origin) => anchors.map((anchor) => {
         try {
           const url = new URL(anchor.href, origin);
@@ -70,8 +71,6 @@ try {
         if (path && isPublicPath(path) && !visited.has(path) && !queue.includes(path)) queue.push(path);
       }
       let html = await page.content();
-      // The local preview host is intentionally noindex; remove that preview-only
-      // signal from snapshots that will be served on the canonical production host.
       html = html.replace(/<meta\s+name=["']robots["'][^>]*>/i, '<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">');
       html = html.replace(/<meta\s+name=["']googlebot["'][^>]*>\s*/gi, "");
       const rootText = await page.locator("#root").innerText().catch(() => "");
@@ -89,15 +88,9 @@ try {
       console.warn("[prerender] Route failed; keeping SPA fallback:", route, String(error));
     }
   }
-  // Keep these endpoints dynamic so newly published news is immediately discoverable.
-  // Vercel serves existing static files before rewrites, so remove the prerendered
-  // listing/sitemap files to let the crawler-specific rewrites reach live API handlers.
   for (const relative of ["sitemap.xml", "actualites/index.html", "new/index.html", "news/index.html"]) {
     await unlink(join(process.cwd(), "dist", relative)).catch(() => {});
   }
-  // Vite copies public/ files into dist/, but some deployment adapters may retain
-  // the public sitemap artifact separately. Remove the source artifact too so
-  // /sitemap.xml must resolve to the live API rewrite and includes newly published news.
   await unlink(join(process.cwd(), "public", "sitemap.xml")).catch(() => {});
   console.log("[prerender] Removed static news-index/sitemap artifacts so live rewrites stay current.");
   console.log("[prerender] Rendered", rendered, "public routes; private/admin/data-room routes are excluded.");
