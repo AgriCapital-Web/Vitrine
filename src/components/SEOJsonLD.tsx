@@ -12,11 +12,11 @@ const SEOJsonLD = () => {
     "url": "https://www.agricapital.ci",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://www.agricapital.ci/og-image.png",
+      "url": "https://www.agricapital.ci/Logo_AgriCapital_-V2-4.png",
       "width": 1200,
       "height": 630
     },
-    "image": "https://www.agricapital.ci/og-image.png",
+    "image": "https://www.agricapital.ci/Logo_AgriCapital_-V2-4.png",
     "description": language === 'fr' 
       ? "AgriCapital facilite l’accès au foncier agricole et aux plantations de palmier à huile clé en main, avec ou sans terre, à Gonaté et Daloa."
       : "AgriCapital supports landowners and small farmers in creating and developing oil palm plantations in Ivory Coast.",
@@ -60,7 +60,7 @@ const SEOJsonLD = () => {
     "@type": "LocalBusiness",
     "@id": "https://www.agricapital.ci/#localbusiness",
     "name": "AgriCapital",
-    "image": "https://www.agricapital.ci/og-image.png",
+    "image": "https://www.agricapital.ci/Logo_AgriCapital_-V2-4.png",
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
