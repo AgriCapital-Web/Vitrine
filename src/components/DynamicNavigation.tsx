@@ -5,7 +5,7 @@ import { useLanguage, Language, languageNames } from "@/contexts/LanguageContext
 import { useNavigate } from "react-router-dom";
 import { useVisitorCount } from "@/hooks/useVisitorCount";
 
-const logo = "/logo-agricapital.png";
+const logo = "/Logo_AgriCapital_-V2-4.png?v=20261016-brand-v3";
 const CLIENT_PORTAL_URL = "https://client.agricapital.ci";
 const PHONE_URL = "tel:+2250564551717";
 const languages: Language[] = ["fr", "en", "ar", "es", "de", "zh"];
