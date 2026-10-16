@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Eye, EyeOff, Lock, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import logo from "@/assets/logo-agricapital-v2.png";
 
 const AdminResetPassword = () => {
   const [password, setPassword] = useState("");
@@ -65,7 +64,7 @@ const AdminResetPassword = () => {
       <Card className="w-full max-w-md bg-card border-border shadow-strong">
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
-            <img src={logo} alt="AgriCapital" className="h-16 w-auto" />
+            <img src="/Logo_AgriCapital_-V2-4.png" alt="AgriCapital" className="h-16 w-auto" />
           </div>
           <CardTitle className="text-2xl font-bold text-foreground">
             Nouveau mot de passe
