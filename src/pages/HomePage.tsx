@@ -62,7 +62,7 @@ const HomePage = () => {
   const isEn = language === "en";
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-background" data-site-build="agricapital-clean-home-2026-10-15">
+    <div className="min-h-screen overflow-x-hidden bg-background" data-site-build="agricapital-clean-home-2026-10-16">
       <SEOHead />
       <SEOJsonLD />
       <DynamicNavigation />
