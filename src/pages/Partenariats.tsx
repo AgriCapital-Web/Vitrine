@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2, Handshake } from "lucide-react";
+import Partnership from "@/components/Partnership";
 import { partnerTypes, partnershipImpact } from "@/data/offerings";
 import partnershipImg from "@/assets/partenariat-agricapital.webp";
 
@@ -58,7 +59,11 @@ const Partenariats = () => {
           </div>
         </div></section>
 
-        {/* Partner types */}
+        <section className="container mx-auto px-4 md:px-6 mb-10">
+        <Partnership />
+      </section>
+
+            {/* Partner types */}
         <section className="container mx-auto px-4 md:px-6 mb-10">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
             {partnerTypes.map((p) => {
