@@ -24,7 +24,7 @@ const stripHtml = (value: unknown) =>
 
 const absoluteUrl = (value: unknown) => {
   const raw = String(value ?? "").trim();
-  if (!raw) return BASE_URL + "/og-image.png";
+  if (!raw) return BASE_URL + "/Logo_AgriCapital_-V2-4.png";
   if (/^https?:\/\//i.test(raw)) return raw;
   return BASE_URL + "/" + raw.replace(/^\/+/, "");
 };
@@ -114,7 +114,7 @@ const renderArticleShell = (shell: string, article: Record<string, any>, slug: s
       "@type": "Organization",
       name: "AgriCapital",
       url: BASE_URL,
-      logo: { "@type": "ImageObject", url: BASE_URL + "/og-image.png" },
+      logo: { "@type": "ImageObject", url: BASE_URL + "/Logo_AgriCapital_-V2-4.png" },
     },
   };
   const jsonLd = "<script type=\"application/ld+json\">" + JSON.stringify(schema).replace(/<\//g, "<\\/") + "</script>";
