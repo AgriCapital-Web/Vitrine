@@ -17,7 +17,7 @@ const stripHtml = (value: unknown) =>
 
 const absoluteUrl = (value: unknown) => {
   const raw = String(value ?? "").trim();
-  if (!raw) return BASE_URL + "/og-image.png";
+  if (!raw) return BASE_URL + "/Logo_AgriCapital_-V2-4.png";
   return /^https?:\/\//i.test(raw) ? raw : BASE_URL + "/" + raw.replace(/^\/+/, "");
 };
 
@@ -73,7 +73,7 @@ export default async function handler(req: any, res: any) {
   // Prefer French editorial fields over potentially English SEO fields.
   const title = stripHtml(article.title_fr || article.title || article.meta_title).slice(0, 200) || "Actualité AgriCapital";
   const description = stripHtml(article.excerpt_fr || article.content_fr || article.meta_description).slice(0, 300) || "Découvrez les dernières actualités d’AgriCapital.";
-  const image = absoluteUrl(article.featured_image || parseImages(article)[0] || "/og-image.png");
+  const image = absoluteUrl(article.featured_image || parseImages(article)[0] || "/Logo_AgriCapital_-V2-4.png");
   const canonical = BASE_URL + "/new/" + encodeURIComponent(article.slug);
   const published = article.published_at || article.created_at || "";
   const modified = article.updated_at || published;
@@ -98,7 +98,7 @@ export default async function handler(req: any, res: any) {
       "@type": "Organization",
       name: "AgriCapital",
       url: BASE_URL,
-      logo: { "@type": "ImageObject", url: BASE_URL + "/og-image.png" },
+      logo: { "@type": "ImageObject", url: BASE_URL + "/Logo_AgriCapital_-V2-4.png" },
     },
   };
 
