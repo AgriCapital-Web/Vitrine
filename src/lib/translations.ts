@@ -144,7 +144,7 @@ const fr = {
     currentPartner: {
       title: "Notre Fournisseur de semences",
       name: "Les Palmistes",
-      desc: "Fournisseur de semences d'origine Iro Lamé utilisées pour la production de plants de palmier à huile.",
+      desc: "Fournisseur de semences d'origine Iro Lamé pour les plants de palmier à huile et partenaire ayant fourni des plans de plantation à AgriCapital.",
     },
     opportunities: {
       landowner: { title: "Propriétaire Foncier", desc: "Confiez votre terre pour sa mise en valeur — sans aucun frais. Vous restez propriétaire." },
@@ -502,7 +502,7 @@ const en: DeepPartial<typeof fr> = {
     currentPartner: {
       title: "Our Seed Supplier",
       name: "Les Palmistes",
-      desc: "Seed supplier of Iro Lamé origin used for the production of oil palm planting material.",
+      desc: "Supplier of Iro Lamé-origin seeds for oil palm planting material and partner who provided plantation plans to AgriCapital.",
     },
     opportunities: {
       landowner: { title: "Landowner", desc: "Entrust your land for development — at no cost. You remain the owner." },
