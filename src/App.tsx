@@ -77,7 +77,7 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { hasError: bo
           <div className="max-w-lg">
             <p className="text-sm font-bold uppercase tracking-[.18em] text-primary">AgriCapital</p>
             <h1 className="mt-4 text-2xl font-black text-foreground">Cette page n’a pas pu se charger correctement.</h1>
-            <p className="mt-3 text-muted-foreground">Le site reste disponible. Réessayez la page ou revenez à l’accueil.</p>
+            <p className="mt-3 text-muted-foreground">Une difficulté temporaire empêche l’affichage de cette page. Aucune information technique n’est nécessaire : réessayez dans quelques instants ou revenez à l’accueil. Si le problème persiste, contactez l’équipe AgriCapital.</p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <button type="button" onClick={() => window.location.reload()} className="rounded-lg bg-primary px-5 py-3 font-semibold text-primary-foreground">Réessayer</button>
               <a href="/" className="rounded-lg border border-border px-5 py-3 font-semibold text-foreground">Retour à l’accueil</a>
