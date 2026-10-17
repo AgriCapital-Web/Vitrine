@@ -61,7 +61,15 @@ export default async function handler(req: any, res: any) {
     const text = await upstream.text();
     res.setHeader("Cache-Control", "no-store");
     res.setHeader("Content-Type", "application/json; charset=utf-8");
-    return res.status(upstream.status).send(text || JSON.stringify({ ok: upstream.ok }));
+    if (!upstream.ok) {
+      console.error("[record-visit] Analytics service returned a non-success status", { status: upstream.status });
+      return res.status(502).json({ error: "Le suivi est momentanément indisponible." });
+    }
+    try {
+      return res.status(200).send(text || JSON.stringify({ ok: true }));
+    } catch {
+      return res.status(502).json({ error: "Le suivi est momentanément indisponible." });
+    }
   } catch (error) {
     console.error("[record-visit] Upstream request failed", error);
     return res.status(502).json({ error: "Analytics request failed" });
