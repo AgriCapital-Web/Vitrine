@@ -45,18 +45,18 @@ export default function AnniversaryFloat() {
       `}</style>
       <aside
         aria-label="Célébration du premier anniversaire d’AgriCapital"
-        className={`fixed z-[60] bottom-[max(1rem,env(safe-area-inset-bottom))] right-3 sm:right-6 transition-all duration-500 ${scrolled ? "translate-y-0 opacity-100" : "translate-y-2 opacity-95"}`}
+        className={`fixed z-[60] bottom-[max(6.5rem,calc(env(safe-area-inset-bottom)+6rem))] right-3 sm:right-6 transition-all duration-500 ${scrolled ? "translate-y-0 opacity-100" : "translate-y-2 opacity-95"}`}
       >
         {expanded && (
           <div className="mb-3 w-[min(19rem,calc(100vw-2rem))] rounded-2xl border border-amber-300/70 bg-white p-4 shadow-2xl shadow-emerald-950/20 dark:bg-slate-950">
             <div className="flex items-start gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-800 text-amber-300">
-                <Sprout size={24} aria-hidden="true" />
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white p-1 ring-1 ring-emerald-100">
+                <img src="/logo.png" alt="AgriCapital" className="h-9 w-9 object-contain" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-bold uppercase tracking-[.16em] text-amber-600">Une année déjà</p>
                 <h2 className="mt-1 text-lg font-extrabold leading-tight text-emerald-900 dark:text-emerald-300">AgriCapital fête ses 1 an !</h2>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">Une année d’engagement pour une agriculture plus forte et un patrimoine agricole durable.</p>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">Une année d’engagement pour une agriculture plus accessible et un patrimoine agricole durable.</p>
                 <p className="mt-2 text-sm font-semibold text-emerald-800 dark:text-emerald-300">Ensemble, cultivons l’avenir.</p>
               </div>
               <button type="button" onClick={() => setExpanded(false)} aria-label="Fermer le message anniversaire" className="rounded-full p-1 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
