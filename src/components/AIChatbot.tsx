@@ -561,7 +561,7 @@ const AIChatbot = () => {
         
         try {
           // Call transcription edge function
-          const transcribeUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/transcribe-audio`;
+          const transcribeUrl = `${SUPABASE_URL}/functions/v1/transcribe-audio`;
           const transcribeResponse = await fetch(transcribeUrl, {
             method: "POST",
             headers: {
