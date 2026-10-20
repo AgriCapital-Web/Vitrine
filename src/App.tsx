@@ -10,6 +10,7 @@ import type { ErrorInfo, ReactNode } from "react";
 import { Loader2 } from "lucide-react";
 import ScrollToTop from "@/components/ScrollToTop";
 import AnniversaryFloat from "@/components/AnniversaryFloat";
+import AIChatbot from "@/components/AIChatbot";
 import { isDataroomHost } from "@/lib/canonical-host";
 
 import HomePage from "./pages/HomePage";
@@ -231,6 +232,7 @@ const App = () => (
           <BrowserRouter>
             <ScrollToTop />
             <AppContent />
+            <AIChatbot />
             <AnniversaryFloat />
           </BrowserRouter>
         </TooltipProvider>
