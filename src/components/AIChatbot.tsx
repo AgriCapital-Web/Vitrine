@@ -3,7 +3,7 @@ import { MessageCircle, X, Send, User, Loader2, Phone, Mic, MicOff, Image, FileT
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/integrations/supabase/client";
 
 interface Message {
   role: "user" | "assistant";
@@ -158,8 +158,8 @@ const translations = {
   },
 };
 
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
-const TTS_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/elevenlabs-tts`;
+const CHAT_URL = `${SUPABASE_URL}/functions/v1/ai-chat`;
+const TTS_URL = `${SUPABASE_URL}/functions/v1/elevenlabs-tts`;
 
 const cleanTextForSpeech = (text: string) => text
   .replace(/```[\s\S]*?```/g, " ")
@@ -349,7 +349,7 @@ const AIChatbot = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
         },
         body: JSON.stringify({ text: speechText.slice(0, 1200), language }),
       });
@@ -414,7 +414,7 @@ const AIChatbot = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
       },
       body: JSON.stringify({ 
         messages: userMessages.map(m => ({ role: m.role, content: m.content })), 
@@ -566,7 +566,7 @@ const AIChatbot = () => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+              Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
             },
             body: JSON.stringify({ 
               audio: base64Audio,
