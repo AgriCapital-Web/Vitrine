@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Sparkles, Sprout, X } from "lucide-react";
+import { Sparkles, X } from "lucide-react";
 
 /**
  * Temporary first-anniversary celebration.
@@ -51,7 +51,7 @@ export default function AnniversaryFloat() {
           <div className="mb-3 w-[min(19rem,calc(100vw-2rem))] rounded-2xl border border-amber-300/70 bg-white p-4 shadow-2xl shadow-emerald-950/20 dark:bg-slate-950">
             <div className="flex items-start gap-3">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white p-1 ring-1 ring-emerald-100">
-                <img src="/logo.png" alt="AgriCapital" className="h-9 w-9 object-contain" />
+                <img src="/Logo_AgriCapital_-V2-4.png" alt="AgriCapital" className="h-9 w-9 object-contain" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-bold uppercase tracking-[.16em] text-amber-600">Une année déjà</p>
