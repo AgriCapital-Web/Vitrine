@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { MessageCircle, X, Send, User, Bot, Loader2, Phone, Mic, MicOff, Image, FileText, Paperclip, StopCircle, Volume2, VolumeX } from "lucide-react";
+import { MessageCircle, X, Send, User, Loader2, Phone, Mic, MicOff, Image, FileText, Paperclip, StopCircle, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { toast } from "sonner";
@@ -695,7 +695,7 @@ const AIChatbot = () => {
         }}
         aria-label="Open chat"
       >
-        <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+        <img src="/Logo_AgriCapital_-V2-4.png" alt="Logo officiel AgriCapital" className="h-10 w-10 rounded-full bg-white p-1 object-contain sm:h-12 sm:w-12" />
         <span className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-amber-400 rounded-full animate-ping" />
       </button>
 
@@ -717,7 +717,7 @@ const AIChatbot = () => {
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                <Bot className="w-6 h-6 text-white" />
+                <img src="/Logo_AgriCapital_-V2-4.png" alt="AgriCapital" className="h-8 w-8 rounded-full bg-white p-0.5 object-contain" />
               </div>
               <div>
                 <h3 className="text-white font-bold text-lg">{t.title}</h3>
@@ -761,7 +761,7 @@ const AIChatbot = () => {
                   {msg.role === "user" ? (
                     <User className="w-4 h-4 text-white" />
                   ) : (
-                    <Bot className="w-4 h-4 text-white" />
+                    <img src="/Logo_AgriCapital_-V2-4.png" alt="AgriCapital" className="h-7 w-7 rounded-full bg-white p-0.5 object-contain" />
                   )}
                 </div>
                 <div
