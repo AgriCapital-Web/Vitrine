@@ -781,7 +781,7 @@ const AIChatbot = () => {
             {(isLoading || isProcessingVoice) && (
               <div className="flex gap-2">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center">
-                  <Bot className="w-4 h-4 text-white" />
+                  <img src="/Logo_AgriCapital_-V2-4.png" alt="AgriCapital" className="h-7 w-7 rounded-full bg-white p-0.5 object-contain" />
                 </div>
                 <div className="bg-white shadow-sm border border-gray-100 rounded-2xl p-3 flex items-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin text-green-600" />
