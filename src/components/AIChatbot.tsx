@@ -21,14 +21,14 @@ interface VisitorInfo {
   phone: string;
 }
 
-type CollectionStep = 'idle' | 'firstName' | 'lastName' | 'email' | 'phone' | 'complete';
+type CollectionStep = 'idle' | 'contact' | 'firstName' | 'lastName' | 'email' | 'phone' | 'complete';
 
 const translations = {
   fr: {
     title: "KAPITA",
     subtitle: "Assistant AgriCapital",
     placeholder: "Tapez ou parlez...",
-    welcome: "Bonjour ! Je suis KAPITA, votre assistant intelligent AgriCapital. Avant de commencer, puis-je avoir votre prénom ?",
+    welcome: "Bonjour ! Je suis KAPITA, l’assistant virtuel d’AgriCapital. Pour mieux vous accompagner, indiquez en un seul message votre nom et prénoms, votre adresse e-mail et votre numéro de téléphone (WhatsApp de préférence). Exemple : Nom et prénoms : … | E-mail : … | WhatsApp : … . Ces coordonnées sont facultatives ; vous pouvez aussi poser directement votre question.",
     askFirstName: "Quel est votre prénom ?",
     askLastName: "Merci ! Et votre nom de famille ?",
     askEmail: "Parfait ! Votre adresse email ? (optionnel, tapez 'passer' pour ignorer)",
@@ -212,9 +212,9 @@ const AIChatbot = () => {
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       setMessages([{ role: "assistant", content: t.welcome }]);
-      setCollectionStep('firstName');
+      setCollectionStep(language === 'fr' ? 'contact' : 'firstName');
     }
-  }, [isOpen, t.welcome]);
+  }, [isOpen, t.welcome, language]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -244,6 +244,32 @@ const AIChatbot = () => {
     const isSkip = trimmedInput.toLowerCase() === t.skip.toLowerCase();
     
     switch (collectionStep) {
+      case 'contact': {
+        const emailMatch = trimmedInput.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}/i);
+        const phoneMatch = trimmedInput.match(/(?:\\+?\\d[\\d ().-]{7,}\\d)/);
+        const email = emailMatch?.[0] || "";
+        const phone = phoneMatch?.[0]?.trim() || "";
+        const clean = trimmedInput.replace(email, " ").replace(phone, " ")
+          .replace(/(?:nom(?:s)?(?: et pr[eé]noms?)?|pr[eé]noms?|nom complet|e-?mail|adresse e-?mail|whatsapp|t[eé]l[eé]phone|num[eé]ro)\\s*[:=-]/gi, " ")
+          .replace(/[|;,]+/g, " ").replace(/\\s+/g, " ").trim();
+        const parts = clean.split(/\\s+/).filter(Boolean);
+        const info = { firstName: parts.length > 1 ? parts.slice(1).join(" ") : (parts[0] || ""), lastName: parts.length > 1 ? parts[0] : "", email, phone };
+        const looksLikeContact = Boolean(email || phone || /nom|pr[eé]nom|whatsapp|t[eé]l[eé]phone/i.test(trimmedInput));
+        if (!looksLikeContact) {
+          setCollectionStep("complete");
+          setHasCollectedInfo(true);
+          return false;
+        }
+        setVisitorInfo(info);
+        setMessages(prev => [...prev,
+          { role: "user", content: trimmedInput },
+          { role: "assistant", content: "Merci" + (info.firstName ? " " + info.firstName : "") + " ! Je suis prêt à vous aider. Que souhaitez-vous savoir sur AgriCapital ?" }
+        ]);
+        if (info.firstName || info.lastName || info.email || info.phone) saveVisitorContact(info);
+        setCollectionStep("complete");
+        setHasCollectedInfo(true);
+        return true;
+      }
       case 'firstName':
         setVisitorInfo(prev => ({ ...prev, firstName: trimmedInput }));
         setMessages(prev => [...prev, 
