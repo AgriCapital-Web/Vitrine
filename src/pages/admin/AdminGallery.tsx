@@ -68,31 +68,38 @@ const AdminGallery = () => {
   };
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      toast.error("Veuillez choisir une image");
+    const files = Array.from(event.target.files || []);
+    if (!files.length) return;
+    const invalid = files.find((file) => !file.type.startsWith("image/"));
+    if (invalid) {
+      toast.error("Tous les fichiers doivent être des images.");
+      event.target.value = "";
       return;
     }
     setIsUploading(true);
     try {
-      const { path, url } = await uploadToStorage(file);
-      const { error } = await supabase.from("site_media").insert({
-        name: title || file.name,
-        url,
-        storage_path: path,
-        alt_text_fr: comment,
-        alt_text_en: comment,
-        type: "image",
-        category: "gallery",
-      });
+      const uploaded = await Promise.all(files.map(async (file, index) => {
+        const { path, url } = await uploadToStorage(file);
+        return {
+          name: files.length === 1 && title.trim() ? title.trim() : file.name.replace(/\\.[^.]+$/, "").replace(/[-_]+/g, " "),
+          url,
+          storage_path: path,
+          alt_text_fr: comment.trim() || file.name,
+          alt_text_en: comment.trim() || file.name,
+          type: "image",
+          category: "gallery",
+          is_active: true,
+          is_archived: false,
+        };
+      }));
+      const { error } = await supabase.from("site_media").insert(uploaded);
       if (error) throw error;
-      toast.success("Image ajoutée à la galerie");
+      toast.success(`${uploaded.length} image(s) ajoutée(s) à la galerie et au diaporama Héro.`);
       setTitle("");
       setComment("");
-      fetchMedia();
+      await fetchMedia();
     } catch (error) {
-      toast.error("Erreur lors de l'ajout de l'image");
+      toast.error("L’ajout a échoué. Vérifiez le stockage des médias puis réessayez.");
       console.error(error);
     } finally {
       setIsUploading(false);
@@ -195,9 +202,9 @@ const AdminGallery = () => {
 
         <Card>
           <CardContent className="p-5 grid gap-4 md:grid-cols-[1fr_1fr_auto] md:items-end">
-            <div><Label>Titre bref</Label><Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Ex. Pépinière de Daloa" /></div>
-            <div><Label>Commentaire bref</Label><Textarea value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Une phrase professionnelle pour contextualiser l’image" className="min-h-10" /></div>
-            <Button asChild disabled={isUploading} className="gap-2"><label className="cursor-pointer"><Upload className="w-4 h-4" />{isUploading ? "Upload..." : "Ajouter"}<input type="file" accept="image/*" className="hidden" onChange={handleUpload} /></label></Button>
+            <div><Label>Titre (facultatif pour un ajout groupé)</Label><Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Ex. Pépinière de Daloa" /></div>
+            <div><Label>Description / texte alternatif</Label><Textarea value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Une phrase professionnelle pour contextualiser l’image" className="min-h-10" /></div>
+            <Button asChild disabled={isUploading} className="gap-2"><label className="cursor-pointer"><Upload className="w-4 h-4" />{isUploading ? "Upload..." : "Ajouter"}<input type="file" accept="image/*" multiple className="hidden" onChange={handleUpload} /></label></Button>
           </CardContent>
         </Card>
 
@@ -219,7 +226,7 @@ const AdminGallery = () => {
             <CardContent className="py-12 text-center">
               <Image className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
               <p className="text-muted-foreground mb-4">Aucun fichier dans cette vue</p>
-              <p className="text-sm text-muted-foreground">Ajoutez vos images terrain depuis le bouton Ajouter.</p>
+              <p className="text-sm text-muted-foreground">Ajoutez une ou plusieurs images : elles seront stockées dans le stockage de médias et apparaîtront dans la galerie ainsi que dans le diaporama Héro.</p>
             </CardContent>
           </Card>
         ) : (
