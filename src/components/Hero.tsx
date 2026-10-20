@@ -182,7 +182,7 @@ const Hero = () => {
     supabase
       .from("site_media")
       .select("url,name")
-      .eq("category", "hero-terrain")
+      .in("category", ["hero-terrain", "gallery", "gallery-featured"])
       .eq("type", "image")
       .eq("is_active", true)
       .order("created_at", { ascending: true })
