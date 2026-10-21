@@ -80,151 +80,90 @@ const slides: Slide[] = [
   },
 ];
 
-// Texte multilingue simplifié (fr + en, en par défaut pour les autres locales)
+// Keep the existing event photography as a safe fallback until hero photos are managed in admin.
 const L = (fr: string, en: string): Record<Language, string> => ({ fr, en, ar: en, es: en, de: en, zh: en });
-
-// Inauguration du Bureau de Proximité de Gonaté + 1re session de formation du réseau commercial
 const eventSlides: Slide[] = [
-  {
-    image: "/inauguration/bureau-gonate-enseigne.webp",
-    eyebrow: L("Bureau de proximité", "Local office"),
-    title: L("Notre premier Bureau de Proximité est ouvert à Gonaté", "Our first local office is open in Gonaté"),
-    description: L(
-      "Un guichet dédié à l'information, l'accompagnement et la contractualisation, au plus près des propriétaires fonciers et des souscripteurs.",
-      "A dedicated desk for information, support and contracting, close to landowners and subscribers.",
-    ),
-  },
-  {
-    image: "/inauguration/inauguration-assemblee.webp",
-    eyebrow: L("Inauguration", "Inauguration"),
-    title: L("Une ouverture officielle en présence de nos partenaires", "An official opening with our partners"),
-    description: L(
-      "Autorités locales, propriétaires fonciers, partenaires techniques et clients réunis autour du modèle AgriCapital.",
-      "Local authorities, landowners, technical partners and clients gathered around the AgriCapital model.",
-    ),
-  },
-  {
-    image: "/inauguration/inauguration-prise-parole.webp",
-    eyebrow: L("Vision & modèle", "Vision & model"),
-    title: L("Un modèle de création et de gestion d'actifs agricoles", "A model for creating and managing agricultural assets"),
-    description: L(
-      "Sécurisation foncière, développement de la plantation et suivi technique sur toute la durée du contrat.",
-      "Land securing, plantation development and technical monitoring throughout the contract.",
-    ),
-  },
-  {
-    image: "/inauguration/inauguration-groupe.webp",
-    eyebrow: L("Nos équipes", "Our teams"),
-    title: L("Une organisation structurée et ancrée sur le terrain", "A structured organisation rooted in the field"),
-    description: L(
-      "AgriCapital construit progressivement une organisation solide, capable d'accompagner durablement ses partenaires.",
-      "AgriCapital is progressively building a solid organisation able to support its partners over the long term.",
-    ),
-  },
-  {
-    image: "/formation/formation-groupe-cohorte.webp",
-    eyebrow: L("Réseau commercial", "Sales network"),
-    title: L("11 conseillers commerciaux rejoignent AgriCapital", "11 sales advisors join AgriCapital"),
-    description: L(
-      "Première session d'intégration et de formation du réseau commercial : histoire, vision, offres et exigences de l'entreprise.",
-      "First onboarding and training session for our sales network: history, vision, offers and standards.",
-    ),
-  },
-  {
-    image: "/formation/formation-prise-parole.webp",
-    eyebrow: L("Formation", "Training"),
-    title: L("Des équipes formées, engagées et alignées", "Trained, committed and aligned teams"),
-    description: L(
-      "Le développement d'une entreprise durable repose autant sur ses équipes que sur son modèle économique.",
-      "Building a sustainable company relies as much on its teams as on its business model.",
-    ),
-  },
-  {
-    image: "/formation/formation-presentation-offres.webp",
-    eyebrow: L("Nos solutions", "Our solutions"),
-    title: L("PalmInvest & TerraPalm : deux voies vers un patrimoine agricole", "PalmInvest & TerraPalm: two paths to agricultural wealth"),
-    description: L(
-      "Que vous possédiez une terre ou non, AgriCapital développe et gère votre plantation de palmier à huile clé en main.",
-      "Whether you own land or not, AgriCapital develops and manages your turnkey oil palm plantation.",
-    ),
-  },
+  { image: "/inauguration/bureau-gonate-enseigne.webp", eyebrow: L("Bureau de proximité", "Local office"), title: L("Notre premier Bureau de Proximité est ouvert à Gonaté", "Our first local office is open in Gonaté"), description: L("Un guichet dédié à l'information, l'accompagnement et la contractualisation, au plus près des propriétaires fonciers et des souscripteurs.", "A dedicated desk for information, support and contracting, close to landowners and subscribers.") },
+  { image: "/inauguration/inauguration-assemblee.webp", eyebrow: L("Inauguration", "Inauguration"), title: L("Une ouverture officielle en présence de nos partenaires", "An official opening with our partners"), description: L("Autorités locales, propriétaires fonciers, partenaires techniques et clients réunis autour du modèle AgriCapital.", "Local authorities, landowners, technical partners and clients gathered around the AgriCapital model.") },
+  { image: "/inauguration/inauguration-prise-parole.webp", eyebrow: L("Vision & modèle", "Vision & model"), title: L("Un modèle de création et de gestion d'actifs agricoles", "A model for creating and managing agricultural assets"), description: L("Sécurisation foncière, développement de la plantation et suivi technique sur toute la durée du contrat.", "Land securing, plantation development and technical monitoring throughout the contract.") },
+  { image: "/inauguration/inauguration-groupe.webp", eyebrow: L("Nos équipes", "Our teams"), title: L("Une organisation structurée et ancrée sur le terrain", "A structured organisation rooted in the field"), description: L("AgriCapital construit progressivement une organisation solide, capable d'accompagner durablement ses partenaires.", "AgriCapital is progressively building a solid organisation able to support its partners over the long term.") },
+  { image: "/formation/formation-groupe-cohorte.webp", eyebrow: L("Réseau commercial", "Sales network"), title: L("11 conseillers commerciaux rejoignent AgriCapital", "11 sales advisors join AgriCapital"), description: L("Première session d'intégration et de formation du réseau commercial : histoire, vision, offres et exigences de l'entreprise.", "First onboarding and training session for our sales network: history, vision, offers and standards.") },
+  { image: "/formation/formation-prise-parole.webp", eyebrow: L("Formation", "Training"), title: L("Des équipes formées, engagées et alignées", "Trained, committed and aligned"), description: L("Le développement d'une entreprise durable repose autant sur ses équipes que sur son modèle économique.", "Building a sustainable company relies as much on its teams as on its business model.") },
+  { image: "/formation/formation-presentation-offres.webp", eyebrow: L("Nos solutions", "Our solutions"), title: L("PalmInvest & TerraPalm : deux voies vers un patrimoine agricole", "PalmInvest & TerraPalm: two paths to agricultural wealth"), description: L("Que vous possédiez une terre ou non, AgriCapital développe et gère votre plantation de palmier à huile clé en main.", "Whether you own land or not, AgriCapital develops and manages your turnkey oil palm plantation.") },
 ];
+const fallbackSlides = [...slides, ...eventSlides];
 
-const allSlides: Slide[] = [...slides, ...eventSlides];
-
-const dbFieldSlide = (url: string, name: string): Slide => ({
+const dbFieldSlide = (url: string, name: string, altText: string | null): Slide => ({
   image: url,
   eyebrow: L("Sur le terrain", "On the ground"),
-  title: L(name, name),
+  title: L(name || "AgriCapital — Sur le terrain", name || "AgriCapital — On the ground"),
   description: L(
-    "Une image réelle du déploiement opérationnel d'AgriCapital sur le terrain.",
-    "A real view of AgriCapital's operational deployment in the field.",
+    altText || "Une image réelle du déploiement opérationnel d'AgriCapital sur le terrain.",
+    altText || "A real view of AgriCapital's operational deployment in the field.",
   ),
 });
-
-const shuffle = <T,>(arr: T[]): T[] => {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-};
 
 const Hero = () => {
   const { language } = useLanguage();
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [slides, setSlides] = useState<Slide[]>(() => allSlides);
+  const [slides, setSlides] = useState<Slide[]>(() => fallbackSlides);
 
   useEffect(() => {
     let cancelled = false;
-    supabase
-      .from("site_media")
-      .select("url,name")
-      .in("category", ["hero-terrain", "gallery", "gallery-featured"])
-      .eq("type", "image")
-      .eq("is_active", true)
-      .order("created_at", { ascending: true })
-      .then(({ data }) => {
-        if (cancelled || !data?.length) return;
-        const valid = data
-          .filter((item) => typeof item.url === "string" && /^(https?:\/\/|\/)/.test(item.url))
-          .map((item) => dbFieldSlide(item.url, item.name || "AgriCapital — Sur le terrain"));
-        if (!valid.length) return;
-        const seen = new Set<string>();
-        const merged = [...allSlides, ...valid].filter((slide) => {
-          if (!slide.image || seen.has(slide.image)) return false;
-          seen.add(slide.image);
-          return true;
-        });
-        setSlides(merged);
-      });
-    return () => {
-      cancelled = true;
+    const loadHeroMedia = async () => {
+      const { data, error } = await supabase
+        .from("site_media")
+        .select("url,name,alt_text_fr,alt_text_en")
+        .eq("category", "hero-terrain")
+        .eq("type", "image")
+        .eq("is_active", true)
+        .eq("is_archived", false)
+        .order("created_at", { ascending: true });
+
+      if (cancelled) return;
+      if (error) {
+        console.error("[Hero] Impossible de charger les images administrées :", error);
+        return;
+      }
+
+      const managed = (data || [])
+        .filter((item) => typeof item.url === "string" && /^(https?:\/\/|\/)/.test(item.url))
+        .map((item) => dbFieldSlide(item.url, item.name, language === "en" ? item.alt_text_en : item.alt_text_fr));
+
+      // If the admin has published hero images, they fully control the slideshow.
+      // Otherwise preserve the existing site experience as a fallback.
+      if (managed.length > 0) setSlides(managed);
     };
-  }, []);
+
+    void loadHeroMedia();
+    return () => { cancelled = true; };
+  }, [language]);
+
+  useEffect(() => {
+    setCurrent((index) => Math.min(index, Math.max(0, slides.length - 1)));
+  }, [slides.length]);
 
   const next = useCallback(() => setCurrent((p) => (p + 1) % slides.length), [slides.length]);
   const prev = useCallback(() => setCurrent((p) => (p - 1 + slides.length) % slides.length), [slides.length]);
 
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || slides.length <= 1) return;
     const id = setInterval(next, 6500);
     return () => clearInterval(id);
-  }, [next, isPaused]);
+  }, [next, isPaused, slides.length]);
 
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const slide = slides[current];
+  const slide = slides[current] || fallbackSlides[0];
   const t = (rec: Record<Language, string>) => rec[language] || rec.fr;
 
   return (
     <section id="hero" className="pt-[72px] bg-background" onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)}>
       <div className="hero-stage relative overflow-hidden bg-cinema text-cinema-foreground">
-        {slides.map((s, i) => <div key={i} aria-hidden={current !== i} className={`absolute inset-0 transition-opacity duration-1000 ${current === i ? "opacity-100" : "opacity-0"}`}>
+        {slides.map((s, i) => <div key={s.image + i} aria-hidden={current !== i} className={`absolute inset-0 transition-opacity duration-1000 ${current === i ? "opacity-100" : "opacity-0"}`}>
           <img src={s.image} alt={t(s.title)} className={`absolute inset-0 h-full w-full object-cover hero-slide-image ${current === i ? "hero-slide-image-active" : ""}`} loading={i === 0 ? "eager" : "lazy"} />
         </div>)}
         <div className="absolute inset-0 hero-shade" />
