@@ -119,7 +119,7 @@ const Hero = () => {
         .eq("type", "image")
         .eq("is_active", true)
         .eq("is_archived", false)
-        .order("created_at", { ascending: true });
+        .order("created_at", { ascending: false });
 
       if (cancelled) return;
       if (error) {
