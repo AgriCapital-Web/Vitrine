@@ -1,5 +1,4 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Logo } from "./Logo";
 import { useCurrentProfile } from "@/lib/mock/store";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -19,7 +18,7 @@ export function PublicHeader() {
     <header className="sticky top-0 z-40 border-b border-border/60 glass">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link to="/" className="flex items-center gap-2.5">
-          <Logo className="h-11 sm:h-12" />
+          <img src="/agricapital360-officiel.png?v=20261021-logo" alt="AgriCapital 360°" className="h-11 sm:h-12 w-auto object-contain" />
         </Link>
         <nav className="hidden items-center gap-1 md:flex">
           {links.map((l) => {
@@ -93,7 +92,7 @@ export function PublicFooter() {
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-2">
-            <Logo className="h-12" />
+            <img src="/agricapital360-officiel.png?v=20261021-logo" alt="AgriCapital 360°" className="h-12 w-auto object-contain" />
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
               La première plateforme africaine de gestion de l'identité professionnelle
               et du networking intelligent. Une carte. Mille connexions.

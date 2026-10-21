@@ -111,7 +111,7 @@ const SEOHead = ({ title, description, image, type = "website", keywords }: SEOH
     const canonical = buildLocalizedUrl(location.pathname, language);
     const finalImage = image
       ? (image.startsWith("http") ? image : `${BASE_URL}${image.startsWith("/") ? image : "/" + image}`)
-      : `${BASE_URL}/Logo_AgriCapital_-V2-4.png?v=20261016-brand-v3`;
+      : `${BASE_URL}/agricapital360-officiel.png?v=20261021-logo`;
 
     document.title = finalTitle;
 
@@ -131,8 +131,8 @@ const SEOHead = ({ title, description, image, type = "website", keywords }: SEOH
     upsertMeta("property", "og:locale", seo.locale);
     upsertMeta("property", "og:image", finalImage);
     upsertMeta("property", "og:image:alt", finalTitle);
-    upsertMeta("property", "og:image:width", "1200");
-    upsertMeta("property", "og:image:height", "630");
+    upsertMeta("property", "og:image:width", "300");
+    upsertMeta("property", "og:image:height", "97");
 
     upsertMeta("name", "twitter:card", "summary_large_image");
     upsertMeta("name", "twitter:title", finalTitle);

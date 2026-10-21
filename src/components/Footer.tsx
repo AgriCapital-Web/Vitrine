@@ -1,4 +1,4 @@
-const logoWhite = "/Logo_AgriCapital_-V2-4.png";
+const logoWhite = "/agricapital360-officiel.png?v=20261021-logo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HelpCircle, Linkedin, Facebook, MessageCircle, ArrowUpRight } from "lucide-react";
