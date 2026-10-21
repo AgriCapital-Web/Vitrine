@@ -286,7 +286,7 @@ const AdminGallery = () => {
           <CardContent className="p-5 space-y-4">
             <div>
               <Label>Destination des nouvelles images</Label>
-              <Tabs value={uploadCategory} onValueChange={(value) => setUploadCategory(value as Exclude<MediaScope, "all">)}>
+              <Tabs value={uploadCategory} onValueChange={(value) => { const next = value as Exclude<MediaScope, "all">; setUploadCategory(next); setScope(next); }}>
                 <TabsList className="mt-2">
                   <TabsTrigger value="hero-terrain">Diaporama Héro</TabsTrigger>
                   <TabsTrigger value="gallery">Galerie photo</TabsTrigger>
@@ -303,7 +303,7 @@ const AdminGallery = () => {
         </Card>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <Tabs value={scope} onValueChange={(value) => setScope(value as MediaScope)}>
+          <Tabs value={scope} onValueChange={(value) => { const next = value as MediaScope; setScope(next); if (next !== "all") setUploadCategory(next); }}>
             <TabsList>
               <TabsTrigger value="hero-terrain">Héro</TabsTrigger>
               <TabsTrigger value="gallery">Galerie</TabsTrigger>
