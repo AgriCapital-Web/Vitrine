@@ -62,6 +62,18 @@ const DynamicNavigation = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const close = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { setMobileOpen(false); setLanguageOpen(false); setOpenDesktop(null); }
+    };
+    const outside = (event: PointerEvent) => {
+      if (event.target instanceof Node && !languageRef.current?.contains(event.target)) setLanguageOpen(false);
+    };
+    document.addEventListener("keydown", close);
+    document.addEventListener("pointerdown", outside);
+    return () => { document.removeEventListener("keydown", close); document.removeEventListener("pointerdown", outside); };
+  }, []);
+
   const label = (labels: Record<Language, string>) => labels[language] || labels.fr;
   const go = (action: string, isRoute?: boolean) => {
     setMobileOpen(false);
@@ -84,9 +96,9 @@ const DynamicNavigation = () => {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 border-b border-border bg-card/95 backdrop-blur-md ${scrolled ? "shadow-soft" : ""}`}>
-      <div className="site-container flex h-[72px] items-center justify-between gap-2 lg:gap-4">
+      <div className="site-container public-navigation flex h-[72px] items-center justify-between gap-2 lg:gap-4">
         <Button variant="ghost" onClick={() => go("hero")} className="h-auto shrink-0 p-0 hover:bg-transparent" aria-label="AgriCapital — Accueil">
-          <img src={logo} alt="AgriCapital" className="h-auto w-[104px] sm:w-[145px]" />
+          <img src={logo} alt="AgriCapital" className="h-auto w-[92px] min-[375px]:w-[104px] sm:w-[145px]" />
         </Button>
         <nav className="hidden xl:flex items-center" aria-label="Navigation principale">
           {menuConfig.map((item) => {
@@ -97,7 +109,7 @@ const DynamicNavigation = () => {
                 {itemLabel}{item.children && <ChevronDown className={`h-3.5 w-3.5 ${isOpen ? "rotate-180" : ""}`} />}
               </Button>
               {item.children && isOpen && <div className="absolute left-0 top-full pt-2"><div className="w-64 rounded-lg border border-border bg-popover p-2 shadow-medium">
-                {item.children.map((child) => <Button variant="ghost" key={label(child.label)} onClick={() => go(child.action, child.isRoute)} className="h-auto w-full justify-start px-3 py-3 text-left">{label(child.label)}</Button>)}
+                {item.children.map((child) => <Button variant="ghost" key={label(child.label)} onClick={() => go(child.action, child.isRoute)} className="h-auto w-full whitespace-normal justify-start px-3 py-3 text-left">{label(child.label)}</Button>)}
               </div></div>}
             </div>;
           })}
@@ -125,7 +137,7 @@ const DynamicNavigation = () => {
             const itemLabel = label(item.label);
             return <div key={itemLabel} className="border-b border-border last:border-0">
               <Button variant="ghost" onClick={() => item.children ? setOpenMobile(openMobile === itemLabel ? null : itemLabel) : go(item.action || "hero", item.isRoute)} className="h-auto w-full justify-between px-0 py-4 font-bold" aria-expanded={item.children ? openMobile === itemLabel : undefined}>{itemLabel}{item.children && <ChevronDown className={openMobile === itemLabel ? "rotate-180" : ""} />}</Button>
-              {item.children && openMobile === itemLabel && <div className="mb-3 border-l-2 border-primary/20 pl-3">{item.children.map((child) => <Button variant="ghost" key={label(child.label)} onClick={() => go(child.action, child.isRoute)} className="h-auto w-full justify-start py-3 text-left text-muted-foreground">{label(child.label)}</Button>)}</div>}
+              {item.children && openMobile === itemLabel && <div className="mb-3 border-l-2 border-primary/20 pl-3">{item.children.map((child) => <Button variant="ghost" key={label(child.label)} onClick={() => go(child.action, child.isRoute)} className="h-auto w-full whitespace-normal justify-start py-3 text-left text-muted-foreground">{label(child.label)}</Button>)}</div>}
             </div>;
           })}
         </div>

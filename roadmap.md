@@ -1,7 +1,7 @@
 # Roadmap AgriCapital
 
 ## En cours
-- [ ] Appliquer la refonte Patrimoine institutionnel dans la charte stricte du logo ; articles cinématographiques, navigation mobile visible, Facebook/WhatsApp et texte d’introduction corrigé.
+- [ ] Corriger DynamicNavigation et Hero ; appliquer la refonte Patrimoine institutionnel dans la charte stricte du logo, avec actualités animées, Espace client, Data Room, Contact et menu réorganisés.
 - [ ] Vérifier chaque page publique et formulaire sur mobile et ordinateur.
 - [ ] Recréer tout le schéma Supabase (tables, relations, RLS, GRANT, triggers) sur le projet externe `sxsolthkxfavimitoowy`
 - [ ] Créer automatiquement le super admin `admin@agricapital.ci` / `@AgriCapitalAdmin`
