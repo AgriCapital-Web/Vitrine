@@ -92,18 +92,18 @@ export default function DataroomVault() {
       )}
 
       <header className="border-b bg-card sticky top-0 z-30">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-primary" />
             <div>
               <div className="font-bold text-sm">AgriCapital Cloud</div>
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs text-muted-foreground break-words">
                 {signatory?.full_name} · {signatory?.email}
                 {signatory?.access_level && <span className="ml-2 uppercase font-semibold text-primary">{signatory.access_level}</span>}
               </div>
             </div>
           </div>
-          <Button variant="ghost" size="sm" onClick={logout}><LogOut className="w-4 h-4 mr-2" />Quitter</Button>
+          <Button variant="ghost" size="sm" className="shrink-0" onClick={logout}><LogOut className="w-4 h-4 mr-2" />Quitter</Button>
         </div>
       </header>
 
@@ -112,7 +112,7 @@ export default function DataroomVault() {
         onContextMenu={(e) => e.preventDefault()}
         onDragStart={(e) => e.preventDefault()}
       >
-        <div className="mb-6 rounded-lg border border-amber-300 bg-amber-50 text-amber-900 px-4 py-3 text-xs flex items-start gap-2">
+        <div className="mb-6 rounded-lg border border-primary/20 bg-secondary text-secondary-foreground px-4 py-3 text-xs flex items-start gap-2">
           <ShieldCheck className="w-4 h-4 mt-0.5 shrink-0" />
           <span>
             <strong>Consultation en ligne uniquement.</strong> Le téléchargement des documents est
@@ -123,10 +123,10 @@ export default function DataroomVault() {
 
         <div className="flex flex-wrap gap-2 mb-6">
           {FILTERS.map(([k, l]) => (
-            <button key={k} onClick={() => setFilter(k)}
+            <Button variant="ghost" size="sm" key={k} aria-pressed={filter === k} onClick={() => setFilter(k)}
               className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${filter === k ? "bg-primary text-primary-foreground border-primary" : "bg-background hover:bg-muted"}`}>
               {l}
-            </button>
+            </Button>
           ))}
         </div>
 
@@ -155,7 +155,7 @@ export default function DataroomVault() {
                     <span className="absolute top-2 left-2 text-[10px] uppercase font-bold bg-primary/90 text-primary-foreground px-2 py-0.5 rounded">
                       {p.type}
                     </span>
-                    <span className="absolute top-2 right-2 text-[10px] uppercase font-bold bg-accent/90 text-white px-2 py-0.5 rounded">
+                    <span className="absolute top-2 right-2 text-[10px] uppercase font-bold bg-accent/90 text-accent-foreground px-2 py-0.5 rounded">
                       {p.visibility}
                     </span>
                   </div>
@@ -175,7 +175,7 @@ export default function DataroomVault() {
       </main>
 
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
-        <DialogContent className="max-w-5xl">
+        <DialogContent className="max-w-5xl max-h-[90dvh] overflow-y-auto">
           <DialogHeader><DialogTitle className="text-base">{active?.title}</DialogTitle></DialogHeader>
           {active?.description && <p className="text-xs text-muted-foreground">{active.description}</p>}
           {active?.type === "platform" ? (
