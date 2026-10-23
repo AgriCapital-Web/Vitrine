@@ -13,6 +13,8 @@ import SEOJsonLD from "@/components/SEOJsonLD";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useLanguage, Language } from "@/contexts/LanguageContext";
+import ClientPortalSection from "@/components/ClientPortalSection";
+import DataroomTeaser from "@/components/DataroomTeaser";
 
 const sectionMap: Record<string, string> = {
   accueil:"hero", home:"hero", hero:"hero", "a-propos":"apropos", about:"apropos", apropos:"apropos",
@@ -176,6 +178,9 @@ const HomePage = () => {
       </section>
 
       <NewsSection />
+
+      <ClientPortalSection />
+      <DataroomTeaser />
 
       <Partnership />
 

@@ -10,6 +10,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
 import { Loader2, ShieldCheck, FileSignature, KeyRound } from "lucide-react";
+import DynamicNavigation from "@/components/DynamicNavigation";
+import Footer from "@/components/Footer";
 
 const NDA_TEXT = `ACCORD DE NON-DIVULGATION (NDA) — AgriCapital SARL
 
@@ -113,14 +115,16 @@ export default function Dataroom() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5">
+    <div className="min-h-screen bg-background">
       <Helmet>
         <title>AgriCapital Cloud — Portail Documentaire Confidentiel</title>
         <meta name="description" content="Portail sécurisé AgriCapital Cloud : signature NDA numérique, accès documents, présentations et données stratégiques." />
       </Helmet>
 
-      <div className="container mx-auto px-4 py-10 md:py-14 max-w-3xl">
-        <div className="text-center mb-8">
+      <DynamicNavigation />
+      <main className="site-container dataroom-layout pt-28 pb-14">
+        <div className="dataroom-intro mb-8">
+          <img src="/inauguration/bureau-gonate-interieur.webp" alt="Bureau AgriCapital à Gonaté" className="mb-6 aspect-[4/3] w-full rounded-lg object-cover object-center" />
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-3">
             <ShieldCheck className="w-4 h-4" /> Espace sécurisé
           </div>
@@ -130,7 +134,7 @@ export default function Dataroom() {
           </p>
         </div>
 
-        <Tabs value={tab} onValueChange={(v) => setTab(v as any)} className="bg-card border rounded-2xl p-4 md:p-6 shadow-sm">
+        <Tabs value={tab} onValueChange={(v) => setTab(v as "nda" | "code")} className="min-w-0 border-t border-border pt-5 lg:border-t-0 lg:border-l lg:pl-8">
           <TabsList className="grid grid-cols-2 mb-6">
             <TabsTrigger value="nda"><FileSignature className="w-4 h-4 mr-2" />Signer le NDA</TabsTrigger>
             <TabsTrigger value="code"><KeyRound className="w-4 h-4 mr-2" />J'ai un code</TabsTrigger>
@@ -188,13 +192,14 @@ export default function Dataroom() {
                 {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <KeyRound className="w-4 h-4 mr-2" />}
                 Accéder au portail
               </Button>
-              <button type="button" onClick={resendCode} className="text-sm text-primary hover:underline block mx-auto">
+              <Button variant="link" type="button" onClick={resendCode} className="text-sm block mx-auto">
                 J'ai perdu mon code
-              </button>
+              </Button>
             </form>
           </TabsContent>
         </Tabs>
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 }

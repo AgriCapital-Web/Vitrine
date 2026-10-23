@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import { ArrowRight, Search, Clock3, Newspaper } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const News = () => {
   const { language, t } = useLanguage();
@@ -100,9 +101,9 @@ const News = () => {
           <div className="newsroom-toolbar">
             <div className="flex min-w-0 gap-2 overflow-x-auto scrollbar-none">
               {categories.map((item) => (
-                <button key={item} onClick={() => setCategory(item)} className={`newsroom-filter ${category === item ? "is-active" : ""}`}>
+                <Button variant="ghost" key={item} aria-pressed={category === item} onClick={() => setCategory(item)} className={`newsroom-filter ${category === item ? "is-active" : ""}`}>
                   {item === "all" ? labels.all : item}
-                </button>
+                </Button>
               ))}
             </div>
             <label className="newsroom-search">

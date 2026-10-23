@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "14.1"
   }
   public: {
     Tables: {
@@ -2469,6 +2469,19 @@ export type Database = {
       increment_news_view: { Args: { p_news_id: string }; Returns: number }
       is_admin: { Args: never; Returns: boolean }
       purge_expired_dataroom_sessions: { Args: never; Returns: number }
+      record_page_visit_deduplicated: {
+        Args: {
+          p_city?: string
+          p_country?: string
+          p_country_code?: string
+          p_page_path: string
+          p_referrer?: string
+          p_region?: string
+          p_user_agent?: string
+          p_visitor_id: string
+        }
+        Returns: boolean
+      }
       refresh_news_relations: {
         Args: { p_news_id: string }
         Returns: undefined

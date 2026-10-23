@@ -148,7 +148,7 @@ const Hero = () => {
   const prev = useCallback(() => setCurrent((p) => (p - 1 + slides.length) % slides.length), [slides.length]);
 
   useEffect(() => {
-    if (isPaused || slides.length <= 1) return;
+    if (isPaused || slides.length <= 1 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = setInterval(next, 6500);
     return () => clearInterval(id);
   }, [next, isPaused, slides.length]);
@@ -164,10 +164,10 @@ const Hero = () => {
     <section id="hero" className="pt-[72px] bg-background" onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)}>
       <div className="hero-stage relative overflow-hidden bg-cinema text-cinema-foreground">
         {slides.map((s, i) => <div key={s.image + i} aria-hidden={current !== i} className={`absolute inset-0 transition-opacity duration-1000 ${current === i ? "opacity-100" : "opacity-0"}`}>
-          <img src={s.image} alt={t(s.title)} className={`absolute inset-0 h-full w-full object-cover hero-slide-image ${current === i ? "hero-slide-image-active" : ""}`} loading={i === 0 ? "eager" : "lazy"} />
+          <img src={s.image} alt={t(s.title)} className={`absolute inset-0 h-full w-full object-cover object-center hero-slide-image ${current === i ? "hero-slide-image-active" : ""}`} loading={i === 0 ? "eager" : "lazy"} onError={e => { if (!e.currentTarget.src.endsWith("/inauguration/pepiniere-plants-palmier.webp")) e.currentTarget.src = "/inauguration/pepiniere-plants-palmier.webp"; }} />
         </div>)}
         <div className="absolute inset-0 hero-shade" />
-        <div className="site-container relative flex min-h-[530px] h-full flex-col justify-end py-8 sm:py-12">
+        <div className="site-container hero-stage-content relative flex flex-col justify-end py-8 sm:py-12">
           <div key={current} className="hero-content-active">
             <p className="mb-4 flex items-center gap-3 text-sm font-bold"><span className="h-0.5 w-8 bg-accent" />AgriCapital — {t(slide.eyebrow)}</p>
             <h1 className="hero-title">{t(slide.title)}</h1>

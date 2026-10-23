@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import {
   Calendar, ArrowLeft, Share2, User, Eye, Loader2, ChevronLeft, ChevronRight, X,
-  Facebook, Twitter, Linkedin, MessageCircle, Copy, Clock3, ArrowRight
+  Facebook, Twitter, Linkedin, MessageCircle, Copy, Clock3, ArrowRight, Pause, Play, Expand
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -27,6 +27,7 @@ const NewsArticle = () => {
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [shareOpen, setShareOpen] = useState(false);
   const [readingProgress, setReadingProgress] = useState(0);
+  const [filmPaused, setFilmPaused] = useState(false);
 
   const { data: article, isLoading } = useQuery({
     queryKey: ["news-article-v2", slug],
@@ -135,10 +136,12 @@ const NewsArticle = () => {
   }, [article]);
 
   useEffect(() => {
-    if (images.length < 2) return;
+    if (images.length < 2 || filmPaused || galleryOpen || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = window.setInterval(() => setGalleryIndex((i) => (i + 1) % images.length), 6500);
     return () => window.clearInterval(id);
-  }, [images.length]);
+  }, [images.length, filmPaused, galleryOpen]);
+
+  useEffect(() => { setGalleryIndex(0); setFilmPaused(false); }, [slug]);
 
   useEffect(() => {
     let observer: IntersectionObserver | null = null;
@@ -149,7 +152,7 @@ const NewsArticle = () => {
       nodes.forEach((node, index) => {
         node.classList.add("article-reveal");
         node.style.setProperty("--article-index", String(Math.min(index, 16)));
-        window.setTimeout(() => node.classList.add("is-visible"), Math.min(index, 16) * 115);
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) node.classList.add("is-visible");
       });
       observer = new IntersectionObserver(
         (entries) => entries.forEach((entry) => {
@@ -256,17 +259,10 @@ const NewsArticle = () => {
     <main className="news-article-page min-h-screen overflow-x-hidden pt-[72px]">
       <section className="site-container pt-5 sm:pt-7 lg:pt-9">
         {images.length > 0 ? (
-          <div
-            className="article-cinematic-hero group"
-            onClick={() => setGalleryOpen(true)}
-          >
-            <img
-              key={images[galleryIndex]}
-              src={images[galleryIndex]}
-              alt={title("title")}
-              className="article-cinematic-hero-image"
-              onError={(e) => { e.currentTarget.src = "/placeholder.jpeg"; }}
-            />
+          <div className={`article-cinematic-hero group ${filmPaused ? "film-paused" : ""}`}>
+            {images.map((image: string, index: number) => <div key={`${image}-${index}`} aria-hidden={index !== galleryIndex} className={`article-film-frame ${index === galleryIndex ? "is-active" : ""}`}>
+              <img src={image} alt={title("title")} className="article-cinematic-hero-image" loading={index === 0 ? "eager" : "lazy"} onError={(e) => { e.currentTarget.src = "/placeholder.jpeg"; }} />
+            </div>)}
             <div className="article-cinematic-hero-shade" />
             <div className="article-cinematic-hero-top">
               <Link
@@ -282,26 +278,26 @@ const NewsArticle = () => {
               </span>
             </div>
             <div className="article-cinematic-hero-content">
-              <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-black uppercase tracking-[.16em] text-white/85 sm:text-xs">
+              <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-bold uppercase text-cinema-foreground/85 sm:text-xs">
                 <span>{article.category || "Actualité"}</span>
-                <span className="text-white/45">•</span>
+                <span className="text-cinema-foreground/45">•</span>
                 <span>{date(article.published_at || article.created_at)}</span>
-                <span className="text-white/45">•</span>
+                <span className="text-cinema-foreground/45">•</span>
                 <span>{readingTime} {fr ? "min de lecture" : "min read"}</span>
               </div>
-              <h1 className="article-cinematic-title mt-4 max-w-[1500px] text-white">
+              <h1 className="article-cinematic-title mt-4 text-cinema-foreground">
                 {title("title")}
               </h1>
-              <p className="article-cinematic-excerpt mt-4 max-w-3xl text-white/85">
+              <p className="article-cinematic-excerpt mt-4 text-cinema-foreground/85">
                 {excerpt}
               </p>
-              <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/75">
+              <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-cinema-foreground/75">
                 <span className="inline-flex items-center gap-2"><User className="h-4 w-4" />{article.author || "AgriCapital"}</span>
                 <span className="inline-flex items-center gap-2"><Eye className="h-4 w-4" />{view} {fr ? "vues" : "views"}</span>
                 {shares > 0 && <span className="inline-flex items-center gap-2"><Share2 className="h-4 w-4" />{shares} {fr ? "partages" : "shares"}</span>}
               </div>
-              <div className="mt-5 flex items-center gap-2">
-                <button
+              <div className="mt-5 flex flex-wrap items-center gap-2">
+                <Button variant="ghost"
                   type="button"
                   aria-label={fr ? "Partager l'article" : "Share article"}
                   className="article-glass-control"
@@ -309,20 +305,20 @@ const NewsArticle = () => {
                 >
                   <Share2 className="h-4 w-4" />
                   <span>{fr ? "Partager" : "Share"}</span>
-                </button>
+                </Button>
+                <Button variant="ghost" size="icon" className="article-glass-icon" onClick={() => setGalleryOpen(true)} aria-label="Agrandir les photos" title="Agrandir les photos"><Expand /></Button>
                 {images.length > 1 && (
                   <div className="article-glass-control">
                     <span>{galleryIndex + 1} / {images.length}</span>
                   </div>
                 )}
+                {images.length > 1 && <>
+                  <Button variant="ghost" size="icon" className="article-glass-icon" onClick={previous} aria-label="Image précédente" title="Image précédente"><ChevronLeft /></Button>
+                  <Button variant="ghost" size="icon" className="article-glass-icon" onClick={() => setFilmPaused(p => !p)} aria-label={filmPaused ? "Reprendre le film" : "Mettre le film en pause"} title={filmPaused ? "Reprendre" : "Pause"}>{filmPaused ? <Play /> : <Pause />}</Button>
+                  <Button variant="ghost" size="icon" className="article-glass-icon" onClick={next} aria-label="Image suivante" title="Image suivante"><ChevronRight /></Button>
+                </>}
               </div>
             </div>
-            {images.length > 1 && (
-              <div className="absolute bottom-5 right-5 z-20 hidden gap-2 sm:flex">
-                <button aria-label="Précédent" className="article-glass-icon" onClick={(e) => { e.stopPropagation(); previous(); }}><ChevronLeft className="h-5 w-5" /></button>
-                <button aria-label="Suivant" className="article-glass-icon" onClick={(e) => { e.stopPropagation(); next(); }}><ChevronRight className="h-5 w-5" /></button>
-              </div>
-            )}
           </div>
         ) : (
           <div className="rounded-2xl border border-border/70 p-8">
@@ -336,9 +332,9 @@ const NewsArticle = () => {
         {images.length > 1 && (
           <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
             {images.map((img: string, i: number) => (
-              <button key={`${img}-${i}`} onClick={() => setGalleryIndex(i)} className={`h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 ${i === galleryIndex ? "border-accent" : "border-transparent opacity-65"}`}>
+              <Button variant="ghost" key={`${img}-${i}`} aria-label={`Voir la photo ${i + 1}`} aria-pressed={i === galleryIndex} onClick={() => setGalleryIndex(i)} className={`h-14 w-20 p-0 shrink-0 overflow-hidden rounded-lg border-2 ${i === galleryIndex ? "border-accent" : "border-transparent opacity-65"}`}>
                 <img src={img} alt={`${title("title")} — ${i + 1}`} className="h-full w-full object-cover" onError={(e) => { e.currentTarget.src = "/placeholder.jpeg"; }} />
-              </button>
+              </Button>
             ))}
           </div>
         )}
@@ -361,7 +357,7 @@ const NewsArticle = () => {
             <p className="newsroom-kicker"><span />{fr ? "À voir" : "Watch"}</p>
             <div className="mt-5 grid gap-5 lg:grid-cols-2">
               {videos.map((video: string, i: number) => (
-                <video key={i} controls preload="metadata" poster={images[0]} className="w-full max-h-[70vh] rounded-2xl bg-black shadow-lg">
+                <video key={i} controls preload="metadata" poster={images[0]} className="w-full max-h-[70vh] rounded-lg bg-cinema">
                   <source src={video} />
                 </video>
               ))}
@@ -411,12 +407,12 @@ const NewsArticle = () => {
     </Dialog>
 
     <Dialog open={galleryOpen} onOpenChange={setGalleryOpen}>
-      <DialogContent className="max-w-[96vw] max-h-[96vh] border-0 bg-black/95 p-2">
+      <DialogContent className="max-w-[96vw] max-h-[96vh] border-0 bg-cinema p-2">
         <div className="relative flex min-h-[65vh] items-center justify-center">
-          <Button variant="ghost" size="icon" className="absolute right-2 top-2 z-10 text-white" onClick={() => setGalleryOpen(false)}><X /></Button>
+          <Button variant="ghost" size="icon" aria-label="Fermer la galerie" className="absolute right-2 top-2 z-10 text-cinema-foreground" onClick={() => setGalleryOpen(false)}><X /></Button>
           {images.length > 1 && <>
-            <Button variant="ghost" size="icon" className="absolute left-2 z-10 text-white" onClick={previous}><ChevronLeft className="h-8 w-8" /></Button>
-            <Button variant="ghost" size="icon" className="absolute right-2 z-10 text-white" onClick={next}><ChevronRight className="h-8 w-8" /></Button>
+            <Button variant="ghost" size="icon" aria-label="Photo précédente" className="absolute left-2 z-10 text-cinema-foreground" onClick={previous}><ChevronLeft className="h-8 w-8" /></Button>
+            <Button variant="ghost" size="icon" aria-label="Photo suivante" className="absolute right-2 z-10 text-cinema-foreground" onClick={next}><ChevronRight className="h-8 w-8" /></Button>
           </>}
           <img src={images[galleryIndex]} alt={`${title("title")} — ${galleryIndex + 1}`} className="max-h-[88vh] max-w-full object-contain" onError={(e) => { e.currentTarget.src = "/placeholder.jpeg"; }} />
         </div>
