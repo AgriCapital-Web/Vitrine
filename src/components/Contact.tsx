@@ -49,16 +49,16 @@ const Contact = () => {
   return (
     <section id="contact" className="py-14 lg:py-16 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10">
+        <div className="mb-10 border-b border-border pb-7">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             {t.contact.title}
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-3xl">
             {t.contact.subtitle}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[.9fr_1.2fr_1fr] gap-5 lg:gap-6 max-w-7xl mx-auto items-stretch">
+        <div className="contact-layout grid grid-cols-1 md:grid-cols-2 gap-7 lg:gap-10 items-start">
           {/* Contact Info */}
           <div className="flex min-w-0 flex-col gap-4 h-full">
             <Card className="bg-card border-border flex-1 min-h-[96px]">
@@ -135,8 +135,8 @@ const Contact = () => {
 
           {/* Contact Form */}
           <div className="min-w-0 h-full">
-            <Card className="bg-card border-border h-full flex flex-col">
-              <CardContent className="p-5 sm:p-7 flex-1">
+            <div className="border-t border-border pt-6 md:border-t-0 md:border-l md:pl-7 md:pt-0">
+              <div>
                 <form onSubmit={handleSubmit} className="space-y-4 min-w-0">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
@@ -200,11 +200,11 @@ const Contact = () => {
                     {isSubmitting ? (t.contact.form.sending || "Envoi...") : t.contact.form.submit}
                   </Button>
                 </form>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
-          <div className="min-w-0 md:col-span-2 lg:col-span-1 h-full">
+          <div className="min-w-0 md:col-span-2 h-[420px]">
             <LocationMap className="h-full" />
           </div>
         </div>
