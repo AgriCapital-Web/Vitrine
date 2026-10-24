@@ -714,7 +714,7 @@ const AIChatbot = () => {
 
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-4 sm:bottom-6 ${isRTL ? 'left-4 sm:left-6' : 'right-4 sm:right-6'} z-[99990] w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 animate-bounce`}
+        className={`fixed bottom-4 sm:bottom-6 ${isRTL ? 'left-4 sm:left-6' : 'right-4 sm:right-6'} z-[99990] w-14 h-14 sm:w-16 sm:h-16 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-105`}
         style={{
           background: 'linear-gradient(135deg, #166534 0%, #14532d 100%)',
           boxShadow: '0 8px 32px rgba(22, 101, 52, 0.4)',
