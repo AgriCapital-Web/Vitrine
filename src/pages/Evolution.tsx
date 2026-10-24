@@ -92,6 +92,16 @@ const Evolution = () => {
   ];
 
   const curatedPhotos = [
+    { src: "/terrain/livraison-plants.webp", title: "Livraison des plants", comment: "Acheminement des plants de palmier vers les parcelles des souscripteurs.", featured: true },
+    { src: "/terrain/trouaison-tariere.webp", title: "Trouaison des parcelles", comment: "Préparation des trous de plantation à la tarière motorisée.", featured: true },
+    { src: "/terrain/pepiniere-plants.webp", title: "Plants prêts à planter", comment: "Plants de palmier à huile vigoureux, prêts pour la mise en terre.", featured: true },
+    { src: "/terrain/chargement-plants.webp", title: "Chargement des plants", comment: "Organisation logistique des plants avant leur départ vers le terrain.", featured: false },
+    { src: "/terrain/trouaison-parcelle.webp", title: "Travaux en parcelle", comment: "Mise en place des plantations selon un alignement maîtrisé.", featured: false },
+    { src: "/terrain/traitement-parcelle.webp", title: "Entretien de la parcelle", comment: "Interventions techniques régulières sur les parcelles.", featured: false },
+    { src: "/terrain/jeune-palmier.webp", title: "Jeune palmier en terre", comment: "Un plant nouvellement installé, suivi dès ses premiers mois.", featured: false },
+    { src: "/terrain/suivi-technique.webp", title: "Suivi technique", comment: "Contrôle terrain et remontée d'informations par nos équipes.", featured: false },
+    { src: "/terrain/visite-parcelle.webp", title: "Visite de parcelle", comment: "Reconnaissance des parcelles avec les équipes terrain.", featured: false },
+    { src: "/terrain/parcelle-preparee.webp", title: "Parcelle préparée", comment: "Terrain dégagé et prêt à accueillir les plants.", featured: false },
     { src: "/inauguration/bureau-gonate-enseigne.webp", title: "Bureau de proximité de Gonaté", comment: "Inauguration du premier bureau de proximité AgriCapital, le 1er août 2026.", featured: true },
     { src: "/inauguration/inauguration-assemblee.webp", title: "Cérémonie d'inauguration", comment: "Plus de 100 participants : autorités locales, propriétaires fonciers, partenaires, clients, jeunes et femmes.", featured: true },
     { src: "/inauguration/inauguration-prise-parole.webp", title: "Présentation du modèle", comment: "Présentation publique de la vision et du modèle de création d'actifs agricoles.", featured: true },
