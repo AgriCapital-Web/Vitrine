@@ -141,9 +141,10 @@ const Hero = () => {
         .filter((item) => typeof item.url === "string" && /^(https?:\/\/|\/)/.test(item.url))
         .map((item) => dbFieldSlide(item.url, item.name, language === "en" ? item.alt_text_en : item.alt_text_fr));
 
-      // If the admin has published hero images, they fully control the slideshow.
-      // Otherwise preserve the existing site experience as a fallback.
-      if (managed.length > 0) setSlides(managed);
+      // Admin-published images come first, followed by all site photos (no duplicates).
+      const seen = new Set<string>();
+      const merged = [...managed, ...fallbackSlides].filter((s) => { const k = s.image.split("?")[0]; if (seen.has(k)) return false; seen.add(k); return true; });
+      setSlides(merged);
     };
 
     void loadHeroMedia();

@@ -280,8 +280,8 @@ const Evolution = () => {
 
             {activePhoto && (
               <div className="max-w-[1500px] mx-auto">
-                <div className="relative overflow-hidden rounded-2xl shadow-medium aspect-[16/8] bg-muted group">
-                  <img src={activePhoto.src} alt={activePhoto.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="relative overflow-hidden rounded-2xl shadow-medium aspect-[4/3] sm:aspect-[16/8] bg-muted group">
+                  <img key={activePhoto.src} src={activePhoto.src} alt={activePhoto.title} className="w-full h-full object-cover object-center animate-fade-in" />
                   <button
                     onClick={goToPreviousPhoto}
                     aria-label="Photo précédente"
@@ -298,15 +298,18 @@ const Evolution = () => {
                   </button>
                   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-foreground/80 to-transparent p-4 sm:p-6 text-primary-foreground">
                     <p className="font-bold text-base sm:text-lg">{activePhoto.title}</p>
-                    {activePhoto.comment && <p className="text-sm text-white/80">{activePhoto.comment}</p>}
+                    {activePhoto.comment && <p className="text-sm text-primary-foreground/80">{activePhoto.comment}</p>}
                   </div>
                 </div>
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-5">
-                  <div className="flex justify-center gap-1.5">
-                    {galleryPhotos.map((_, i) => (
-                      <button key={i} onClick={() => setCurrentPhoto(i)} className={`h-2 rounded-full transition-all ${i === currentPhoto % galleryPhotos.length ? "w-7 bg-primary" : "w-2 bg-border"}`} aria-label={`Voir la photo ${i + 1}`} />
-                    ))}
-                  </div>
+                <div className="mt-4 flex gap-2 overflow-x-auto pb-2 snap-x">
+                  {galleryPhotos.map((p, i) => (
+                    <button key={p.src + i} onClick={() => setCurrentPhoto(i)} aria-label={`Voir ${p.title}`} className={`h-16 w-24 sm:h-20 sm:w-32 shrink-0 snap-start overflow-hidden rounded-lg border-2 transition ${i === currentPhoto % galleryPhotos.length ? "border-accent" : "border-transparent opacity-70 hover:opacity-100"}`}>
+                      <img src={p.src} alt="" loading="lazy" className="h-full w-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+                <div className="flex flex-row items-center justify-between gap-4 mt-3">
+                  <span className="text-sm font-semibold text-muted-foreground">{String((currentPhoto % galleryPhotos.length) + 1).padStart(2, "0")} / {String(galleryPhotos.length).padStart(2, "0")}</span>
                   <div className="flex items-center gap-2">
                     <Button variant="outline" className="rounded-lg" onClick={() => setSelectedImage(activePhoto.src)}>
                       <Images className="w-4 h-4 mr-2" />
