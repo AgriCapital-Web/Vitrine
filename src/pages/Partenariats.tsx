@@ -9,6 +9,7 @@ import { CheckCircle2, Handshake } from "lucide-react";
 import Partnership from "@/components/Partnership";
 import { partnerTypes, partnershipImpact } from "@/data/offerings";
 import partnershipImg from "@/assets/partenariat-agricapital.webp";
+import PublicPageHero from "@/components/PublicPageHero";
 
 const Partenariats = () => {
   return (
@@ -28,36 +29,7 @@ const Partenariats = () => {
 
       <main className="pt-[72px] pb-8">
         {/* Header */}
-        <section className="public-page-header"><div className="public-page-header-inner">
-          <div className="grid lg:grid-cols-[.9fr_1.1fr] gap-7 lg:gap-12 items-center">
-            <div>
-              <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-4">
-                Partenariats
-              </span>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[clamp(2.2rem,3.6vw,4rem)] font-bold text-foreground mb-4 leading-[1.04]">
-                Construisons ensemble une agriculture performante, inclusive et durable
-              </h1>
-              <p className="text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed">
-                Nous recherchons des partenaires engagés dans le développement durable de
-                l'agriculture et la création de valeur au sein des territoires.
-              </p>
-            </div>
-            <div className="relative order-first lg:order-last">
-              <div className="absolute inset-x-4 bottom-2 h-6 bg-foreground/10 blur-xl rounded-full" />
-              <img
-                src={partnershipImg}
-                alt="AgriCapital — équipe AgriCapital en réunion dans une plantation de palmiers"
-                width={1024}
-                height={1024}
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
-                className="relative w-full rounded-xl object-cover aspect-[4/3] max-h-[260px] sm:max-h-[340px] lg:max-h-[460px] mx-auto shadow-medium"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.jpeg"; }}
-              />
-            </div>
-          </div>
-        </div></section>
+        <PublicPageHero title="Partenariats AgriCapital" description="Construisons ensemble une agriculture performante, inclusive et durable." image={partnershipImg} imageAlt="Équipe AgriCapital et partenaires sur le terrain" />
 
         <section className="container mx-auto px-4 md:px-6 mb-10">
         <Partnership />
@@ -108,8 +80,8 @@ const Partenariats = () => {
 
         {/* CTA */}
         <section className="container mx-auto px-4 md:px-6">
-          <Card className="bg-gradient-to-br from-primary/5 via-primary/10 to-accent/10 border-primary/20">
-            <CardContent className="p-6 md:p-10 text-center">
+          <div className="border-t border-border bg-secondary/40">
+            <div className="py-10 text-center">
               <Handshake className="w-12 h-12 text-primary mx-auto mb-4" />
               <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-3">
                 Vous souhaitez devenir partenaire ?
@@ -126,8 +98,8 @@ const Partenariats = () => {
                   <Link to="/contact">Nous contacter</Link>
                 </Button>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </section>
       </main>
 

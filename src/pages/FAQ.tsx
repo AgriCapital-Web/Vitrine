@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import DynamicNavigation from "@/components/DynamicNavigation";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import PublicPageHero from "@/components/PublicPageHero";
 
 interface FAQItem {
   question: string;
@@ -103,13 +104,7 @@ const FAQ = () => {
       <DynamicNavigation />
       
       <main className="public-page min-h-screen pt-[72px]">
-        <section className="public-page-header"><div className="public-page-header-inner">
-          <div className="container mx-auto px-4 text-center">
-            <HelpCircle className="w-10 h-10 mb-5 text-accent" />
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-foreground">{ft.title}</h1>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl">{ft.subtitle}</p>
-          </div>
-        </div></section>
+        <PublicPageHero title={ft.title} description={ft.subtitle} image="/inauguration/bureau-gonate-interieur.webp" imageAlt="Espace d’accueil AgriCapital à Gonaté" />
 
         <section className="border-b bg-card/50 py-8">
           <div className="site-container px-4">
@@ -118,11 +113,10 @@ const FAQ = () => {
                 const Icon = cat.icon;
                 return (
                   <Button key={cat.id} variant={activeCategory === cat.id ? "default" : "outline"}
-                    className={`flex items-center gap-2 ${activeCategory === cat.id ? "bg-agri-green hover:bg-agri-green-dark text-white" : ""}`}
+                    className="flex h-auto min-h-10 items-center gap-2 whitespace-normal text-left"
                     onClick={() => setActiveCategory(cat.id)}>
                     <Icon className="w-4 h-4" />
-                    <span className="hidden sm:inline">{cat.label}</span>
-                    <span className="sm:hidden">{cat.label.split(" ")[0]}</span>
+                    <span>{cat.label}</span>
                   </Button>
                 );
               })}
@@ -160,23 +154,21 @@ const FAQ = () => {
           </div>
         </section>
 
-        <section className="py-12 sm:py-16 bg-gradient-to-r from-agri-green/10 to-accent/10">
+        <section className="py-12 sm:py-16 bg-secondary/50">
           <div className="container mx-auto px-4">
-            <Card className="max-w-2xl mx-auto border-2 border-agri-green/20">
-              <CardHeader className="text-center pb-4">
-                <CardTitle className="text-xl sm:text-2xl">{ft.ctaTitle}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
+            <div className="mx-auto">
+              <h2 className="site-title mb-4 text-center">{ft.ctaTitle}</h2>
+              <div className="space-y-4">
                 <p className="text-center text-muted-foreground">{ft.ctaSubtitle}</p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <Button onClick={scrollToContact} className="bg-agri-green hover:bg-agri-green-dark">
+                  <Button onClick={scrollToContact}>
                     <MessageCircle className="w-4 h-4 mr-2" />{ft.contactUs}<ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
                   <Button variant="outline" asChild><a href="tel:+2250564551717"><Phone className="w-4 h-4 mr-2" />05 64 55 17 17</a></Button>
                   <Button variant="outline" asChild><a href="mailto:contact@agricapital.ci"><Mail className="w-4 h-4 mr-2" />Email</a></Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </section>
       </main>

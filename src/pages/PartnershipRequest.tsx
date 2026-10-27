@@ -6,6 +6,7 @@ import DynamicNavigation from "@/components/DynamicNavigation";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import PartnershipRequestForm from "@/components/PartnershipRequestForm";
+import PublicPageHero from "@/components/PublicPageHero";
 
 const PartnershipRequest = () => {
   const { language } = useLanguage();
@@ -26,7 +27,8 @@ const PartnershipRequest = () => {
       <SEOHead />
       <DynamicNavigation />
       
-      <main className="pt-20 min-h-screen bg-background">
+      <main className="pt-[72px] min-h-screen bg-background">
+        <PublicPageHero title="Partenariats AgriCapital" image="/terrain/visite-parcelle.webp" imageAlt="Rencontre sur une parcelle AgriCapital" />
         <div className="container mx-auto px-4 py-8">
           <div className="mb-8">
             <Button variant="ghost" asChild className="mb-4">
