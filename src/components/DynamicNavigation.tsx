@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Eye, Globe, Menu, Phone, UserCircle2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage, Language, languageNames } from "@/contexts/LanguageContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useVisitorCount } from "@/hooks/useVisitorCount";
 
 const logo = "/Logo_AgriCapital_-V2-4.png?v=20261016-brand-v3";
@@ -22,6 +22,8 @@ const menuConfig: MenuItem[] = [
       { label: { fr: "Notre capacité", en: "Our capacity", ar: "قدرتنا", es: "Capacidad", de: "Kapazität", zh: "能力" }, action: "/impact", isRoute: true },
       { label: { fr: "Évolution", en: "Evolution", ar: "التطور", es: "Evolución", de: "Entwicklung", zh: "发展" }, action: "/evolution", isRoute: true },
       { label: { fr: "Équipe", en: "Team", ar: "الفريق", es: "Equipo", de: "Team", zh: "团队" }, action: "/equipe", isRoute: true },
+      { label: { fr: "Notre approche", en: "Our approach", ar: "نهجنا", es: "Nuestro enfoque", de: "Unser Ansatz", zh: "我们的方法" }, action: "/notre-approche", isRoute: true },
+      { label: { fr: "Partenariats", en: "Partnerships", ar: "الشراكات", es: "Alianzas", de: "Partnerschaften", zh: "合作伙伴" }, action: "/partenariats", isRoute: true },
     ],
   },
   {
@@ -38,6 +40,7 @@ const menuConfig: MenuItem[] = [
     children: [
       { label: { fr: "Actualités", en: "News", ar: "الأخبار", es: "Noticias", de: "Nachrichten", zh: "新闻" }, action: "/new", isRoute: true },
       { label: { fr: "FAQ", en: "FAQ", ar: "الأسئلة", es: "FAQ", de: "FAQ", zh: "常见问题" }, action: "/faq", isRoute: true },
+      { label: { fr: "AgriCapital Cloud", en: "AgriCapital Cloud", ar: "AgriCapital Cloud", es: "AgriCapital Cloud", de: "AgriCapital Cloud", zh: "AgriCapital Cloud" }, action: "/dataroom", isRoute: true },
       { label: { fr: "Le trésor caché du foncier", en: "The hidden treasure of land", ar: "الكنز الخفي للأرض", es: "El tesoro oculto de la tierra", de: "Der verborgene Schatz des Bodens", zh: "土地的隐藏宝藏" }, action: "/tresor-foncier", isRoute: true },
       { label: { fr: "Le trésor caché du palmier", en: "The hidden treasure of oil palm", ar: "الكنز الخفي لنخيل الزيت", es: "El tesoro oculto de la palma aceitera", de: "Der verborgene Schatz der Ölpalme", zh: "油棕的隐藏宝藏" }, action: "/tresor-palmier", isRoute: true },
     ],
@@ -54,7 +57,16 @@ const DynamicNavigation = () => {
   const { language, setLanguage } = useLanguage();
   const { totalVisitors } = useVisitorCount();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const languageRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previous; };
+  }, [mobileOpen]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -64,10 +76,11 @@ const DynamicNavigation = () => {
 
   useEffect(() => {
     const close = (event: KeyboardEvent) => {
-      if (event.key === "Escape") { setMobileOpen(false); setLanguageOpen(false); setOpenDesktop(null); }
+      if (event.key === "Escape") { setMobileOpen(false); setLanguageOpen(false); setOpenDesktop(null); headerRef.current?.querySelector<HTMLButtonElement>('[aria-label="Menu"]')?.focus(); }
     };
     const outside = (event: PointerEvent) => {
       if (event.target instanceof Node && !languageRef.current?.contains(event.target)) setLanguageOpen(false);
+      if (event.target instanceof Node && !headerRef.current?.contains(event.target)) { setMobileOpen(false); setOpenDesktop(null); }
     };
     document.addEventListener("keydown", close);
     document.addEventListener("pointerdown", outside);
@@ -87,7 +100,7 @@ const DynamicNavigation = () => {
     if (target) {
       window.scrollTo({
         top: target.getBoundingClientRect().top + window.scrollY - 84,
-        behavior: "smooth",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
       });
     } else {
       navigate(`/#${action}`);
@@ -95,7 +108,7 @@ const DynamicNavigation = () => {
   };
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 border-b border-border bg-card/95 backdrop-blur-md ${scrolled ? "shadow-soft" : ""}`}>
+    <header ref={headerRef} className={`institutional-navigation fixed inset-x-0 top-0 z-50 border-b border-border bg-card/95 backdrop-blur-md ${scrolled ? "shadow-soft" : ""}`}>
       <div className="site-container public-navigation flex h-[72px] items-center justify-between gap-2 lg:gap-4">
         <Button variant="ghost" onClick={() => go("hero")} className="h-auto shrink-0 p-0 hover:bg-transparent" aria-label="AgriCapital — Accueil">
           <img src={logo} alt="AgriCapital" className="h-auto w-[92px] min-[375px]:w-[104px] sm:w-[145px]" />
@@ -105,10 +118,10 @@ const DynamicNavigation = () => {
             const itemLabel = label(item.label);
             const isOpen = openDesktop === itemLabel;
             return <div key={itemLabel} className="relative" onMouseEnter={() => item.children && setOpenDesktop(itemLabel)} onMouseLeave={() => item.children && setOpenDesktop(null)}>
-              <Button variant="ghost" onClick={() => item.children ? setOpenDesktop(isOpen ? null : itemLabel) : go(item.action || "hero", item.isRoute)} className="site-nav-link px-3" aria-expanded={item.children ? isOpen : undefined}>
+              <Button variant="ghost" onClick={() => item.children ? setOpenDesktop(isOpen ? null : itemLabel) : go(item.action || "hero", item.isRoute)} className="site-nav-link px-3" data-active={item.children?.some((child) => child.action === pathname) || item.action === pathname || (item.action === "hero" && pathname === "/")} aria-expanded={item.children ? isOpen : undefined}>
                 {itemLabel}{item.children && <ChevronDown className={`h-3.5 w-3.5 ${isOpen ? "rotate-180" : ""}`} />}
               </Button>
-              {item.children && isOpen && <div className="absolute left-0 top-full pt-2"><div className="w-64 rounded-lg border border-border bg-popover p-2 shadow-medium">
+              {item.children && isOpen && <div className="institutional-dropdown absolute left-0 top-full pt-2"><div className="w-64 rounded-lg border border-border bg-popover p-2 shadow-medium">
                 {item.children.map((child) => <Button variant="ghost" key={label(child.label)} onClick={() => go(child.action, child.isRoute)} className="h-auto w-full whitespace-normal justify-start px-3 py-3 text-left">{label(child.label)}</Button>)}
               </div></div>}
             </div>;
@@ -124,20 +137,20 @@ const DynamicNavigation = () => {
           </Button>
           <div className="relative" ref={languageRef}>
             <Button variant="ghost" onClick={() => setLanguageOpen(!languageOpen)} className="h-9 gap-1 px-1.5 sm:px-3 text-xs uppercase" aria-label="Changer de langue" aria-expanded={languageOpen} title="Changer de langue"><Globe className="hidden sm:block" />{language}<ChevronDown className="h-3 w-3" /></Button>
-            {languageOpen && <div className="absolute right-0 top-full mt-2 w-44 rounded-lg border border-border bg-popover p-2 shadow-medium">
+            {languageOpen && <div className="institutional-dropdown absolute right-0 top-full mt-2 w-44 rounded-lg border border-border bg-popover p-2 shadow-medium">
               {languages.map((lang) => <Button variant="ghost" key={lang} onClick={() => { setLanguage(lang); setLanguageOpen(false); }} className={`h-auto w-full justify-start px-3 py-2.5 text-left ${language === lang ? "bg-primary/10 text-primary" : ""}`}><span className="text-xs uppercase">{lang}</span>{languageNames[lang]}</Button>)}
             </div>}
           </div>
           <Button variant="ghost" size="icon" className="xl:hidden h-9 w-9 text-primary" onClick={() => { setMobileOpen(!mobileOpen); setLanguageOpen(false); }} aria-label="Menu" aria-expanded={mobileOpen}>{mobileOpen ? <X /> : <Menu />}</Button>
         </div>
       </div>
-      {mobileOpen && <nav className="xl:hidden max-h-[calc(100dvh-72px)] overflow-y-auto border-t border-border bg-card shadow-medium" aria-label="Navigation mobile">
+      {mobileOpen && <nav className="institutional-mobile-menu xl:hidden max-h-[calc(100dvh-72px)] overflow-y-auto border-t border-border bg-card shadow-medium" aria-label="Navigation mobile">
         <div className="site-container py-3">
           {menuConfig.map((item) => {
             const itemLabel = label(item.label);
             return <div key={itemLabel} className="border-b border-border last:border-0">
               <Button variant="ghost" onClick={() => item.children ? setOpenMobile(openMobile === itemLabel ? null : itemLabel) : go(item.action || "hero", item.isRoute)} className="h-auto w-full justify-between px-0 py-4 font-bold" aria-expanded={item.children ? openMobile === itemLabel : undefined}>{itemLabel}{item.children && <ChevronDown className={openMobile === itemLabel ? "rotate-180" : ""} />}</Button>
-              {item.children && openMobile === itemLabel && <div className="mb-3 border-l-2 border-primary/20 pl-3">{item.children.map((child) => <Button variant="ghost" key={label(child.label)} onClick={() => go(child.action, child.isRoute)} className="h-auto w-full whitespace-normal justify-start py-3 text-left text-muted-foreground">{label(child.label)}</Button>)}</div>}
+              {item.children && openMobile === itemLabel && <div className="institutional-dropdown mb-3 border-l-2 border-primary/20 pl-3">{item.children.map((child) => <Button variant="ghost" key={label(child.label)} onClick={() => go(child.action, child.isRoute)} aria-current={child.action === pathname ? "page" : undefined} className="h-auto w-full whitespace-normal justify-start py-3 text-left text-muted-foreground">{label(child.label)}</Button>)}</div>}
             </div>;
           })}
         </div>

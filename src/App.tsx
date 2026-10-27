@@ -12,6 +12,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import AnniversaryFloat from "@/components/AnniversaryFloat";
 import AIChatbot from "@/components/AIChatbot";
 import { isDataroomHost } from "@/lib/canonical-host";
+import PublicPageMotion from "@/components/PublicPageMotion";
 
 import HomePage from "./pages/HomePage";
 import About from "./pages/About";
@@ -112,6 +113,7 @@ const AppContent = () => {
 
   return (
     <Suspense fallback={<LoadingFallback />}>
+      <PublicPageMotion />
       <Routes>
         {/* Public */}
         <Route path="/" element={<HomePage />} />

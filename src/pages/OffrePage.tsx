@@ -10,6 +10,7 @@ import SEOHead from "@/components/SEOHead";
 import ContactCTA, { contactCtaLabel } from "@/components/ContactCTA";
 import terraPalmHero from "@/assets/palm-mature-fruits.jpg";
 import palmTerroirHero from "@/assets/palm-mature-plantation.jpg";
+import PublicPageHero from "@/components/PublicPageHero";
 
 export type OffreKey = "palminvest" | "terrapalm" | "palmterroir";
 
@@ -140,37 +141,24 @@ const OffrePage = ({ offer }: { offer: OffreKey }) => {
       />
       <DynamicNavigation />
 
-      <header className="relative overflow-hidden bg-primary text-primary-foreground pt-[72px]">
-        <div className="site-container grid gap-8 xl:gap-14 px-0 py-10 sm:py-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center lg:py-16">
-          <div>
-            <p className="mb-4 inline-block rounded-full bg-primary-foreground/15 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em]">
-              {data.eyebrow}
-            </p>
-            <h1 className="mb-5 max-w-[18ch] text-3xl font-black tracking-[-.025em] sm:text-4xl lg:text-[clamp(2.35rem,3.35vw,3.75rem)]" style={{ lineHeight: 1.16, overflowWrap: "normal", wordBreak: "normal" }}>{data.title}</h1>
-            <p className="max-w-2xl text-base leading-[1.7] text-primary-foreground/85 sm:text-lg xl:text-xl">{data.intro}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+      <main className="pt-[72px]">
+        <PublicPageHero title={data.name} description={data.intro} image={data.image} imageAlt={data.alt} eyebrow={data.eyebrow} />
+        <div className="site-container py-8 border-b border-border">
+          <h2 className="site-title">{data.title}</h2>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <ContactCTA>
                 <Button size="lg" variant="secondary">{contactCtaLabel()}</Button>
               </ContactCTA>
-              <Button asChild size="lg" variant="outline" className="border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10">
+              <Button asChild size="lg" variant="outline">
                 <Link to={otherPath}>Découvrir {other.name}</Link>
               </Button>
             </div>
-          </div>
-          <img
-            src={data.image}
-            alt={data.alt}
-            width={1600}
-            height={1008}
-            className="w-full aspect-[16/10] rounded-2xl object-contain object-center bg-white/5 shadow-strong lg:min-h-[500px]"
-          />
         </div>
-      </header>
 
       <section className="py-8 lg:py-10">
         <div className="container mx-auto px-4">
           <h2 className="mb-8 text-2xl font-bold sm:text-3xl">Ce que comprend l’offre</h2>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className={`grid gap-5 sm:grid-cols-2 ${data.highlights.length > 2 ? "lg:grid-cols-4" : ""}`}>
             {data.highlights.map(({ icon: Icon, title, desc }) => (
               <Card key={title} className="h-full border-border/60">
                 <CardContent className="p-6">
@@ -257,6 +245,7 @@ const OffrePage = ({ offer }: { offer: OffreKey }) => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );
