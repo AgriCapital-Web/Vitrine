@@ -2,12 +2,13 @@ import DynamicNavigation from "@/components/DynamicNavigation";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import TeamSection from "@/components/Team";
+import PublicPageHero from "@/components/PublicPageHero";
 
 const TeamPage = () => (
   <div className="min-h-screen bg-background">
     <SEOHead title="Équipe & partenaires — AgriCapital" description="Découvrez l'équipe AgriCapital et son réseau de partenaires techniques et d'appui." />
     <DynamicNavigation />
-    <main className="pt-[72px]"><TeamSection /></main>
+    <main className="pt-[72px]"><PublicPageHero title="AgriCapital" image="/terrain/chargement-plants.webp" imageAlt="L’équipe AgriCapital mobilisée pour les plantations" /><TeamSection /></main>
     <Footer />
   </div>
 );
