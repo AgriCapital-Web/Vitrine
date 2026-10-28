@@ -1132,3 +1132,18 @@ input,textarea,select { max-width:100%; }
  .article-film-frame {transition:none;}
  .article-film-frame.is-active img,.article-cinematic-hero-content > *, .hero-content-active > *, .newsroom-masthead .newsroom-main-title,.newsroom-masthead .newsroom-main-intro,.newsroom-feature-copy > *, .newsroom-feature-media img {animation:none;transform:none;}
 }
+
+/* Shared photographic opening for public pages */
+.institutional-hero { position: relative; isolation: isolate; display: flex; align-items: flex-end; min-height: clamp(380px, 62vh, 620px); overflow: hidden; background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.institutional-hero-image { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center; animation: filmCamera 14s ease-in-out infinite alternate; }
+.institutional-hero-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, hsl(var(--primary) / 0.25) 0%, hsl(var(--primary) / 0.55) 45%, hsl(var(--primary) / 0.92) 100%); }
+.institutional-hero-content { position: relative; width: 100%; padding-top: 6rem; padding-bottom: clamp(2.5rem, 6vw, 4.5rem); }
+.institutional-hero-content > * { animation: filmText 0.9s cubic-bezier(.2,.7,.2,1) both; }
+.institutional-hero-content > *:nth-child(2) { animation-delay: .15s; }
+.institutional-hero-content > *:nth-child(3) { animation-delay: .3s; }
+.institutional-hero-eyebrow { display: inline-flex; align-items: center; gap: .6rem; margin-bottom: 1rem; font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: hsl(var(--accent)); }
+.institutional-hero-eyebrow::before { content: ""; width: 2rem; height: 2px; background: hsl(var(--accent)); }
+.institutional-hero h1 { max-width: 56rem; font-size: clamp(2rem, 5.5vw, 4rem); line-height: 1.05; font-weight: 800; color: hsl(var(--primary-foreground)); text-wrap: balance; }
+.institutional-hero-description { max-width: 44rem; margin-top: 1.1rem; font-size: clamp(1rem, 1.8vw, 1.25rem); line-height: 1.6; color: hsl(var(--primary-foreground) / 0.88); }
+.institutional-hero.film-paused .institutional-hero-image, .institutional-hero.film-paused .institutional-hero-content > * { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .institutional-hero-image, .institutional-hero-content > * { animation: none; } }
