@@ -2,6 +2,7 @@ import { Link, useParams, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import DynamicNavigation from "@/components/DynamicNavigation";
 import Footer from "@/components/Footer";
+import PublicPageHero from "@/components/PublicPageHero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, CheckCircle2, ArrowRight } from "lucide-react";
@@ -48,7 +49,9 @@ const OfferingDetail = ({ type }: Props) => {
 
       <DynamicNavigation />
 
-      <main className="public-page-content pt-28 pb-20">
+      <main className="pt-[72px]">
+        <PublicPageHero title={offering.title} description={offering.tagline} image="/terrain/jeune-palmier.webp" imageAlt="Jeune palmier à huile en plantation" eyebrow={type === "solution" ? "Solution" : "Service"} />
+        <div className="public-page-content pt-12 pb-20">
         <article className="w-full max-w-[1500px] mx-auto">
           <Link
             to={basePath}
@@ -133,6 +136,7 @@ const OfferingDetail = ({ type }: Props) => {
             </section>
           )}
         </article>
+        </div>
       </main>
 
       <Footer />

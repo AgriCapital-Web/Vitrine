@@ -2,9 +2,9 @@
 
 ## En cours
 - [ ] Republier les changements précédents, puis publier la refonte finale après contrôle.
-- [ ] Harmoniser le menu et toutes les pages publiques restantes avec les animations institutionnelles partagées.
+- [x] Harmoniser le menu et toutes les pages publiques restantes avec les animations institutionnelles partagées.
 - [ ] Corriger DynamicNavigation et Hero ; appliquer la refonte Patrimoine institutionnel dans la charte stricte du logo, avec actualités animées, Espace client, Data Room, Contact et menu réorganisés.
-- [ ] Vérifier chaque page publique et formulaire sur mobile et ordinateur.
+- [x] Vérifier chaque page publique et formulaire sur mobile et ordinateur.
 - [ ] Recréer tout le schéma Supabase (tables, relations, RLS, GRANT, triggers) sur le projet externe `sxsolthkxfavimitoowy`
 - [ ] Créer automatiquement le super admin `admin@agricapital.ci` / `@AgriCapitalAdmin`
 - [ ] Page admin "Base de données" : import du backup (~100 Mo) déclenchant la migration

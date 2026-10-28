@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import DynamicNavigation from "@/components/DynamicNavigation";
 import Footer from "@/components/Footer";
+import PublicPageHero from "@/components/PublicPageHero";
 import SEOHead from "@/components/SEOHead";
 
 interface Testimonial {
@@ -73,18 +74,9 @@ const TestimonialsPage = () => {
       <SEOHead />
       <DynamicNavigation />
       <main className="public-page min-h-screen pt-[72px]">
-        <section className="public-page-header"><div className="public-page-header-inner">
-          <div className="container mx-auto px-4">
-            <Link to="/">
-              <Button variant="ghost" size="sm" className="mb-6 -ml-2 text-muted-foreground hover:text-foreground">
-                <ArrowLeft className="w-4 h-4 mr-1.5" />
-                {t.back}
-              </Button>
-            </Link>
-            <div className="text-center mb-8">
-              <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">{t.title}</h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t.subtitle}</p>
-            </div>
+        <PublicPageHero title={t.title} description={t.subtitle} image="/terrain/visite-parcelle.webp" imageAlt="Visite de parcelle avec les partenaires AgriCapital" eyebrow="Témoignages" />
+        <section className="py-10 sm:py-14"><div>
+          <div className="site-container px-4">
 
             {loading ? (
               <div className="text-center py-12 text-muted-foreground">Chargement...</div>
