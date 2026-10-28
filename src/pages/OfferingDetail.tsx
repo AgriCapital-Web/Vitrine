@@ -2,6 +2,7 @@ import { Link, useParams, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import DynamicNavigation from "@/components/DynamicNavigation";
 import Footer from "@/components/Footer";
+import PublicPageHero from "@/components/PublicPageHero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, CheckCircle2, ArrowRight } from "lucide-react";
@@ -135,6 +136,7 @@ const OfferingDetail = ({ type }: Props) => {
             </section>
           )}
         </article>
+        </div>
       </main>
 
       <Footer />

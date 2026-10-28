@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import DynamicNavigation from "@/components/DynamicNavigation";
 import Footer from "@/components/Footer";
+import PublicPageHero from "@/components/PublicPageHero";
 import SEOHead from "@/components/SEOHead";
 
 interface Testimonial {
