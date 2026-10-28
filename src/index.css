@@ -1147,3 +1147,4 @@ input,textarea,select { max-width:100%; }
 .institutional-hero-description { max-width: 44rem; margin-top: 1.1rem; font-size: clamp(1rem, 1.8vw, 1.25rem); line-height: 1.6; color: hsl(var(--primary-foreground) / 0.88); }
 .institutional-hero.film-paused .institutional-hero-image, .institutional-hero.film-paused .institutional-hero-content > * { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .institutional-hero-image, .institutional-hero-content > * { animation: none; } }
+.institutional-hero-content { max-width: 1280px; margin-inline: auto; padding-inline: clamp(1.25rem, 5vw, 3rem); }
