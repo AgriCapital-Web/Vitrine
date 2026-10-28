@@ -48,7 +48,9 @@ const OfferingDetail = ({ type }: Props) => {
 
       <DynamicNavigation />
 
-      <main className="public-page-content pt-28 pb-20">
+      <main className="pt-[72px]">
+        <PublicPageHero title={offering.title} description={offering.tagline} image="/terrain/jeune-palmier.webp" imageAlt="Jeune palmier à huile en plantation" eyebrow={type === "solution" ? "Solution" : "Service"} />
+        <div className="public-page-content pt-12 pb-20">
         <article className="w-full max-w-[1500px] mx-auto">
           <Link
             to={basePath}

@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import ArticleJsonLD from "@/components/ArticleJsonLD";
 import { supabase } from "@/integrations/supabase/client";
+import PublicPageHero from "@/components/PublicPageHero";
 
 import nurseryPepiniere from "@/assets/nursery-pepiniere-daloa.jpg";
 import lancementTerrain from "@/assets/jalon-1.jpg";
@@ -176,22 +177,7 @@ const Evolution = () => {
       <DynamicNavigation />
 
       <main className="public-page min-h-screen pt-[72px]">
-        {/* Hero — clean editorial */}
-        <section className="relative pt-24 pb-10 sm:pt-28 sm:pb-12 bg-gradient-primary text-white overflow-hidden">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+PHBhdGggZD0iTTAgMGg2MHY2MEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0zMCAzMGgyMHYyMEgzMHoiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiLz48L3N2Zz4=')] opacity-40" />
-          <div className="container mx-auto px-4 relative">
-            <Link to="/">
-              <Button variant="ghost" size="sm" className="mb-6 text-white/70 hover:text-white hover:bg-white/10 -ml-2">
-                <ArrowLeft className="w-4 h-4 mr-1.5" />
-                {t.backHome}
-              </Button>
-            </Link>
-            <div className="max-w-5xl">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl mb-4 text-white leading-[1.05]">{t.title}</h1>
-              <p className="text-lg sm:text-xl text-white/80 leading-relaxed">{t.subtitle}</p>
-            </div>
-          </div>
-        </section>
+        <PublicPageHero title={t.title} description={t.subtitle} image="/terrain/livraison-plants.webp" imageAlt="Livraison de plants de palmier à huile sur le terrain" eyebrow="Évolution du projet" />
 
         {/* Stats strip */}
         <section className="py-0 -mt-7 relative z-10">
