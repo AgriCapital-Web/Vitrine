@@ -1,0 +1,16 @@
+CREATE INDEX IF NOT EXISTS idx_client_messages_order_id_fk ON public.client_messages (order_id);
+CREATE INDEX IF NOT EXISTS idx_dataroom_access_logs_signatory_id_fk ON public.dataroom_access_logs (signatory_id);
+CREATE INDEX IF NOT EXISTS idx_dataroom_comments_publication_id_fk ON public.dataroom_comments (publication_id);
+CREATE INDEX IF NOT EXISTS idx_dataroom_comments_signatory_id_fk ON public.dataroom_comments (signatory_id);
+CREATE INDEX IF NOT EXISTS idx_dataroom_download_links_publication_id_fk ON public.dataroom_download_links (publication_id);
+CREATE INDEX IF NOT EXISTS idx_dataroom_download_links_signatory_id_fk ON public.dataroom_download_links (signatory_id);
+CREATE INDEX IF NOT EXISTS idx_dataroom_intents_publication_id_fk ON public.dataroom_intents (publication_id);
+CREATE INDEX IF NOT EXISTS idx_dataroom_intents_signatory_id_fk ON public.dataroom_intents (signatory_id);
+CREATE INDEX IF NOT EXISTS idx_dataroom_review_comments_publication_id_fk ON public.dataroom_review_comments (publication_id);
+CREATE INDEX IF NOT EXISTS idx_dataroom_sessions_signatory_id_fk ON public.dataroom_sessions (signatory_id);
+CREATE INDEX IF NOT EXISTS idx_email_events_campaign_id_fk ON public.email_events (campaign_id);
+CREATE INDEX IF NOT EXISTS idx_news_slug_redirects_news_id_fk ON public.news_slug_redirects (news_id);
+CREATE INDEX IF NOT EXISTS idx_newsletter_sends_campaign_id_fk ON public.newsletter_sends (campaign_id);
+CREATE INDEX IF NOT EXISTS idx_service_order_events_created_by_fk ON public.service_order_events (created_by);
+CREATE INDEX IF NOT EXISTS idx_service_orders_service_id_fk ON public.service_orders (service_id);
+CREATE INDEX IF NOT EXISTS idx_site_menu_parent_id_fk ON public.site_menu (parent_id);
