@@ -4,6 +4,7 @@ import { User } from "lucide-react";
 import founderImage from "@/assets/founder-inocent-koffi.webp";
 import pierreImage from "@/assets/team-pierre-kouame.jpg";
 import ericImage from "@/assets/team-eric-dido.jpg";
+import larissaImage from "@/assets/team-larissa-konan.webp";
 import marcelImage from "@/assets/team-marcel-konan.jpg";
 import angaImage from "@/assets/team-anga-mathieu.jpg";
 import gesmaLogo from "@/assets/partner-gesma.jpg";
@@ -57,33 +58,39 @@ const teamTranslations = {
 const directionMembers = {
   fr: [
     { name: "Inocent KOFFI", role: "Gérant", bio: "Informaticien, commercial et stratège, Inocent KOFFI assure la vision globale d'AgriCapital, la conception du modèle économique et la coordination de l'ensemble du déploiement.", image: founderImage, email: "direction@agricapital.ci" },
-    { name: "Éric Stéphane DIDO", role: "Chargé du Développement Commercial", bio: "Contribution à la préparation du dispositif commercial, au déploiement des activités et au développement du portefeuille de clients.", image: ericImage },
-    { name: "Koffi Pierre KOUAMÉ", role: "Conseiller Stratégique", bio: "Plus de 10 ans d'expérience en gouvernance organisationnelle. Accompagne AgriCapital sur les questions institutionnelles, la gouvernance et la sécurisation foncière.", image: pierreImage },
+    { name: "Koffi Pierre KOUAMÉ", role: "Conseiller Stratégique, Mobilisation Foncière & Opérations", bio: "Chargé de la mobilisation foncière, du suivi des opérations de terrain et de la gouvernance institutionnelle.", image: pierreImage },
+    { name: "Éric Stéphane DIDO", role: "Chargé du Développement Commercial", bio: "Chargé du développement commercial, de la prospection et du déploiement de la stratégie commerciale.", image: ericImage },
+    { name: "Larissa KONAN", role: "Chargée des Relations Clients et Support", bio: "Chargée de la relation client, de l'accueil, du traitement des demandes et de l'assistance aux équipes.", image: larissaImage },
   ],
   en: [
     { name: "Inocent KOFFI", role: "Manager", bio: "IT specialist, commercial strategist and entrepreneur, Inocent KOFFI oversees AgriCapital's global vision, business model design and overall deployment coordination.", image: founderImage, email: "direction@agricapital.ci" },
-    { name: "Éric Stéphane DIDO", role: "Business Development Manager", bio: "Contributes to commercial strategy preparation, business deployment and client portfolio development.", image: ericImage },
-    { name: "Koffi Pierre KOUAMÉ", role: "Strategic Advisor", bio: "Over 10 years of experience in organizational governance. Supports AgriCapital on institutional matters, governance and land security.", image: pierreImage },
+    { name: "Koffi Pierre KOUAMÉ", role: "Strategic Advisor, Land Mobilization & Operations", bio: "In charge of land mobilization, field operations monitoring and institutional governance.", image: pierreImage },
+    { name: "Éric Stéphane DIDO", role: "Business Development Manager", bio: "In charge of business development, prospecting and deployment of the commercial strategy.", image: ericImage },
+    { name: "Larissa KONAN", role: "Client Relations & Support Officer", bio: "In charge of client relations, reception, request handling and team assistance.", image: larissaImage },
   ],
   ar: [
     { name: "Inocent KOFFI", role: "المدير", bio: "يشرف Inocent KOFFI على الرؤية الشاملة لأغريكابيتال وتصميم النموذج الاقتصادي وتنسيق التنفيذ.", image: founderImage, email: "direction@agricapital.ci" },
-    { name: "إريك ستيفان ديدو", role: "مسؤول التطوير التجاري", bio: "المساهمة في إعداد الجهاز التجاري وتطوير محفظة العملاء.", image: ericImage },
-    { name: "كوفي بيير كوامي", role: "مستشار استراتيجي", bio: "أكثر من 10 سنوات من الخبرة في الحوكمة المؤسسية.", image: pierreImage },
+    { name: "كوفي بيير كوامي", role: "مستشار استراتيجي، تعبئة الأراضي والعمليات", bio: "مسؤول عن تعبئة الأراضي ومتابعة العمليات الميدانية والحوكمة المؤسسية.", image: pierreImage },
+    { name: "إريك ستيفان ديدو", role: "مسؤول التطوير التجاري", bio: "مسؤول عن التطوير التجاري والتنقيب ونشر الاستراتيجية التجارية.", image: ericImage },
+    { name: "لاريسا كونان", role: "مسؤولة علاقات العملاء والدعم", bio: "مسؤولة عن علاقات العملاء والاستقبال ومعالجة الطلبات ومساعدة الفرق.", image: larissaImage },
   ],
   es: [
     { name: "Inocent KOFFI", role: "Gerente", bio: "Informático, comercial y estratega, Inocent KOFFI lidera la visión global de AgriCapital y la coordinación del despliegue.", image: founderImage, email: "direction@agricapital.ci" },
-    { name: "Éric Stéphane DIDO", role: "Encargado de Desarrollo Comercial", bio: "Contribución a la estrategia comercial y desarrollo de cartera de clientes.", image: ericImage },
-    { name: "Koffi Pierre KOUAMÉ", role: "Asesor Estratégico", bio: "Más de 10 años de experiencia en gobernanza organizacional.", image: pierreImage },
+    { name: "Koffi Pierre KOUAMÉ", role: "Asesor Estratégico, Movilización de Tierras y Operaciones", bio: "Encargado de la movilización de tierras, el seguimiento de las operaciones de campo y la gobernanza institucional.", image: pierreImage },
+    { name: "Éric Stéphane DIDO", role: "Encargado de Desarrollo Comercial", bio: "Encargado del desarrollo comercial, la prospección y el despliegue de la estrategia comercial.", image: ericImage },
+    { name: "Larissa KONAN", role: "Encargada de Relaciones con Clientes y Soporte", bio: "Encargada de la relación con los clientes, la acogida, el tratamiento de solicitudes y la asistencia a los equipos.", image: larissaImage },
   ],
   de: [
     { name: "Inocent KOFFI", role: "Geschäftsführer", bio: "Als IT-Fachmann, Kaufmann und Stratege leitet Inocent KOFFI die Gesamtvision von AgriCapital und die Umsetzung des Modells.", image: founderImage, email: "direction@agricapital.ci" },
-    { name: "Éric Stéphane DIDO", role: "Leiter Geschäftsentwicklung", bio: "Beitrag zur Geschäftsstrategie und Kundenportfolio-Entwicklung.", image: ericImage },
-    { name: "Koffi Pierre KOUAMÉ", role: "Strategischer Berater", bio: "Über 10 Jahre Erfahrung in organisatorischer Governance.", image: pierreImage },
+    { name: "Koffi Pierre KOUAMÉ", role: "Strategischer Berater, Landmobilisierung & Betrieb", bio: "Verantwortlich für Landmobilisierung, Überwachung der Feldarbeiten und institutionelle Governance.", image: pierreImage },
+    { name: "Éric Stéphane DIDO", role: "Leiter Geschäftsentwicklung", bio: "Verantwortlich für Geschäftsentwicklung, Akquise und Umsetzung der Vertriebsstrategie.", image: ericImage },
+    { name: "Larissa KONAN", role: "Kundenbeziehungen & Support", bio: "Verantwortlich für Kundenbeziehungen, Empfang, Bearbeitung von Anfragen und Unterstützung der Teams.", image: larissaImage },
   ],
   zh: [
     { name: "Inocent KOFFI", role: "经理", bio: "Inocent KOFFI 负责 AgriCapital 的整体愿景、商业模式设计和部署协调。", image: founderImage, email: "direction@agricapital.ci" },
-    { name: "Éric Stéphane DIDO", role: "商业发展负责人", bio: "参与商业战略准备和客户组合开发。", image: ericImage },
-    { name: "Koffi Pierre KOUAMÉ", role: "战略顾问", bio: "超过10年的组织治理经验。", image: pierreImage },
+    { name: "Koffi Pierre KOUAMÉ", role: "战略顾问、土地动员与运营", bio: "负责土地动员、现场运营跟进和机构治理。", image: pierreImage },
+    { name: "Éric Stéphane DIDO", role: "商业发展负责人", bio: "负责商业发展、客户开发和商业战略的实施。", image: ericImage },
+    { name: "Larissa KONAN", role: "客户关系与支持负责人", bio: "负责客户关系、接待、请求处理和团队协助。", image: larissaImage },
   ],
 };
 
@@ -129,7 +136,7 @@ const partnerMembers = {
 type MemberType = { name: string; role: string; bio: string; image: string | null; email?: string; isLogo?: boolean };
 
 const MemberCard = ({ member }: { member: MemberType }) => (
-  <Card className={`h-full bg-card border-border hover:shadow-medium transition-smooth overflow-hidden ${member.name === "Inocent KOFFI" ? "border-primary/30 shadow-soft" : ""}`}>
+  <Card className={`h-full bg-card border-border hover:shadow-medium hover:-translate-y-1 hover:border-primary/40 transition-smooth overflow-hidden ${member.name === "Inocent KOFFI" ? "border-primary/30 shadow-soft" : ""}`}>
     <CardContent className="p-6 lg:p-7 flex h-full flex-col items-center text-center">
       <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-primary/20 flex items-center justify-center bg-secondary/50">
         {member.image ? (
@@ -148,7 +155,7 @@ const MemberCard = ({ member }: { member: MemberType }) => (
           <User className="w-12 h-12 text-muted-foreground" />
         )}
       </div>
-      <h4 className="text-lg font-bold text-foreground mb-1">{member.name}</h4>
+      <h4 className="font-display text-lg font-semibold tracking-tight text-foreground mb-1">{member.name}</h4>
       <p className="text-sm text-primary font-semibold mb-2">{member.role}</p>
       <p className="text-sm text-muted-foreground leading-relaxed">{member.bio}</p>
       {member.email && (
@@ -177,7 +184,7 @@ const Team = () => {
         {/* Direction */}
         <div className="mb-9">
           <h3 className="text-2xl font-bold text-foreground mb-6 text-center">{t.direction}</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 xl:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 xl:gap-6">
             {direction.map((member: MemberType, i: number) => (
               <MemberCard key={i} member={member} />
             ))}

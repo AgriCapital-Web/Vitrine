@@ -238,8 +238,8 @@
   .public-page-header { position:relative; overflow:hidden; padding-top:3.5rem; padding-bottom:3.5rem; background:linear-gradient(180deg,hsl(var(--primary)/.055),transparent); }
   .public-page-header::after { display:none; }
   .public-page-header-inner { position:relative; z-index:1; width:min(calc(100% - 4rem),1440px); margin-inline:auto; }
-  .public-page-header h1 { max-width:900px; font-size:3.5rem; line-height:.98; letter-spacing: 0; font-weight:800; }
-  .public-page-header p { max-width:720px; margin-top:1.25rem; color:hsl(var(--muted-foreground)); font-size:3.5rem; line-height:1.75; }
+  .public-page-header h1 { max-width:900px; font-size:clamp(2.1rem,5vw,3.5rem); line-height:1.05; letter-spacing:-0.02em; font-weight:700; }
+  .public-page-header p { max-width:720px; margin-top:1.25rem; color:hsl(var(--muted-foreground)); font-size:clamp(1.05rem,1.6vw,1.375rem); line-height:1.7; }
   .public-page-content { width:min(calc(100% - 4rem),1440px); margin-inline:auto; padding-block:clamp(2.75rem,5vw,4.5rem); }
   .modern-card { @apply rounded-lg border border-border/70 bg-card shadow-soft transition-all duration-300; }
   .modern-card:hover { @apply -translate-y-1 border-primary/20 shadow-medium; }
@@ -1148,3 +1148,8 @@ input,textarea,select { max-width:100%; }
 .institutional-hero.film-paused .institutional-hero-image, .institutional-hero.film-paused .institutional-hero-content > * { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .institutional-hero-image, .institutional-hero-content > * { animation: none; } }
 .institutional-hero-content { max-width: 1280px; margin-inline: auto; padding-inline: clamp(1.25rem, 5vw, 3rem); }
+
+/* Typographic calibration */
+h1,h2,h3 { letter-spacing:-0.015em; }
+h2,h3 { font-weight:600; }
+p { line-height:1.7; }
