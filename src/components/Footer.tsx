@@ -1,4 +1,4 @@
-const logoWhite = "/Logo_AgriCapital_-V2-4.png";
+import footerLogo from "@/assets/logo-agricapital-footer.webp";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HelpCircle, Linkedin, Facebook, MessageCircle, ArrowUpRight } from "lucide-react";
@@ -31,7 +31,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-14 sm:py-16 lg:py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           <div className="sm:col-span-2 lg:col-span-1">
-            <img src={logoWhite} alt="AgriCapital" className="h-12 sm:h-14 w-auto mb-5" loading="lazy" />
+            <div className="inline-flex mb-5 rounded-xl bg-background px-4 py-3 shadow-soft"><img src={footerLogo} alt="AgriCapital" className="h-12 sm:h-14 w-auto" loading="lazy" /></div>
             <p className="text-primary-foreground/75 text-sm leading-7 max-w-sm">{t.footer.description}</p>
           </div>
 
