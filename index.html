@@ -81,7 +81,7 @@
         script.src = "https://www.googletagmanager.com/gtag/js?id=G-BF53QRVL3Y";
         document.head.appendChild(script);
         gtag("js", new Date());
-        gtag("consent", "update", { analytics_storage: "granted" });
+        gtag("consent", "update", { analytics_storage: "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
         gtag("config", "G-BF53QRVL3Y", { anonymize_ip: true });
       };
       try { if (localStorage.getItem("agricapital_analytics_consent") === "accepted") window.agriLoadAnalytics(); } catch (_) {}
