@@ -21,6 +21,19 @@ const server = spawn(process.execPath, [
 ], { stdio: "inherit", env: process.env });
 
 let browser;
+let page;
+let pagesSinceRestart = 0;
+let chromium;
+let chromiumBinary;
+
+async function startBrowser() {
+  if (browser?.isConnected()) await browser.close().catch(() => {});
+  browser = await chromium.launch({ headless: true, args: chromiumBinary.args, executablePath: await chromiumBinary.executablePath() });
+  page = await browser.newPage({ locale: "fr-CI", viewport: { width: 1440, height: 1000 } });
+  page.setDefaultNavigationTimeout(15000);
+  pagesSinceRestart = 0;
+}
+
 try {
   let ready = false;
   for (let attempt = 0; attempt < 30; attempt++) {
@@ -32,11 +45,9 @@ try {
   }
   if (!ready) throw new Error("Vite preview did not start in time");
 
-  const { chromium } = await import("playwright-core");
-  const chromiumBinary = (await import("@sparticuz/chromium")).default;
-  browser = await chromium.launch({ headless: true, args: chromiumBinary.args, executablePath: await chromiumBinary.executablePath() });
-  const page = await browser.newPage({ locale: "fr-CI", viewport: { width: 1440, height: 1000 } });
-  page.setDefaultNavigationTimeout(15000);
+  ({ chromium } = await import("playwright-core"));
+  chromiumBinary = (await import("@sparticuz/chromium")).default;
+  await startBrowser();
 
   let rendered = 0;
   const queue = [...PUBLIC_ROUTES];
@@ -53,6 +64,7 @@ try {
     const route = queue.shift();
     if (!route || visited.has(route)) continue;
     visited.add(route);
+    if (!browser?.isConnected() || pagesSinceRestart >= 2) await startBrowser();
     try {
       await page.goto(ORIGIN + route, { waitUntil: "domcontentloaded", timeout: 15000 });
       await page.waitForFunction(() => {
@@ -86,6 +98,8 @@ try {
       console.log("[prerender] Rendered", route);
     } catch (error) {
       console.warn("[prerender] Route failed; keeping SPA fallback:", route, String(error));
+    } finally {
+      pagesSinceRestart++;
     }
   }
   for (const relative of ["sitemap.xml", "actualites/index.html", "new/index.html", "news/index.html"]) {
