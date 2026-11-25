@@ -118,7 +118,7 @@ const Newsletter = () => {
       </Button>
       
       <p className="text-xs text-white/60">
-        {t.newsletter.privacy}
+        {t.newsletter.privacy} <a href="/confidentialite.html" className="underline underline-offset-2">Politique de confidentialité</a>.
       </p>
     </form>
   );
