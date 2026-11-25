@@ -64,9 +64,24 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BF53QRVL3Y"></script>
     <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("consent", "default", { analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
+      window.agriLoadAnalytics = function () {
+        if (window.__agriAnalyticsLoaded) return;
+        window.__agriAnalyticsLoaded = true;
+        var script = document.createElement("script");
+        script.async = true;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-BF53QRVL3Y";
+        document.head.appendChild(script);
+        gtag("js", new Date());
+        gtag("consent", "update", { analytics_storage: "granted" });
+        gtag("config", "G-BF53QRVL3Y", { anonymize_ip: true });
+      };
+      try { if (localStorage.getItem("agricapital_analytics_consent") === "accepted") window.agriLoadAnalytics(); } catch (_) {}
+    </script>
+<script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
@@ -111,6 +126,35 @@
     <footer id="public-site-directory" style="padding:1rem 1.25rem;text-align:center;font:14px/1.5 system-ui,sans-serif;background:#f3f7f3;color:#183326">
       <a href="/plan-du-site.html" style="color:#176b45;font-weight:600;text-underline-offset:.2em">Plan du site — toutes les pages publiques, offres, formulaires et actualités</a>
     </footer>
+
+    <script>
+      (function () {
+        var key = "agricapital_analytics_consent";
+        var banner;
+        function show() {
+          if (!banner) {
+            banner = document.createElement("section");
+            banner.id = "agri-cookie-consent";
+            banner.setAttribute("role", "dialog");
+            banner.setAttribute("aria-label", "Préférences de confidentialité");
+            banner.setAttribute("aria-live", "polite");
+            banner.style.cssText = "position:fixed;z-index:99999;left:16px;right:16px;bottom:16px;max-width:760px;margin:auto;background:#fff;color:#183326;border:1px solid #d6e2d8;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.18);padding:18px;font:14px/1.5 system-ui,sans-serif";
+            banner.innerHTML = '<strong style="display:block;font-size:16px;margin-bottom:6px">Votre confidentialité compte</strong><p style="margin:0 0 12px">Nous utilisons des mesures d’audience pour comprendre la fréquentation du site. Elles restent désactivées tant que vous ne les acceptez pas. <a href="/confidentialite" style="color:#087d47;text-decoration:underline">Lire la politique de confidentialité</a>.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" data-choice="reject" style="border:1px solid #087d47;background:white;color:#087d47;border-radius:999px;padding:9px 16px;font-weight:600">Refuser</button><button type="button" data-choice="accept" style="border:1px solid #087d47;background:#087d47;color:white;border-radius:999px;padding:9px 16px;font-weight:600">Accepter les statistiques</button></div>';
+            banner.addEventListener("click", function (event) {
+              var choice = event.target && event.target.getAttribute("data-choice");
+              if (!choice) return;
+              try { localStorage.setItem(key, choice === "accept" ? "accepted" : "rejected"); } catch (_) {}
+              if (choice === "accept" && window.agriLoadAnalytics) window.agriLoadAnalytics();
+              banner.remove();
+              window.dispatchEvent(new Event("agricapital:consent-updated"));
+            });
+            document.body.appendChild(banner);
+          } else if (!banner.isConnected) document.body.appendChild(banner);
+        }
+        window.addEventListener("agricapital:show-consent", show);
+        try { if (!localStorage.getItem(key)) show(); } catch (_) { show(); }
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
