@@ -21,7 +21,9 @@ type Props = {
   "aria-invalid"?: boolean | "true" | "false";
 };
 
-const displayNames = new Intl.DisplayNames(["fr"], { type: "region" });
+type DisplayNamesCtor = new (locales: string[], options: { type: "region" }) => { of(code: string): string | undefined };
+const DisplayNames = (Intl as unknown as { DisplayNames: DisplayNamesCtor }).DisplayNames;
+const displayNames = typeof DisplayNames === "function" ? new DisplayNames(["fr"], { type: "region" }) : { of: (code: string) => code };
 const flag = (code: string) => code.toUpperCase().replace(/[A-Z]/g, letter => String.fromCodePoint(127397 + letter.charCodeAt(0)));
 const digits = (value: string) => String(value || "").replace(/\D/g, "");
 
