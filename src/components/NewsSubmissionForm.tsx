@@ -4,6 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import CountryPhoneInput from "@/components/common/CountryPhoneInput";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2, Send } from "lucide-react";
@@ -81,7 +82,7 @@ const NewsSubmissionForm = () => {
               </div>
               <div>
                 <Label htmlFor="ns-phone">{tr.phone}</Label>
-                <Input id="ns-phone" value={form.author_phone} onChange={(e) => set("author_phone", e.target.value)} />
+                <CountryPhoneInput value={form.author_phone} onChange={(value) => set("author_phone", value)} placeholder="+Indicatif et numéro" />
               </div>
               <div>
                 <Label htmlFor="ns-org">{tr.org}</Label>
