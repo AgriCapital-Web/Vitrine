@@ -558,6 +558,7 @@ const PartnershipRequestForm = () => {
             />
           </div>
 
+          <p className="text-xs leading-5 text-muted-foreground">Les informations transmises servent à étudier votre demande de partenariat. <a href="/confidentialite.html" className="underline underline-offset-2">Politique de confidentialité</a>.</p>
           <p className="text-xs text-muted-foreground">
             <span className="text-destructive">*</span> {tr.required}
           </p>

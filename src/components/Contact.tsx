@@ -191,6 +191,8 @@ const Contact = () => {
                     />
                   </div>
 
+                  <p className="text-xs leading-5 text-muted-foreground">Les informations saisies sont utilisées pour traiter votre demande. <a href="/confidentialite.html" className="underline underline-offset-2">Politique de confidentialité</a>.</p>
+
                   <Button
                     type="submit"
                     disabled={isSubmitting}

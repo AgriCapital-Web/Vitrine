@@ -2,6 +2,12 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
+const CONSENT_KEY = "agricapital_analytics_consent";
+
+const hasConsent = () => {
+  try { return localStorage.getItem(CONSENT_KEY) === "accepted"; } catch { return false; }
+};
+
 const getVisitorId = () => {
   let id = localStorage.getItem("visitor_id");
   if (!id) {
@@ -15,10 +21,10 @@ export const usePageTracking = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname.startsWith("/admin")) return;
-    if (navigator.webdriver) return;
+    if (location.pathname.startsWith("/admin") || navigator.webdriver) return;
 
     const track = async () => {
+      if (!hasConsent()) return;
       try {
         const key = `visit:${location.pathname}`;
         const last = Number(sessionStorage.getItem(key) || 0);
@@ -32,7 +38,6 @@ export const usePageTracking = () => {
           automation_flag: Boolean(navigator.webdriver),
           referrer: document.referrer || null,
         };
-        // Use the first-party Vercel endpoint so its trusted geo headers can be recorded.
         const response = await fetch("/api/record-visit", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -40,7 +45,6 @@ export const usePageTracking = () => {
           keepalive: true,
         });
         if (!response.ok) {
-          // Preserve basic visit tracking if the geo-aware proxy is unavailable.
           const { error } = await supabase.functions.invoke("record-visit", { body: visitPayload });
           if (error) console.warn("record-visit:", error.message);
         }
@@ -50,6 +54,8 @@ export const usePageTracking = () => {
     };
 
     void track();
+    window.addEventListener("agricapital:consent-updated", track);
+    return () => window.removeEventListener("agricapital:consent-updated", track);
   }, [location.pathname]);
 };
 
