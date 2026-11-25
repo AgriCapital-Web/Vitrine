@@ -49,3 +49,5 @@ Allow: /
 Disallow: /api/
 
 Sitemap: https://www.agricapital.ci/sitemap.xml
+Sitemap: https://www.agricapital.ci/image-sitemap.xml
+Sitemap: https://www.agricapital.ci/image-sitemap-live.xml
