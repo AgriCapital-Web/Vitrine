@@ -9,7 +9,7 @@ const xmlEscape = (value: unknown) => String(value ?? "")
 const isEditoriallyExcluded = (item: { name?: string; alt_text_fr?: string | null }) => {
   const text = `${item.name ?? ""} ${item.alt_text_fr ?? ""}`
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  return /\bbaf\b|bureau de proximite|community[-_ ]meeting|prospect[-_ ]meeting|team[-_ ]|agricapital[-_ ]team|photo privee|confidentiel|non diffusable/.test(text);
+  return /\bbaf\b|bureau de proximite|community[-_ ]meeting|prospect[-_ ]meeting|team[-_ ]|agricapital[-_ ]team|inauguration[-_ ](groupe|assemblee|equipe|accueil[-_ ]client|prise[-_ ]parole|remise[-_ ]symbolique)|formation[-_ ](groupe[-_ ]cohorte|participants|echange[-_ ]equipe|prise[-_ ]parole|session[-_ ]salle)|photo privee|confidentiel|non diffusable/.test(text);
 };
 
 export default async function handler(_req: any, res: any) {
