@@ -3,6 +3,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import CountryPhoneInput from "@/components/common/CountryPhoneInput";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -473,24 +474,14 @@ const PartnershipRequestForm = () => {
             </div>
             <div className="space-y-2">
               <Label>{tr.phone}</Label>
-              <Input
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                placeholder="+225 XX XX XX XX XX"
-              />
+              <CountryPhoneInput value={formData.phone} onChange={(value) => setFormData({ ...formData, phone: value })} placeholder="+Indicatif et numéro" />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>{tr.whatsapp}</Label>
-              <Input
-                type="tel"
-                value={formData.whatsapp}
-                onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                placeholder="+225 XX XX XX XX XX"
-              />
+              <CountryPhoneInput value={formData.whatsapp} onChange={(value) => setFormData({ ...formData, whatsapp: value })} placeholder="+Indicatif et numéro" />
             </div>
             <div className="space-y-2">
               <Label>{tr.city}</Label>
