@@ -68,7 +68,7 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag("consent", "default", { analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
-      window.agriLoadAnalytics = function () {
+      window.agriDisableAnalytics = function () {\n        gtag("consent", "update", { analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });\n        document.cookie.split(";").forEach(function (part) { var name = part.trim().split("=")[0]; if (name.indexOf("_ga") === 0) { document.cookie = name + "=; Max-Age=0; path=/"; document.cookie = name + "=; Max-Age=0; path=/; domain=.agricapital.ci"; } });\n        try { localStorage.removeItem("visitor_id"); } catch (_) {}\n      };\n      window.agriLoadAnalytics = function () {
         if (window.__agriAnalyticsLoaded) return;
         window.__agriAnalyticsLoaded = true;
         var script = document.createElement("script");
@@ -144,7 +144,7 @@
               var choice = event.target && event.target.getAttribute("data-choice");
               if (!choice) return;
               try { localStorage.setItem(key, choice === "accept" ? "accepted" : "rejected"); } catch (_) {}
-              if (choice === "accept" && window.agriLoadAnalytics) window.agriLoadAnalytics();
+              if (choice === "accept" && window.agriLoadAnalytics) window.agriLoadAnalytics();\n              if (choice === "reject" && window.agriDisableAnalytics) window.agriDisableAnalytics();
               banner.remove();
               window.dispatchEvent(new Event("agricapital:consent-updated"));
             });
