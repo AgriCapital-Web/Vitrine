@@ -74,7 +74,10 @@
         try { localStorage.removeItem("visitor_id"); } catch (_) {}
       };
       window.agriLoadAnalytics = function () {
-        if (window.__agriAnalyticsLoaded) return;
+        if (window.__agriAnalyticsLoaded) {
+          gtag("consent", "update", { analytics_storage: "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
+          return;
+        }
         window.__agriAnalyticsLoaded = true;
         var script = document.createElement("script");
         script.async = true;
@@ -86,12 +89,7 @@
       };
       try { if (localStorage.getItem("agricapital_analytics_consent") === "accepted") window.agriLoadAnalytics(); } catch (_) {}
     </script>
-<script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-BF53QRVL3Y');
-    </script>
+
 
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
