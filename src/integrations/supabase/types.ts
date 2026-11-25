@@ -2090,6 +2090,7 @@ export type Database = {
           id: string
           is_active: boolean
           is_archived: boolean
+          is_search_indexable: boolean
           name: string
           storage_path: string | null
           type: string
@@ -2103,6 +2104,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           is_archived?: boolean
+          is_search_indexable?: boolean
           name: string
           storage_path?: string | null
           type?: string
@@ -2116,6 +2118,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           is_archived?: boolean
+          is_search_indexable?: boolean
           name?: string
           storage_path?: string | null
           type?: string

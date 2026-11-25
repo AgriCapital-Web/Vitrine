@@ -5,6 +5,7 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Allow: /api/image-sitemap-live
 Disallow: /404
 
 # Assistants et robots IA : accès aux pages publiques et fichiers de référence.
@@ -49,3 +50,5 @@ Allow: /
 Disallow: /api/
 
 Sitemap: https://www.agricapital.ci/sitemap.xml
+Sitemap: https://www.agricapital.ci/image-sitemap.xml
+Sitemap: https://www.agricapital.ci/api/image-sitemap-live

@@ -32,6 +32,7 @@ const staticEntries: SitemapEntry[] = [
   { path: "/tresor-palmier", changefreq: "monthly", priority: "0.7", alternates: true },
   { path: "/evolution", changefreq: "weekly", priority: "0.9", alternates: true },
   { path: "/actualites", changefreq: "daily", priority: "0.9", alternates: true },
+  { path: "/galerie-images.html", changefreq: "weekly", priority: "0.8" },
   { path: "/temoignages", changefreq: "monthly", priority: "0.7" },
   { path: "/partenariats", changefreq: "monthly", priority: "0.7" },
   { path: "/faq", changefreq: "monthly", priority: "0.7" },

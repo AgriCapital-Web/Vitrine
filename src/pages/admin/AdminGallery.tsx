@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Archive, ArchiveRestore, Eye, EyeOff, Image, Loader2, RefreshCw, Star, Trash2, Upload, Images, PanelsTopLeft, ArrowLeftRight } from "lucide-react";
+import { Archive, ArchiveRestore, Eye, EyeOff, Image, Loader2, RefreshCw, Star, Trash2, Upload, Images, PanelsTopLeft, ArrowLeftRight, Search } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -21,6 +21,7 @@ interface MediaItem {
   category: string | null;
   is_active: boolean;
   is_archived: boolean;
+  is_search_indexable: boolean;
   storage_path: string | null;
   created_at: string;
 }
@@ -112,6 +113,7 @@ const AdminGallery = () => {
           category: uploadCategory,
           is_active: true,
           is_archived: false,
+          is_search_indexable: false,
         });
       }
 
@@ -200,6 +202,20 @@ const AdminGallery = () => {
       .eq("id", item.id);
     if (error) toast.error("Erreur lors de la mise à la une");
     else { toast.success("Galerie mise à jour"); await fetchMedia(); }
+  };
+
+  const toggleSearchIndex = async (item: MediaItem) => {
+    const next = !item.is_search_indexable;
+    const { error } = await supabase.from("site_media")
+      .update({ is_search_indexable: next })
+      .eq("id", item.id);
+    if (error) {
+      toast.error("Impossible de modifier l’indexation Google de cette image.");
+      console.error("[AdminGallery] toggleSearchIndex:", error);
+      return;
+    }
+    toast.success(next ? "Image autorisée dans le sitemap Google." : "Image exclue du sitemap Google.");
+    await fetchMedia();
   };
 
   const toggleVisibility = async (item: MediaItem) => {
@@ -338,6 +354,7 @@ const AdminGallery = () => {
                     {item.category !== "hero-terrain" && <Button size="icon" variant="secondary" onClick={() => void toggleFeatured(item)} title="Mettre à la une"><Star className="h-4 w-4" /></Button>}
                     <Button size="icon" variant="secondary" onClick={() => startReplace(item)} title="Remplacer le fichier"><RefreshCw className="h-4 w-4" /></Button>
                     {scope === "all" && <Button size="icon" variant="secondary" onClick={() => void moveCategory(item, item.category === "hero-terrain" ? "gallery" : "hero-terrain")} title="Déplacer entre Héro et galerie"><ArrowLeftRight className="h-4 w-4" /></Button>}
+                    <Button size="icon" variant={item.is_search_indexable ? "default" : "secondary"} onClick={() => void toggleSearchIndex(item)} title={item.is_search_indexable ? "Exclure de Google" : "Autoriser l’indexation Google"}><Search className="h-4 w-4" /></Button>
                     <Button size="icon" variant="secondary" onClick={() => void toggleVisibility(item)} title={item.is_active ? "Masquer" : "Publier"}>{item.is_active ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}</Button>
                     <Button size="icon" variant="secondary" onClick={() => void toggleArchive(item)} title={item.is_archived ? "Restaurer" : "Archiver"}>{item.is_archived ? <ArchiveRestore className="h-4 w-4" /> : <Archive className="h-4 w-4" />}</Button>
                     <Button size="icon" variant="destructive" onClick={() => void handleDelete(item)} title="Supprimer"><Trash2 className="h-4 w-4" /></Button>
@@ -347,6 +364,7 @@ const AdminGallery = () => {
                   <p className="truncate text-xs font-semibold">{item.name}</p>
                   {item.alt_text_fr && <p className="line-clamp-2 text-[11px] text-muted-foreground">{item.alt_text_fr}</p>}
                   <Badge variant="outline" className="text-[10px]">{categoryLabel(item.category)}</Badge>
+                  <Badge variant={item.is_search_indexable ? "default" : "secondary"} className="ml-1 text-[10px]">{item.is_search_indexable ? "Indexable Google" : "Hors index Google"}</Badge>
                   {!item.is_active && !item.is_archived && <Badge variant="secondary" className="ml-1 text-[10px]">Masquée</Badge>}
                   {item.is_archived && <Badge variant="outline" className="ml-1 text-[10px]">Archivée</Badge>}
                 </CardContent>
