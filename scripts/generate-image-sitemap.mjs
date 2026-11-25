@@ -26,7 +26,7 @@ const titleFromPath = (value) => {
 
 const isExcluded = (source) => {
   const normalized = source.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  return /bureau de proximite|\bbaf\b|placeholder|favicon|og-image|logo|poster|android-chrome|apple-touch-icon/.test(normalized);
+  return /bureau de proximite|\bbaf\b|community[-_ ]meeting|prospect[-_ ]meeting|team[-_ ]|agricapital[-_ ]team|placeholder|favicon|og-image|logo|poster|android-chrome|apple-touch-icon/.test(normalized);
 };
 
 const images = new Map();
