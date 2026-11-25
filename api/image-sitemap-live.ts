@@ -6,6 +6,12 @@ const xmlEscape = (value: unknown) => String(value ?? "")
   .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
   .replace(/"/g, "&quot;").replace(/'/g, "&apos;");
 
+const isEditoriallyExcluded = (item: { name?: string; alt_text_fr?: string | null }) => {
+  const text = `${item.name ?? ""} ${item.alt_text_fr ?? ""}`
+    .normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase();
+  return /\\bbaf\\b|bureau de proximite|photo privee|confidentiel|non diffusable/.test(text);
+};
+
 export default async function handler(_req: any, res: any) {
   try {
     const response = await fetch(
@@ -21,7 +27,11 @@ export default async function handler(_req: any, res: any) {
     );
     if (!response.ok) throw new Error("Lecture des images publiques impossible (HTTP " + response.status + ").");
     const media = await response.json() as Array<{ name?: string; url?: string; alt_text_fr?: string | null }>;
-    const images = media.filter((item) => typeof item.url === "string" && item.url.startsWith("https://"));
+    const images = media.filter((item) =>
+      typeof item.url === "string" &&
+      item.url.startsWith("https://") &&
+      !isEditoriallyExcluded(item)
+    );
     const entries = images.map((item) => {
       const title = item.alt_text_fr?.trim() || item.name?.trim() || "Photographie AgriCapital";
       return "    <image:image><image:loc>" + xmlEscape(item.url) + "</image:loc><image:title>" +
