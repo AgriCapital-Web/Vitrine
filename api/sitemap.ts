@@ -7,7 +7,7 @@ const staticPaths = [
   "/", "/a-propos", "/notre-approche", "/impact", "/equipe",
   "/contact", "/solutions", "/palminvest", "/terrapalm",
   "/palmterroir", "/tresor-foncier", "/tresor-palmier", "/evolution",
-  "/actualites", "/partenariats", "/faq"
+  "/actualites", "/partenariats", "/faq", "/confidentialite.html", "/conditions-utilisation.html"
 ];
 
 const xmlEscape = (value: unknown) => String(value ?? "")
