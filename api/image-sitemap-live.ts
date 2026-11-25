@@ -8,8 +8,8 @@ const xmlEscape = (value: unknown) => String(value ?? "")
 
 const isEditoriallyExcluded = (item: { name?: string; alt_text_fr?: string | null }) => {
   const text = `${item.name ?? ""} ${item.alt_text_fr ?? ""}`
-    .normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase();
-  return /\\bbaf\\b|bureau de proximite|photo privee|confidentiel|non diffusable/.test(text);
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  return /\bbaf\b|bureau de proximite|community[-_ ]meeting|prospect[-_ ]meeting|team[-_ ]|agricapital[-_ ]team|photo privee|confidentiel|non diffusable/.test(text);
 };
 
 export default async function handler(_req: any, res: any) {
