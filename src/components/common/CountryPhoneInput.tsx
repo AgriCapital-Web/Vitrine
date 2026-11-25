@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +14,11 @@ type Props = {
   required?: boolean;
   placeholder?: string;
   className?: string;
+  name?: string;
+  id?: string;
+  onBlur?: () => void;
+  "aria-describedby"?: string;
+  "aria-invalid"?: boolean | "true" | "false";
 };
 
 const displayNames = new Intl.DisplayNames(["fr"], { type: "region" });
@@ -26,7 +31,10 @@ const countries = COUNTRY_DIAL_CODES.map(country => ({
   search: `${getLocalizedCountryNames(country.code)} ${country.code} ${country.dialCode} ${country.code === "CI" ? "Cote d Ivoire Cote ivoire Ivoire Ivory Coast Ivory-Coast Ivorie" : ""}`,
 })).sort((a, b) => a.name.localeCompare(b.name, "fr"));
 
-export default function CountryPhoneInput({ value = "", onChange, disabled, required, placeholder = "Numéro de téléphone", className }: Props) {
+const CountryPhoneInput = forwardRef<HTMLInputElement, Props>(function CountryPhoneInput(
+  { value = "", onChange, disabled, required, placeholder = "Numéro de téléphone", className, name, id, onBlur, "aria-describedby": ariaDescribedBy, "aria-invalid": ariaInvalid },
+  ref
+) {
   const defaultCountry = countries.find(country => country.code === "CI") || countries[0];
   const [selectedCode, setSelectedCode] = useState(defaultCountry.code);
   const [localNumber, setLocalNumber] = useState("");
@@ -90,7 +98,9 @@ export default function CountryPhoneInput({ value = "", onChange, disabled, requ
           </Command>
         </PopoverContent>
       </Popover>
-      <Input type="tel" inputMode="tel" autoComplete="tel" value={localNumber} onChange={event => emit(selected, event.target.value)} disabled={disabled} required={required} placeholder={placeholder} className="min-w-0 flex-1" />
+      <Input ref={ref} id={id} name={name} type="tel" inputMode="tel" autoComplete="tel" value={localNumber} onChange={event => emit(selected, event.target.value)} onBlur={onBlur} aria-describedby={ariaDescribedBy} aria-invalid={ariaInvalid} disabled={disabled} required={required} placeholder={placeholder} className="min-w-0 flex-1" />
     </div>
   );
-}
+});
+
+export default CountryPhoneInput;
