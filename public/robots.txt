@@ -4,93 +4,49 @@
 
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /admin/
 Disallow: /admin-setup
-Disallow: /dataroom
-Disallow: /dataroom/
 Disallow: /api/
 Disallow: /404
 
 # Assistants et robots IA : accès aux pages publiques et fichiers de référence.
 User-agent: GPTBot
 Allow: /
-Disallow: /admin
-Disallow: /admin/
-Disallow: /dataroom
-Disallow: /dataroom/
 Disallow: /api/
 
 User-agent: OAI-SearchBot
 Allow: /
-Disallow: /admin
-Disallow: /admin/
-Disallow: /dataroom
-Disallow: /dataroom/
 Disallow: /api/
 
 User-agent: ChatGPT-User
 Allow: /
-Disallow: /admin
-Disallow: /admin/
-Disallow: /dataroom
-Disallow: /dataroom/
 Disallow: /api/
 
 User-agent: ClaudeBot
 Allow: /
-Disallow: /admin
-Disallow: /admin/
-Disallow: /dataroom
-Disallow: /dataroom/
 Disallow: /api/
 
 User-agent: Claude-SearchBot
 Allow: /
-Disallow: /admin
-Disallow: /admin/
-Disallow: /dataroom
-Disallow: /dataroom/
 Disallow: /api/
 
 User-agent: PerplexityBot
 Allow: /
-Disallow: /admin
-Disallow: /admin/
-Disallow: /dataroom
-Disallow: /dataroom/
 Disallow: /api/
 
 User-agent: Google-Extended
 Allow: /
-Disallow: /admin
-Disallow: /admin/
-Disallow: /dataroom
-Disallow: /dataroom/
 Disallow: /api/
 
 User-agent: Applebot-Extended
 Allow: /
-Disallow: /admin
-Disallow: /admin/
-Disallow: /dataroom
-Disallow: /dataroom/
 Disallow: /api/
 
 User-agent: Bytespider
 Allow: /
-Disallow: /admin
-Disallow: /admin/
-Disallow: /dataroom
-Disallow: /dataroom/
 Disallow: /api/
 
 User-agent: CCBot
 Allow: /
-Disallow: /admin
-Disallow: /admin/
-Disallow: /dataroom
-Disallow: /dataroom/
 Disallow: /api/
 
 Sitemap: https://www.agricapital.ci/sitemap.xml
