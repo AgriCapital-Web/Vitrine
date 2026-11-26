@@ -11,7 +11,7 @@ interface VisitorLocation {
 
 const VisitorMap = () => {
   const [locations, setLocations] = useState<VisitorLocation[]>([]);
-  const [totalVisitors, setTotalVisitors] = useState(0);
+  const [totalDetailedVisits, setTotalDetailedVisits] = useState(0);
   const [uniqueCountries, setUniqueCountries] = useState(0);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const VisitorMap = () => {
       .select("country, city, visitor_id", { count: "exact" });
 
     if (visits) {
-      setTotalVisitors(count || 0);
+      setTotalDetailedVisits(count || 0);
 
       // Count visitors by country/city
       const locationCounts: Record<string, VisitorLocation> = {};
@@ -88,7 +88,7 @@ const VisitorMap = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Globe className="w-5 h-5" />
-          Carte des Visiteurs
+          Carte des visites détaillées
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -96,8 +96,8 @@ const VisitorMap = () => {
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="bg-primary/10 rounded-lg p-4 text-center">
             <Users className="w-6 h-6 mx-auto mb-2 text-primary" />
-            <p className="text-2xl font-bold">{totalVisitors.toLocaleString()}</p>
-            <p className="text-xs text-muted-foreground">Total Visiteurs</p>
+            <p className="text-2xl font-bold">{totalDetailedVisits.toLocaleString()}</p>
+            <p className="text-xs text-muted-foreground">Visites détaillées</p>
           </div>
           <div className="bg-green-500/10 rounded-lg p-4 text-center">
             <Globe className="w-6 h-6 mx-auto mb-2 text-green-500" />
@@ -139,7 +139,7 @@ const VisitorMap = () => {
             <div className="text-center py-8 text-muted-foreground">
               <MapPin className="w-12 h-12 mx-auto mb-2 opacity-50" />
               <p>Aucune donnée de localisation disponible</p>
-              <p className="text-xs mt-1">Les données seront collectées automatiquement</p>
+              <p className="text-xs mt-1">Les données géographiques apparaîtront pour les visites enregistrées après acceptation des statistiques détaillées</p>
             </div>
           )}
         </div>
@@ -148,10 +148,10 @@ const VisitorMap = () => {
         {locations.length > 0 && (
           <div className="mt-6 p-4 bg-green-50 rounded-lg text-center">
             <p className="text-sm text-green-700 font-medium">
-              ✅ Collecte de géolocalisation active
+              Statistiques détaillées de localisation
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              Les données sont collectées automatiquement via l'IP des visiteurs
+              Les données de localisation concernent uniquement les visites enregistrées après acceptation des statistiques détaillées.
             </p>
           </div>
         )}
