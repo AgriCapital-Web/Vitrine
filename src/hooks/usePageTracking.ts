@@ -67,7 +67,7 @@ export const usePageTracking = () => {
     trackPublicVisit();
     window.addEventListener("online", trackPublicVisit);
     return () => window.removeEventListener("online", trackPublicVisit);
-  }, []);
+  }, [location.pathname]);
 
   // Google Analytics et l'historique détaillé restent strictement soumis au consentement.
   useEffect(() => {
