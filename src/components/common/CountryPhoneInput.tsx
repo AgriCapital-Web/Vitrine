@@ -41,6 +41,7 @@ const CountryPhoneInput = forwardRef<HTMLInputElement, Props>(function CountryPh
   const [selectedCode, setSelectedCode] = useState(defaultCountry.code);
   const [localNumber, setLocalNumber] = useState("");
   const [open, setOpen] = useState(false);
+  const [internationalDraft, setInternationalDraft] = useState<string | null>(null);
   const lastEmitted = useRef<string | null>(null);
 
   useEffect(() => {
@@ -48,6 +49,7 @@ const CountryPhoneInput = forwardRef<HTMLInputElement, Props>(function CountryPh
       lastEmitted.current = null;
       return;
     }
+    setInternationalDraft(null);
     if (!value) {
       setLocalNumber("");
       setSelectedCode(defaultCountry.code);
@@ -71,6 +73,36 @@ const CountryPhoneInput = forwardRef<HTMLInputElement, Props>(function CountryPh
     lastEmitted.current = valueToSave;
     onChange(valueToSave);
   };
+  const handlePhoneInput = (rawValue: string) => {
+    const raw = rawValue.trim();
+    if (raw.startsWith("+")) {
+      const rawDigits = digits(raw);
+      const match = [...countries]
+        .sort((a, b) => digits(b.dialCode).length - digits(a.dialCode).length)
+        .find(country => rawDigits.startsWith(digits(country.dialCode)));
+      setInternationalDraft(raw);
+      if (!match) {
+        setLocalNumber("");
+        lastEmitted.current = "";
+        onChange("");
+        return;
+      }
+      const country = match.dialCode === "+1"
+        ? countries.find(item => item.code === "US") || match
+        : match.dialCode === "+44"
+          ? countries.find(item => item.code === "GB") || match
+          : match;
+      const local = rawDigits.slice(digits(country.dialCode).length);
+      setSelectedCode(country.code);
+      setLocalNumber(local);
+      const valueToSave = local ? country.dialCode + local : "";
+      lastEmitted.current = valueToSave;
+      onChange(valueToSave);
+      return;
+    }
+    setInternationalDraft(null);
+    emit(selected, rawValue);
+  };
 
   return (
     <div className={`flex min-w-0 items-center gap-2 ${className || ""}`}>
@@ -88,7 +120,7 @@ const CountryPhoneInput = forwardRef<HTMLInputElement, Props>(function CountryPh
               <CommandEmpty>Aucun pays trouvé.</CommandEmpty>
               <CommandGroup>
                 {countries.map(country => (
-                  <CommandItem key={country.code} value={`${country.name} ${country.search} ${country.dialCode}`} onSelect={() => { emit(country, localNumber); setOpen(false); }}>
+                  <CommandItem key={country.code} value={`${country.name} ${country.search} ${country.dialCode}`} onSelect={() => { setInternationalDraft(null); emit(country, localNumber); setOpen(false); }}>
                     <Check className={`mr-2 h-4 w-4 ${selected.code === country.code ? "opacity-100" : "opacity-0"}`} />
                     <span className="mr-2" aria-hidden="true">{flag(country.code)}</span>
                     <span className="min-w-0 flex-1 truncate">{country.name}</span>
@@ -100,7 +132,7 @@ const CountryPhoneInput = forwardRef<HTMLInputElement, Props>(function CountryPh
           </Command>
         </PopoverContent>
       </Popover>
-      <Input ref={ref} id={id} name={name} type="tel" inputMode="tel" autoComplete="tel" value={localNumber} onChange={event => emit(selected, event.target.value)} onBlur={onBlur} aria-describedby={ariaDescribedBy} aria-invalid={ariaInvalid} disabled={disabled} required={required} placeholder={placeholder} className="min-w-0 flex-1" />
+      <Input ref={ref} id={id} name={name} type="tel" inputMode="tel" autoComplete="tel" value={internationalDraft ?? localNumber} onChange={event => handlePhoneInput(event.target.value)} onBlur={onBlur} aria-describedby={ariaDescribedBy} aria-invalid={ariaInvalid} disabled={disabled} required={required} placeholder={placeholder} className="min-w-0 flex-1" />
     </div>
   );
 });
