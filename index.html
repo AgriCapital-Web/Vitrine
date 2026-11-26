@@ -133,52 +133,83 @@
     <script>
       (function () {
         var key = "agricapital_analytics_consent";
-        var banner;
-        function show() {
-          if (!banner) {
-            banner = document.createElement("section");
-            banner.id = "agri-cookie-consent";
-            banner.setAttribute("role", "dialog");
-            banner.setAttribute("aria-label", "Préférences de confidentialité");
-            banner.setAttribute("aria-live", "polite");
-            banner.style.cssText = "position:fixed;z-index:99999;left:16px;right:16px;bottom:16px;max-width:760px;margin:auto;background:#fff;color:#183326;border:1px solid #d6e2d8;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.18);padding:18px;pointer-events:auto;font:14px/1.5 system-ui,sans-serif";
-            banner.innerHTML = '<strong style="display:block;font-size:16px;margin-bottom:6px">Votre confidentialité compte</strong><p style="margin:0 0 12px">Nous utilisons des mesures d’audience pour comprendre la fréquentation du site. Elles restent désactivées tant que vous ne les acceptez pas. <a href="/confidentialite.html" style="color:#087d47;text-decoration:underline">Lire la politique de confidentialité</a>.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" data-choice="reject" style="border:1px solid #087d47;background:white;color:#087d47;border-radius:999px;padding:9px 16px;font-weight:600">Refuser</button><button type="button" data-choice="accept" style="border:1px solid #087d47;background:#087d47;color:white;border-radius:999px;padding:9px 16px;font-weight:600">Accepter les statistiques</button></div>';
-            var chooseConsent = function (event) {
-              if (!banner) return;
-              var target = event.target;
-              if (!target || typeof target.closest !== "function") return;
-              var button = target.closest("[data-choice]");
-              if (!button || !banner.contains(button)) return;
+        var banner = null;
 
-              event.preventDefault();
-              event.stopPropagation();
-              var choice = button.getAttribute("data-choice");
-              if (choice !== "accept" && choice !== "reject") return;
-
-              // Enregistrer le choix puis fermer immédiatement, sans attendre Analytics.
-              try { localStorage.setItem(key, choice === "accept" ? "accepted" : "rejected"); } catch (_) {}
-              var currentBanner = banner;
-              banner = null;
-              currentBanner.style.display = "none";
-              currentBanner.setAttribute("aria-hidden", "true");
-              if (currentBanner.parentNode) currentBanner.parentNode.removeChild(currentBanner);
-              window.dispatchEvent(new Event("agricapital:consent-updated"));
-
-              try {
-                if (choice === "accept" && window.agriLoadAnalytics) window.agriLoadAnalytics();
-                if (choice === "reject" && window.agriDisableAnalytics) window.agriDisableAnalytics();
-              } catch (error) {
-                console.warn("[AgriCapital] Mise à jour du consentement analytics impossible :", error);
-              }
-            };
-            // Délégation au conteneur : les deux boutons restent actifs même si leur contenu change.
-            banner.addEventListener("click", chooseConsent);
-            banner.addEventListener("pointerup", chooseConsent);
-            document.body.appendChild(banner);
-          } else if (!banner.isConnected) document.body.appendChild(banner);
+        function readConsent() {
+          try {
+            var saved = localStorage.getItem(key);
+            if (saved === "accepted" || saved === "rejected") return saved;
+          } catch (_) {}
+          var match = document.cookie.match(new RegExp("(?:^|;\\\\s*)" + key + "=([^;]+)"));
+          if (!match) return null;
+          var value = decodeURIComponent(match[1]);
+          return value === "accepted" || value === "rejected" ? value : null;
         }
+
+        function saveConsent(choice) {
+          var value = choice === "accept" ? "accepted" : "rejected";
+          var saved = false;
+          try {
+            localStorage.setItem(key, value);
+            saved = localStorage.getItem(key) === value;
+          } catch (_) {}
+          if (!saved) {
+            try {
+              document.cookie = key + "=" + value + "; Path=/; Max-Age=31536000; SameSite=Lax; Secure";
+              saved = readConsent() === value;
+            } catch (_) {}
+          }
+          return saved;
+        }
+
+        function closeBanner() {
+          var current = banner;
+          banner = null;
+          if (!current) return;
+          current.setAttribute("aria-hidden", "true");
+          current.remove();
+        }
+
+        function chooseConsent(event) {
+          var button = event.currentTarget;
+          var choice = button && button.getAttribute("data-choice");
+          if (choice !== "accept" && choice !== "reject") return;
+
+          event.preventDefault();
+          event.stopPropagation();
+          if (typeof event.stopImmediatePropagation === "function") event.stopImmediatePropagation();
+
+          // Le choix est appliqué immédiatement : l'interface ne dépend pas du chargement de Google Analytics.
+          saveConsent(choice);
+          closeBanner();
+          window.dispatchEvent(new Event("agricapital:consent-updated"));
+
+          try {
+            if (choice === "accept" && typeof window.agriLoadAnalytics === "function") window.agriLoadAnalytics();
+            if (choice === "reject" && typeof window.agriDisableAnalytics === "function") window.agriDisableAnalytics();
+          } catch (error) {
+            console.warn("[AgriCapital] Mise à jour du consentement analytics impossible :", error);
+          }
+        }
+
+        function show() {
+          if (banner && banner.isConnected) return;
+          banner = document.createElement("section");
+          banner.id = "agri-cookie-consent";
+          banner.setAttribute("role", "dialog");
+          banner.setAttribute("aria-label", "Préférences de confidentialité");
+          banner.setAttribute("aria-live", "polite");
+          banner.style.cssText = "position:fixed;z-index:2147483647;isolation:isolate;left:16px;right:16px;bottom:16px;max-width:760px;margin:auto;background:#fff;color:#183326;border:1px solid #d6e2d8;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.18);padding:18px;pointer-events:auto;font:14px/1.5 system-ui,sans-serif";
+          banner.innerHTML = '<strong style="display:block;font-size:16px;margin-bottom:6px">Votre confidentialité compte</strong><p style="margin:0 0 12px">Nous utilisons des mesures d’audience pour comprendre la fréquentation du site. Elles restent désactivées tant que vous ne les acceptez pas. <a href="/confidentialite.html" style="color:#087d47;text-decoration:underline">Lire la politique de confidentialité</a>.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" data-choice="reject" style="position:relative;z-index:1;cursor:pointer;touch-action:manipulation;border:1px solid #087d47;background:white;color:#087d47;border-radius:999px;padding:9px 16px;font-weight:600">Refuser</button><button type="button" data-choice="accept" style="position:relative;z-index:1;cursor:pointer;touch-action:manipulation;border:1px solid #087d47;background:#087d47;color:white;border-radius:999px;padding:9px 16px;font-weight:600">Accepter les statistiques</button></div>';
+
+          banner.querySelectorAll("button[data-choice]").forEach(function (button) {
+            button.addEventListener("click", chooseConsent, true);
+          });
+          document.body.appendChild(banner);
+        }
+
         window.addEventListener("agricapital:show-consent", show);
-        try { if (!localStorage.getItem(key)) show(); } catch (_) { show(); }
+        if (!readConsent()) show();
       })();
     </script>
     <script type="module" src="/src/main.tsx"></script>
