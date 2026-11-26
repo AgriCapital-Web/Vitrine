@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 const CONSENT_KEY = "agricapital_analytics_consent";
+let publicVisitRequestStarted = false;
 
 const readConsent = () => {
   try {
@@ -31,7 +32,6 @@ const getVisitorId = () => {
     }
     return id;
   } catch {
-    // Keep a session-scoped identifier when persistent storage is unavailable.
     let id = sessionStorage.getItem("visitor_id");
     if (!id) {
       id = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -41,13 +41,39 @@ const getVisitorId = () => {
   }
 };
 
+const recordPublicVisit = async (pagePath: string) => {
+  if (publicVisitRequestStarted) return;
+  publicVisitRequestStarted = true;
+  try {
+    const { error } = await supabase.functions.invoke("record-public-visit", {
+      body: { page_path: pagePath },
+    });
+    if (error) throw error;
+  } catch (error) {
+    publicVisitRequestStarted = false;
+    console.warn("record-public-visit:", error);
+  }
+};
+
 export const usePageTracking = () => {
   const location = useLocation();
 
+  // Le compteur global mesure une entrée réelle sur le site, indépendamment du choix
+  // concernant les statistiques détaillées. Aucun identifiant ni donnée de navigation
+  // n'est transmis par cet appel.
+  useEffect(() => {
+    if (location.pathname.startsWith("/admin") || navigator.webdriver) return;
+    const trackPublicVisit = () => void recordPublicVisit(location.pathname);
+    trackPublicVisit();
+    window.addEventListener("online", trackPublicVisit);
+    return () => window.removeEventListener("online", trackPublicVisit);
+  }, []);
+
+  // Google Analytics et l'historique détaillé restent strictement soumis au consentement.
   useEffect(() => {
     if (location.pathname.startsWith("/admin") || navigator.webdriver) return;
 
-    const track = async () => {
+    const trackAnalytics = async () => {
       if (!hasConsent()) return;
 
       const key = `visit:${location.pathname}`;
@@ -82,7 +108,6 @@ export const usePageTracking = () => {
           if (error) console.warn("record-visit:", error.message);
         }
 
-        // Do not suppress a retry for 30 minutes when the recording request failed.
         if (recorded) {
           try {
             sessionStorage.setItem(key, String(Date.now()));
@@ -95,9 +120,9 @@ export const usePageTracking = () => {
       }
     };
 
-    void track();
-    window.addEventListener("agricapital:consent-updated", track);
-    return () => window.removeEventListener("agricapital:consent-updated", track);
+    void trackAnalytics();
+    window.addEventListener("agricapital:consent-updated", trackAnalytics);
+    return () => window.removeEventListener("agricapital:consent-updated", trackAnalytics);
   }, [location.pathname]);
 };
 

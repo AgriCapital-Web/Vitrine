@@ -22,9 +22,9 @@ Deno.serve(async (req: Request) => {
     return new Response(JSON.stringify({
       total_visitors: Number(data.total_visitors) || 0,
       weekly_visitors: Number(data.weekly_visitors) || 0,
-      metric: "historical_cumulative_visits",
+      metric: "cumulative_site_entries",
       updated_at: data.updated_at,
-      note: "Compteur historique cumulé conservé. Les estimations de visiteurs uniques sont disponibles séparément dans les analytiques."
+      note: "Compteur cumulatif des entrées sur le site. Il fonctionne indépendamment du consentement aux statistiques détaillées et ne repose sur aucun identifiant visiteur."
     }), { headers: { ...corsHeaders, "Content-Type": "application/json", "Cache-Control": "no-store" } });
   } catch (error) {
     console.error("visitor-stats:", error);
