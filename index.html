@@ -87,7 +87,17 @@
         gtag("consent", "update", { analytics_storage: "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
         gtag("config", "G-BF53QRVL3Y", { anonymize_ip: true });
       };
-      try { if (localStorage.getItem("agricapital_analytics_consent") === "accepted") window.agriLoadAnalytics(); } catch (_) {}
+      (function () {
+        var consent = null;
+        try { consent = localStorage.getItem("agricapital_analytics_consent"); } catch (_) {}
+        if (!consent) {
+          try {
+            var pair = document.cookie.split(";").map(function (part) { return part.trim(); }).find(function (part) { return part.indexOf("agricapital_analytics_consent=") === 0; });
+            consent = pair ? decodeURIComponent(pair.slice("agricapital_analytics_consent=".length)) : null;
+          } catch (_) {}
+        }
+        if (consent === "accepted") window.agriLoadAnalytics();
+      })();
     </script>
 
 
