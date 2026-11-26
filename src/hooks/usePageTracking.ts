@@ -12,8 +12,8 @@ const readConsent = () => {
     // Private browsing or restrictive browser settings may block localStorage.
   }
   try {
-    const match = document.cookie.match(new RegExp("(?:^|;\\\\s*)" + CONSENT_KEY + "=([^;]+)"));
-    const saved = match ? decodeURIComponent(match[1]) : null;
+    const pair = document.cookie.split(";").map((part) => part.trim()).find((part) => part.startsWith(`${CONSENT_KEY}=`));
+    const saved = pair ? decodeURIComponent(pair.slice(CONSENT_KEY.length + 1)) : null;
     return saved === "accepted" || saved === "rejected" ? saved : null;
   } catch {
     return null;
