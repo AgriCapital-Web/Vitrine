@@ -140,9 +140,9 @@
             var saved = localStorage.getItem(key);
             if (saved === "accepted" || saved === "rejected") return saved;
           } catch (_) {}
-          var match = document.cookie.match(new RegExp("(?:^|;\\\\s*)" + key + "=([^;]+)"));
-          if (!match) return null;
-          var value = decodeURIComponent(match[1]);
+          var pair = document.cookie.split(";").map(function (part) { return part.trim(); }).find(function (part) { return part.indexOf(key + "=") === 0; });
+          if (!pair) return null;
+          var value = decodeURIComponent(pair.slice(key.length + 1));
           return value === "accepted" || value === "rejected" ? value : null;
         }
 
