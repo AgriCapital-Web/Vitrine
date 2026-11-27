@@ -88,7 +88,7 @@ const VisitorMap = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Globe className="w-5 h-5" />
-          Carte des visites détaillées
+          Historique géographique des visites détaillées
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -138,8 +138,8 @@ const VisitorMap = () => {
           ) : (
             <div className="text-center py-8 text-muted-foreground">
               <MapPin className="w-12 h-12 mx-auto mb-2 opacity-50" />
-              <p>Aucune donnée de localisation disponible</p>
-              <p className="text-xs mt-1">Les données géographiques apparaîtront pour les visites enregistrées après acceptation des statistiques détaillées</p>
+              <p>Aucune donnée géographique historique disponible</p>
+              <p className="text-xs mt-1">Le suivi automatique actuel ne collecte pas la localisation ; seules les données historiques restent affichées ici</p>
             </div>
           )}
         </div>
@@ -148,10 +148,10 @@ const VisitorMap = () => {
         {locations.length > 0 && (
           <div className="mt-6 p-4 bg-green-50 rounded-lg text-center">
             <p className="text-sm text-green-700 font-medium">
-              Statistiques détaillées de localisation
+              Historique de localisation
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              Les données de localisation concernent uniquement les visites enregistrées après acceptation des statistiques détaillées.
+              Ces données proviennent des visites détaillées enregistrées avant l’arrêt du suivi individuel. Le compteur automatique actuel ne collecte pas la localisation.
             </p>
           </div>
         )}

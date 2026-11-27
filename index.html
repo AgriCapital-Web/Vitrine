@@ -65,40 +65,13 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag("consent", "default", { analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
-      window.agriDisableAnalytics = function () {
-        gtag("consent", "update", { analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
-        document.cookie.split(";").forEach(function (part) { var name = part.trim().split("=")[0]; if (name.indexOf("_ga") === 0) { document.cookie = name + "=; Max-Age=0; path=/"; document.cookie = name + "=; Max-Age=0; path=/; domain=.agricapital.ci"; } });
-        try { localStorage.removeItem("visitor_id"); } catch (_) {}
-      };
-      window.agriLoadAnalytics = function () {
-        if (window.__agriAnalyticsLoaded) {
-          gtag("consent", "update", { analytics_storage: "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
-          return;
-        }
-        window.__agriAnalyticsLoaded = true;
-        var script = document.createElement("script");
-        script.async = true;
-        script.src = "https://www.googletagmanager.com/gtag/js?id=G-BF53QRVL3Y";
-        document.head.appendChild(script);
-        gtag("js", new Date());
-        gtag("consent", "update", { analytics_storage: "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
-        gtag("config", "G-BF53QRVL3Y", { anonymize_ip: true });
-      };
-      (function () {
-        var consent = null;
-        try { consent = localStorage.getItem("agricapital_analytics_consent"); } catch (_) {}
-        if (!consent) {
-          try {
-            var pair = document.cookie.split(";").map(function (part) { return part.trim(); }).find(function (part) { return part.indexOf("agricapital_analytics_consent=") === 0; });
-            consent = pair ? decodeURIComponent(pair.slice("agricapital_analytics_consent=".length)) : null;
-          } catch (_) {}
-        }
-        if (consent === "accepted") window.agriLoadAnalytics();
-      })();
-    </script>
+      // Retire les anciens identifiants locaux du suivi détaillé, désormais désactivé.
+      try {
+        localStorage.removeItem("visitor_id");
+        sessionStorage.removeItem("visitor_id");
+        localStorage.removeItem("agricapital_analytics_consent");
+      } catch (_) {}
+    </script>ipt>
 
 
     <!-- Structured Data for SEO -->

@@ -109,7 +109,7 @@ const Footer = () => {
             <Link to="/partenariat-demande" className="text-primary-foreground/70 hover:text-primary-foreground text-xs transition-colors">Devenir partenaire</Link>
             <a href="/confidentialite.html" className="text-primary-foreground/70 hover:text-primary-foreground text-xs transition-colors">Confidentialité</a>
             <a href="/conditions-utilisation.html" className="text-primary-foreground/70 hover:text-primary-foreground text-xs transition-colors">Conditions d’utilisation</a>
-            <button type="button" onClick={() => window.dispatchEvent(new Event("agricapital:show-consent"))} className="text-primary-foreground/70 hover:text-primary-foreground text-xs transition-colors">Gérer les cookies</button>\n            <a href="/confidentialite" className="text-primary-foreground/70 hover:text-primary-foreground text-xs transition-colors">Confidentialité</a>\n            <a href="/conditions-utilisation" className="text-primary-foreground/70 hover:text-primary-foreground text-xs transition-colors">Conditions d’utilisation</a>\n            <button type="button" onClick={() => window.dispatchEvent(new Event("agricapital:show-consent"))} className="text-primary-foreground/70 hover:text-primary-foreground text-xs transition-colors">Gérer les cookies</button>
+
             <p className="text-primary-foreground/45 text-xs italic">Investir la terre. Cultiver l'avenir.</p>
           </div>
         </div>
