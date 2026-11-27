@@ -36,6 +36,7 @@ const AdminAnalytics = () => {
   const [topCities, setTopCities] = useState<{ city: string; count: number }[]>([]);
   const [topDevices, setTopDevices] = useState<CountItem[]>([]);
   const [suspectedBotVisits, setSuspectedBotVisits] = useState(0);
+  const [recentPageViews, setRecentPageViews] = useState<{ page_path: string; referrer_host: string | null; device_type: string; created_at: string }[]>([]);
 
   useEffect(() => {
     fetchAnalytics();
@@ -44,16 +45,21 @@ const AdminAnalytics = () => {
   const fetchAnalytics = async () => {
     setIsLoading(true);
     try {
-      const visits: any[] = [];
+      const detailedVisits: any[] = [];
       for (let offset = 0; ; offset += 1000) {
         const { data: batch, error } = await supabase.from("page_visits")
           .select("page_path, user_agent, country, city, referrer, created_at")
           .gte("created_at", new Date(Date.now() - 180 * 24 * 60 * 60 * 1000).toISOString())
           .order("created_at", { ascending: false }).range(offset, offset + 999);
         if (error) throw error;
-        visits.push(...(batch || []));
+        detailedVisits.push(...(batch || []));
         if (!batch || batch.length < 1000) break;
       }
+
+      const { data: publicStats, error: publicStatsError } = await supabase.functions.invoke("admin-public-page-stats", { method: "GET" });
+      if (publicStatsError) throw publicStatsError;
+      if (!publicStats) throw new Error("Public page analytics unavailable");
+
       const { data: counter, error: counterError } = await supabase
         .from("visitor_counters")
         .select("total_visitors, weekly_visitors")
@@ -64,58 +70,26 @@ const AdminAnalytics = () => {
         setHistoricalWeekly(Number(counter.weekly_visitors) || 0);
       }
 
-      const humanVisits = visits.filter((v: any) => !isAutomatedUA(v.user_agent) && !isPreviewReferrer(v.referrer));
-      setSuspectedBotVisits(visits.length - humanVisits.length);
-      const now = new Date();
-      const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
-      const weekStart = new Date(now); weekStart.setDate(weekStart.getDate() - 6); weekStart.setHours(0, 0, 0, 0);
-      const monthStart = new Date(now); monthStart.setDate(monthStart.getDate() - 30);
-      setTotalVisits(humanVisits.length);
-      setTodayVisits(humanVisits.filter((v: any) => new Date(v.created_at) >= todayStart).length);
-      setWeekVisits(humanVisits.filter((v: any) => new Date(v.created_at) >= weekStart).length);
-      setMonthVisits(humanVisits.filter((v: any) => new Date(v.created_at) >= monthStart).length);
-
-      const pageCount: Record<string, number> = {};
-      const deviceCounts: Record<string, number> = {};
+      const humanDetailedVisits = detailedVisits.filter((v: any) => !isAutomatedUA(v.user_agent) && !isPreviewReferrer(v.referrer));
+      setSuspectedBotVisits(detailedVisits.length - humanDetailedVisits.length);
       const countryCounts: Record<string, number> = {};
       const cityCounts: Record<string, number> = {};
-      const refCounts: Record<string, number> = {};
-      const dailyCounts: Record<string, number> = {};
-      for (let i = 6; i >= 0; i--) {
-        const date = new Date(now); date.setDate(date.getDate() - i); date.setHours(0, 0, 0, 0);
-        dailyCounts[date.toISOString().split("T")[0]] = 0;
-      }
-      humanVisits.forEach((v: any) => {
-        const path = v.page_path || "/";
-        pageCount[path] = (pageCount[path] || 0) + 1;
+      humanDetailedVisits.forEach((v: any) => {
         if (v.country) countryCounts[v.country] = (countryCounts[v.country] || 0) + 1;
         if (v.city) cityCounts[v.city] = (cityCounts[v.city] || 0) + 1;
-        const ua = String(v.user_agent || "").toLowerCase();
-        const device = /ipad|tablet|kindle|silk/.test(ua) ? "Tablette"
-          : /mobile|iphone|ipod|android/.test(ua) ? "Téléphone"
-          : ua ? "Ordinateur" : "Non déterminé";
-        deviceCounts[device] = (deviceCounts[device] || 0) + 1;
-        if (v.referrer) {
-          try {
-            const source = new URL(v.referrer).hostname.replace(/^www\./, "");
-            refCounts[source] = (refCounts[source] || 0) + 1;
-          } catch {
-            refCounts["Référent non reconnu"] = (refCounts["Référent non reconnu"] || 0) + 1;
-          }
-        }
-        if (!v.referrer) refCounts["Direct / référent absent"] = (refCounts["Direct / référent absent"] || 0) + 1;
-        const date = new Date(v.created_at);
-        const day = date.toISOString().split("T")[0];
-        if (dailyCounts[day] !== undefined) dailyCounts[day] += 1;
       });
-      setTopPages(Object.entries(pageCount).map(([page_path, count]) => ({ page_path, count })).sort((a,b)=>b.count-a.count).slice(0,10));
-      setTopDevices(Object.entries(deviceCounts).map(([label,count])=>({label,count})).sort((a,b)=>b.count-a.count));
+
+      setTotalVisits(Number(publicStats.totalVisits) || 0);
+      setTodayVisits(Number(publicStats.todayVisits) || 0);
+      setWeekVisits(Number(publicStats.weekVisits) || 0);
+      setMonthVisits(Number(publicStats.monthVisits) || 0);
+      setTopPages(Array.isArray(publicStats.topPages) ? publicStats.topPages : []);
+      setDailyVisits(Array.isArray(publicStats.dailyVisits) ? publicStats.dailyVisits : []);
+      setTopReferrers(Array.isArray(publicStats.topReferrers) ? publicStats.topReferrers : []);
+      setTopDevices(Array.isArray(publicStats.topDevices) ? publicStats.topDevices : []);
+      setRecentPageViews(Array.isArray(publicStats.recentPageViews) ? publicStats.recentPageViews : []);
       setTopCountries(Object.entries(countryCounts).map(([country,count])=>({country,count})).sort((a,b)=>b.count-a.count));
       setTopCities(Object.entries(cityCounts).map(([city,count])=>({city,count})).sort((a,b)=>b.count-a.count).slice(0,10));
-      setTopReferrers(Object.entries(refCounts).map(([referrer,count])=>({referrer,count})).sort((a,b)=>b.count-a.count).slice(0,10));
-      setDailyVisits(Object.entries(dailyCounts).map(([date,count])=>({
-        date: new Date(date).toLocaleDateString("fr-FR", { weekday: "short", day: "numeric" }), count
-      })));
     } catch (error) {
       console.error("Error fetching analytics:", error);
     } finally {
@@ -128,7 +102,7 @@ const AdminAnalytics = () => {
       ["Métrique", "Valeur"],
       ["Compteur historique cumulé", historicalTotal.toString()],
       ["Compteur historique de la semaine", historicalWeekly.toString()],
-      ["Visites non classées comme automatisées (180 jours)", totalVisits.toString()],
+      ["Pages publiques consultées automatiquement (180 jours)", totalVisits.toString()],
       ["Visites Aujourd'hui", todayVisits.toString()],
       ["Visites Cette Semaine", weekVisits.toString()],
       ["Visites Ce Mois (robots identifiés exclus)", monthVisits.toString()],
@@ -157,7 +131,7 @@ const AdminAnalytics = () => {
   return (
     <AdminLayout title="Analytiques">
       <div className="space-y-6">
-        <Card className="border-primary/20"><CardHeader><CardTitle>Compteur historique conservé</CardTitle><CardDescription>Ce total historique n’est pas recalculé à partir des visiteurs uniques. Les anciennes données restent intactes.</CardDescription></CardHeader><CardContent className="flex flex-wrap items-end gap-8"><div><p className="text-3xl font-bold">{historicalTotal.toLocaleString()}</p><p className="text-xs text-muted-foreground">Visites cumulées</p></div><div><p className="text-2xl font-semibold">{historicalWeekly.toLocaleString()}</p><p className="text-xs text-muted-foreground">Compteur de la semaine, historique inclus</p></div></CardContent></Card>
+        <Card className="border-primary/20"><CardHeader><CardTitle>Compteur historique conservé</CardTitle><CardDescription>Le total historique de départ est conservé. Il augmente désormais à chaque page publique consultée, sans identifiant visiteur.</CardDescription></CardHeader><CardContent className="flex flex-wrap items-end gap-8"><div><p className="text-3xl font-bold">{historicalTotal.toLocaleString()}</p><p className="text-xs text-muted-foreground">Visites cumulées</p></div><div><p className="text-2xl font-semibold">{historicalWeekly.toLocaleString()}</p><p className="text-xs text-muted-foreground">Compteur de la semaine, historique inclus</p></div></CardContent></Card>
         <Card><CardHeader><CardTitle>Robots et profils de navigateur suspects</CardTitle><CardDescription>Conservés dans l’historique, mais exclus des indicateurs de trafic humain estimé.</CardDescription></CardHeader><CardContent><p className="text-3xl font-bold">{suspectedBotVisits.toLocaleString()}</p><p className="text-xs text-muted-foreground">Sur les 180 derniers jours disponibles. Le filtre reconnaît les agents connus, les navigateurs headless et deux signatures de navigateur obsolètes à volume anormal. Certains robots peuvent encore se présenter comme des navigateurs ordinaires.</p></CardContent></Card>
         {/* Export Button */}
         <div className="flex justify-end">
@@ -218,6 +192,28 @@ const AdminAnalytics = () => {
           </Card>
         </div>
 
+        <Card>
+          <CardHeader>
+            <CardTitle>Dernières pages consultées</CardTitle>
+            <CardDescription>Suivi automatique des pages publiques, avec date, appareil et domaine référent. Aucun identifiant personnel ni adresse IP n’est conservé.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {recentPageViews.length ? (
+              <div className="space-y-2">
+                {recentPageViews.map((view, index) => (
+                  <div key={view.created_at + view.page_path + index} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border p-3">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-medium">{view.page_path || "/"}</p>
+                      <p className="text-xs text-muted-foreground">{view.referrer_host || "Accès direct"} · {view.device_type === "mobile" ? "Téléphone" : view.device_type === "tablet" ? "Tablette" : view.device_type === "desktop" ? "Ordinateur" : "Non déterminé"}</p>
+                    </div>
+                    <time className="text-xs text-muted-foreground">{new Date(view.created_at).toLocaleString("fr-FR")}</time>
+                  </div>
+                ))}
+              </div>
+            ) : <p className="text-sm text-muted-foreground">Les nouvelles pages consultées apparaîtront ici.</p>}
+          </CardContent>
+        </Card>
+
         {/* Daily Chart */}
         <Card>
           <CardHeader>
@@ -253,7 +249,7 @@ const AdminAnalytics = () => {
         <Card>
           <CardHeader>
             <CardTitle>Types d’appareils</CardTitle>
-            <CardDescription>Estimation à partir du navigateur déclaré lors des visites enregistrées.</CardDescription>
+            <CardDescription>Catégorie d’appareil déduite du navigateur, sans conserver son identifiant complet.</CardDescription>
           </CardHeader>
           <CardContent>
             {topDevices.length ? (
@@ -302,7 +298,7 @@ const AdminAnalytics = () => {
           <Card>
             <CardHeader>
               <CardTitle>Sources de Trafic</CardTitle>
-              <CardDescription>D'où viennent vos visiteurs</CardDescription>
+              <CardDescription>Domaines référents enregistrés, sans conserver les URL complètes.</CardDescription>
             </CardHeader>
             <CardContent>
               {topReferrers.length === 0 ? (

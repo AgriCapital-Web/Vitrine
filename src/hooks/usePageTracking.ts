@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 const CONSENT_KEY = "agricapital_analytics_consent";
-let publicVisitRequestStarted = false;
+const pendingPublicPageViews = new Set<string>();
 
 const readConsent = () => {
   try {
@@ -42,16 +42,17 @@ const getVisitorId = () => {
 };
 
 const recordPublicVisit = async (pagePath: string) => {
-  if (publicVisitRequestStarted) return;
-  publicVisitRequestStarted = true;
+  if (pendingPublicPageViews.has(pagePath)) return;
+  pendingPublicPageViews.add(pagePath);
   try {
     const { error } = await supabase.functions.invoke("record-public-visit", {
-      body: { page_path: pagePath },
+      body: { page_path: pagePath, referrer: document.referrer || null },
     });
     if (error) throw error;
   } catch (error) {
-    publicVisitRequestStarted = false;
     console.warn("record-public-visit:", error);
+  } finally {
+    pendingPublicPageViews.delete(pagePath);
   }
 };
 
@@ -63,10 +64,7 @@ export const usePageTracking = () => {
   // n'est transmis par cet appel.
   useEffect(() => {
     if (location.pathname.startsWith("/admin") || navigator.webdriver) return;
-    const trackPublicVisit = () => void recordPublicVisit(location.pathname);
-    trackPublicVisit();
-    window.addEventListener("online", trackPublicVisit);
-    return () => window.removeEventListener("online", trackPublicVisit);
+    void recordPublicVisit(location.pathname);
   }, [location.pathname]);
 
   // Google Analytics et l'historique détaillé restent strictement soumis au consentement.
