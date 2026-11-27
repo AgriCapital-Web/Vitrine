@@ -1,9 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const allowedOrigin = (origin: string) =>
-  /^https:\/\/(?:www\.)?agricapital\.ci$/.test(origin)
-  ;
+const allowedOrigin = (origin: string) => /^https:\/\/(?:www\.)?agricapital\.ci$/.test(origin);
 
 const isAutomated = (userAgent: string) =>
   /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(userAgent);
@@ -33,9 +31,8 @@ Deno.serve(async (req: Request) => {
 
   try {
     const userAgent = req.headers.get("user-agent") || "";
-    const automated = isAutomated(userAgent);
-
     const body = await req.json().catch(() => ({}));
+    const automated = isAutomated(userAgent) || body?.automation_flag === true;
     const pagePath = typeof body?.page_path === "string" ? body.page_path.trim().slice(0, 2048) : "/";
     if (!pagePath.startsWith("/") || pagePath.startsWith("/admin")) {
       return new Response(JSON.stringify({ ok: false }), { status: 400, headers });

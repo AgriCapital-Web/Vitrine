@@ -46,7 +46,7 @@ const recordPublicVisit = async (pagePath: string) => {
   pendingPublicPageViews.add(pagePath);
   try {
     const { error } = await supabase.functions.invoke("record-public-visit", {
-      body: { page_path: pagePath, referrer: document.referrer || null },
+      body: { page_path: pagePath, referrer: document.referrer || null, automation_flag: Boolean(navigator.webdriver) },
     });
     if (error) throw error;
   } catch (error) {
@@ -59,9 +59,8 @@ const recordPublicVisit = async (pagePath: string) => {
 export const usePageTracking = () => {
   const location = useLocation();
 
-  // Le compteur global mesure une entrée réelle sur le site, indépendamment du choix
-  // concernant les statistiques détaillées. Aucun identifiant ni donnée de navigation
-  // n'est transmis par cet appel.
+  // Le compteur public suit chaque page consultée indépendamment des statistiques détaillées.
+  // Il transmet le chemin, le référent et un indicateur d’automatisation, sans identifiant visiteur.
   useEffect(() => {
     if (location.pathname.startsWith("/admin")) return;
     void recordPublicVisit(location.pathname);
