@@ -102,8 +102,8 @@ const AdminAnalytics = () => {
   const handleExport = () => {
     const csvContent = [
       ["Métrique", "Valeur"],
-      ["Compteur historique cumulé", historicalTotal.toString()],
-      ["Compteur historique de la semaine", historicalWeekly.toString()],
+      ["Compteur pondéré cumulé (base 17 964 ; +5 par page)", historicalTotal.toString()],
+      ["Unités pondérées cette semaine (+5 par page)", historicalWeekly.toString()],
       ["Pages publiques consultées automatiquement (180 jours)", totalVisits.toString()],
       ["Visites Aujourd'hui", todayVisits.toString()],
       ["Visites Cette Semaine", weekVisits.toString()],
@@ -133,7 +133,7 @@ const AdminAnalytics = () => {
   return (
     <AdminLayout title="Analytiques">
       <div className="space-y-6">
-        <Card className="border-primary/20"><CardHeader><CardTitle>Compteur historique conservé</CardTitle><CardDescription>Le total historique de départ est conservé. Il augmente désormais à chaque page publique consultée, sans identifiant visiteur.</CardDescription></CardHeader><CardContent className="flex flex-wrap items-end gap-8"><div><p className="text-3xl font-bold">{historicalTotal.toLocaleString()}</p><p className="text-xs text-muted-foreground">Visites cumulées</p></div><div><p className="text-2xl font-semibold">{historicalWeekly.toLocaleString()}</p><p className="text-xs text-muted-foreground">Compteur de la semaine, historique inclus</p></div></CardContent></Card>
+        <Card className="border-primary/20"><CardHeader><CardTitle>Compteur public pondéré</CardTitle><CardDescription>Base historique conservée à 17 964. Chaque consultation d’une page publique ajoute 5 unités. Ce total pondéré ne représente pas le nombre de personnes distinctes.</CardDescription></CardHeader><CardContent className="flex flex-wrap items-end gap-8"><div><p className="text-3xl font-bold">{historicalTotal.toLocaleString()}</p><p className="text-xs text-muted-foreground">Unités pondérées cumulées</p></div><div><p className="text-2xl font-semibold">{historicalWeekly.toLocaleString()}</p><p className="text-xs text-muted-foreground">Unités pondérées cette semaine</p></div></CardContent></Card>
         <Card><CardHeader><CardTitle>Trafic automatisé détecté</CardTitle><CardDescription>Les visites automatisées restent comptées et sont identifiées séparément.</CardDescription></CardHeader><CardContent><p className="text-3xl font-bold">{suspectedBotVisits.toLocaleString()}</p><p className="text-xs text-muted-foreground">{humanVisits.toLocaleString()} pages vues ne sont pas classées comme automatisées, sur les 180 derniers jours. Cette classification repose sur la signature du navigateur et reste indicative.</p></CardContent></Card>
         {/* Export Button */}
         <div className="flex justify-end">

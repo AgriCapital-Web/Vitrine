@@ -10,13 +10,12 @@ export const useVisitorCount = () => {
   // Never initialize the public historical counter from the filtered unique-browser cache.
   // Prefer the last known cumulative value while the authoritative database request runs.
   const readCachedTotal = () => Math.max(0, ...[
-    "cached_public_total_visits_v5",
-    "cached_visitor_count",
+    "cached_public_weighted_total_v1",
   ].map((key) => Number(localStorage.getItem(key) || 0)).filter(Number.isFinite));
   const [totalVisitors, setTotalVisitors] = useState<number>(() => readCachedTotal());
   const [weeklyVisitors, setWeeklyVisitors] = useState<number>(() => Math.max(0,
-    Number(localStorage.getItem("cached_public_weekly_visits_v5")
-      || localStorage.getItem("cached_weekly_count") || 0) || 0
+    Number(localStorage.getItem("cached_public_weighted_weekly_v1")
+      || 0) || 0
   ));
   const [isLoading, setIsLoading] = useState(true);
 
@@ -56,8 +55,8 @@ export const useVisitorCount = () => {
         if (!mounted) return;
         setTotalVisitors(total);
         setWeeklyVisitors(weekly);
-        localStorage.setItem("cached_public_total_visits_v5", String(total));
-        localStorage.setItem("cached_public_weekly_visits_v5", String(weekly));
+        localStorage.setItem("cached_public_weighted_total_v1", String(total));
+        localStorage.setItem("cached_public_weighted_weekly_v1", String(weekly));
       } catch (error) {
         console.warn("visitor-stats:", error);
         // Keep the latest valid cumulative cache if the service is temporarily unavailable.

@@ -60,7 +60,7 @@ Deno.serve(async (req: Request) => {
     });
     if (error) throw error;
 
-    return new Response(JSON.stringify({ ok: true, counted: 1 }), { status: 200, headers });
+    return new Response(JSON.stringify({ ok: true, counted: 5, raw_page_views: 1, metric: "weighted_public_page_views" }), { status: 200, headers });
   } catch (error) {
     console.error("record-public-visit:", error);
     return new Response(JSON.stringify({ ok: false }), { status: 500, headers });

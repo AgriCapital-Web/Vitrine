@@ -22,9 +22,9 @@ Deno.serve(async (req: Request) => {
     return new Response(JSON.stringify({
       total_visitors: Number(data.total_visitors) || 0,
       weekly_visitors: Number(data.weekly_visitors) || 0,
-      metric: "cumulative_page_views",
+      metric: "weighted_public_page_views",
       updated_at: data.updated_at,
-      note: "Compteur cumulatif des pages publiques consultées. Chaque navigation publique enregistrée l’alimente, sans identifiant visiteur, adresse IP ni agent utilisateur complet."
+      note: "Compteur pondéré : la base historique de 17 964 est conservée et chaque consultation d’une page publique ajoute 5 unités. Ce total ne représente pas le nombre de personnes distinctes. Les événements bruts sont conservés séparément, sans identifiant visiteur, adresse IP ni agent utilisateur complet."
     }), { headers: { ...corsHeaders, "Content-Type": "application/json", "Cache-Control": "no-store" } });
   } catch (error) {
     console.error("visitor-stats:", error);
