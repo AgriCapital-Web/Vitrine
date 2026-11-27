@@ -49,9 +49,9 @@ export const useVisitorCount = () => {
           throw new Error("Historical public counter unavailable");
         }
 
-        // A cumulative historical counter must not regress because of a stale cache or a
-        // temporary function response. Unique visitors are shown separately in admin analytics.
-        const total = Math.max(0, Number(stats.total_visitors) || 0, readCachedTotal());
+        // The database is authoritative. A cached value is only a temporary loading fallback;
+        // it must not override a corrected baseline or a newer server-side counter.
+        const total = Math.max(0, Number(stats.total_visitors) || 0);
         const weekly = Math.max(0, Number(stats.weekly_visitors) || 0);
         if (!mounted) return;
         setTotalVisitors(total);
