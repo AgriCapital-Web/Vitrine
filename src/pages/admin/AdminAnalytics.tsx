@@ -36,6 +36,7 @@ const AdminAnalytics = () => {
   const [topCities, setTopCities] = useState<{ city: string; count: number }[]>([]);
   const [topDevices, setTopDevices] = useState<CountItem[]>([]);
   const [suspectedBotVisits, setSuspectedBotVisits] = useState(0);
+  const [humanVisits, setHumanVisits] = useState(0);
   const [recentPageViews, setRecentPageViews] = useState<{ page_path: string; referrer_host: string | null; device_type: string; created_at: string }[]>([]);
 
   useEffect(() => {
@@ -71,7 +72,8 @@ const AdminAnalytics = () => {
       }
 
       const humanDetailedVisits = detailedVisits.filter((v: any) => !isAutomatedUA(v.user_agent) && !isPreviewReferrer(v.referrer));
-      setSuspectedBotVisits(detailedVisits.length - humanDetailedVisits.length);
+      setSuspectedBotVisits(Number(publicStats.suspectedBotVisits) || 0);
+      setHumanVisits(Number(publicStats.humanVisits) || 0);
       const countryCounts: Record<string, number> = {};
       const cityCounts: Record<string, number> = {};
       humanDetailedVisits.forEach((v: any) => {
@@ -132,7 +134,7 @@ const AdminAnalytics = () => {
     <AdminLayout title="Analytiques">
       <div className="space-y-6">
         <Card className="border-primary/20"><CardHeader><CardTitle>Compteur historique conservé</CardTitle><CardDescription>Le total historique de départ est conservé. Il augmente désormais à chaque page publique consultée, sans identifiant visiteur.</CardDescription></CardHeader><CardContent className="flex flex-wrap items-end gap-8"><div><p className="text-3xl font-bold">{historicalTotal.toLocaleString()}</p><p className="text-xs text-muted-foreground">Visites cumulées</p></div><div><p className="text-2xl font-semibold">{historicalWeekly.toLocaleString()}</p><p className="text-xs text-muted-foreground">Compteur de la semaine, historique inclus</p></div></CardContent></Card>
-        <Card><CardHeader><CardTitle>Robots et profils de navigateur suspects</CardTitle><CardDescription>Conservés dans l’historique, mais exclus des indicateurs de trafic humain estimé.</CardDescription></CardHeader><CardContent><p className="text-3xl font-bold">{suspectedBotVisits.toLocaleString()}</p><p className="text-xs text-muted-foreground">Sur les 180 derniers jours disponibles. Le filtre reconnaît les agents connus, les navigateurs headless et deux signatures de navigateur obsolètes à volume anormal. Certains robots peuvent encore se présenter comme des navigateurs ordinaires.</p></CardContent></Card>
+        <Card><CardHeader><CardTitle>Trafic automatisé détecté</CardTitle><CardDescription>Les visites automatisées restent comptées et sont identifiées séparément.</CardDescription></CardHeader><CardContent><p className="text-3xl font-bold">{suspectedBotVisits.toLocaleString()}</p><p className="text-xs text-muted-foreground">{humanVisits.toLocaleString()} pages vues ne sont pas classées comme automatisées, sur les 180 derniers jours. Cette classification repose sur la signature du navigateur et reste indicative.</p></CardContent></Card>
         {/* Export Button */}
         <div className="flex justify-end">
           <Button onClick={handleExport} variant="outline" className="gap-2">

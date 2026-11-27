@@ -3,8 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const allowedOrigin = (origin: string) =>
   /^https:\/\/(?:www\.)?agricapital\.ci$/.test(origin)
-  || /^https:\/\/vitrine-[a-z0-9-]+\.vercel\.app$/.test(origin)
-  || /^http:\/\/localhost:(?:5173|8080|4173)$/.test(origin);
+  ;
 
 const isAutomated = (userAgent: string) =>
   /(?:\bbot\b|crawler|spider|headlesschrome|lighthouse|pagespeed|preview|facebookexternalhit|meta-externalagent|whatsapp|telegram|ahrefsbot|bingbot|googlebot|playwright|puppeteer|selenium|cypress|webdriver|curl\/|wget\/|python-requests|node\.js)/i.test(userAgent);
@@ -34,9 +33,7 @@ Deno.serve(async (req: Request) => {
 
   try {
     const userAgent = req.headers.get("user-agent") || "";
-    if (isAutomated(userAgent)) {
-      return new Response(JSON.stringify({ ok: true, ignored: true }), { status: 200, headers });
-    }
+    const automated = isAutomated(userAgent);
 
     const body = await req.json().catch(() => ({}));
     const pagePath = typeof body?.page_path === "string" ? body.page_path.trim().slice(0, 2048) : "/";
@@ -62,6 +59,7 @@ Deno.serve(async (req: Request) => {
       p_page_path: pagePath,
       p_referrer_host: referrerHost,
       p_device_type: getDeviceType(userAgent),
+      p_is_automated: automated,
     });
     if (error) throw error;
 

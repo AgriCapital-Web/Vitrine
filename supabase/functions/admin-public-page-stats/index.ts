@@ -58,7 +58,7 @@ Deno.serve(async (req: Request) => {
     for (let offset = 0; offset < 10000; offset += 1000) {
       const { data, error } = await serviceClient
         .from("public_page_events")
-        .select("page_path,referrer_host,device_type,created_at")
+        .select("page_path,referrer_host,device_type,created_at,is_automated")
         .gte("created_at", cutoff)
         .order("created_at", { ascending: false })
         .range(offset, offset + 999);
@@ -86,6 +86,7 @@ Deno.serve(async (req: Request) => {
     let todayVisits = 0;
     let weekVisits = 0;
     let monthVisits = 0;
+    const suspectedBotVisits = events.filter((event) => event.is_automated === true).length;
     for (const event of events) {
       const pagePath = event.page_path || "/";
       pageCounts[pagePath] = (pageCounts[pagePath] || 0) + 1;
@@ -123,6 +124,8 @@ Deno.serve(async (req: Request) => {
       todayVisits,
       weekVisits,
       monthVisits,
+      suspectedBotVisits,
+      humanVisits: Math.max(0, events.length - suspectedBotVisits),
       topPages,
       dailyVisits,
       topReferrers,

@@ -63,7 +63,7 @@ export const usePageTracking = () => {
   // concernant les statistiques détaillées. Aucun identifiant ni donnée de navigation
   // n'est transmis par cet appel.
   useEffect(() => {
-    if (location.pathname.startsWith("/admin") || navigator.webdriver) return;
+    if (location.pathname.startsWith("/admin")) return;
     void recordPublicVisit(location.pathname);
   }, [location.pathname]);
 
